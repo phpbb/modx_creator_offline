@@ -1,0 +1,368 @@
+/* css for the MODX creator */
+body {
+	background-color: #dbd7d1;
+	padding: 0 10px;
+	font-size: 0.95em;
+	min-width: 900px;
+}
+
+p {
+	line-height: 1em;
+	font-size: 0.9em;
+	margin: .5em 0;
+}
+
+h1 {
+	font-size: 30px;
+	margin-bottom: 0;
+}
+
+h2 {
+	font-size: 12px;
+	margin-top: -8px;
+}
+
+img.sign {
+	vertical-align: text-top !important;
+	margin: 2px;
+	padding-left: 2px;
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+}
+
+img.sign:hover {
+	margin: 1px;
+	height: 18px;
+	width: 18px;
+}
+
+img.plus-sign:active {
+	margin: 3px;
+	height: 14px;
+	width: 14px;
+}
+
+img.do-stuff {
+	vertical-align: top !important;
+	margin: 2px;
+	padding-left: 2px;
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+}
+
+img.do-stuff:hover {
+	margin: 1px;
+	height: 18px;
+	width: 18px;
+}
+
+img.do-stuff:active {
+	margin: 3px;
+	height: 14px;
+	width: 14px;
+}
+
+#left-add {
+	float: left;
+	width: 130px;
+}
+
+#wrap {
+	margin: 20px auto;
+/*	padding: 0 40px;*/
+}
+
+#header {
+	width: 100%;
+	text-align: center;
+}
+
+#content {
+	margin: 10px 0;
+	padding: 5px;
+	background-color: #FFFFFF;
+	background-image: url('./images/index.gif');
+	background-repeat: repeat-x;
+}
+
+#error-span {
+	background-color: #ff7777;
+	padding: 2px 5px;
+	font-weight: bold;
+}
+
+#warning-span {
+	background-color: #f0e370;
+	padding: 2px 5px;
+	font-weight: bold;
+}
+
+.warning-dl {
+	background-color: #f0e370;
+}
+
+.error-dl {
+	background-color: #ff9999;
+}
+
+.error-div {
+	text-align: center;
+}
+/* fieldsets */
+.outer {
+	background-color: #e2e4e7;
+	margin-top: 10px;
+}
+
+.inner {
+	background-color: #e2e2e0;
+	margin-top: 5px;
+}
+
+.white {
+	background-color: #fff;
+	margin-top: 5px;
+}
+/* Diverse */
+.input-fields { border-bottom: 1px solid #DDDDDD; }
+.explain { font-size: 12px; }
+.noborder { border: none; }
+
+.krav {
+	margin-left: 5px;
+}
+
+.main-field {
+	border: none;
+}
+
+.submit {
+	margin-top: 10px;
+}
+
+/* Definition list layout for forms, from phpbb3 forms.css
+---------------------------------------- */
+fieldset {
+	padding: 2px;
+}
+
+fieldset dl {
+	padding: 6px 0;
+	color: #333333;
+	margin: 0;
+	clear: both;
+}
+
+fieldset dt {
+	float: left;
+	text-align: left;
+}
+
+fieldset dd {
+	margin-bottom: 5px;
+	display: block;
+}
+
+/* about-mod fields */
+.about-mod dt {
+	width: 18%;
+}
+
+.about-mod dd {
+	margin-left: 19%;
+}
+
+.about-mod textarea {
+	width: 76%;
+}
+
+/* Action fields */
+.actions-fieldset dt {
+	width: 19%;
+}
+
+.actions-fieldset dd {
+	margin-left: 20%;
+}
+
+.actions-fieldset textarea {
+	width: 92%;
+}
+
+textarea.action-comment {
+	width: 75%;
+}
+
+.action-text1 {
+	position: absolute;
+	margin: 2px 4px;
+}
+img.action-text1:hover { margin: 1px 3px; }
+img.action-text1:active { margin: 3px 5px; }
+
+.action-text2 {
+	position: absolute;
+	float: right;
+	margin: 23px 4px;
+}
+img.action-text2:hover { margin: 22px 0 0 3px; }
+img.action-text2:active { margin: 24px 0 0 5px; }
+
+.action-text3 {
+	position: absolute;
+	float: right;
+	margin: 46px 4px;
+}
+img.action-text3:hover { margin: 45px 0 0 3px; }
+img.action-text3:active { margin: 47px 0 0 5px; }
+
+img.action-text1:hover, img.action-text2:hover, img.action-text3:hover {
+	height: 18px;
+	width: 18px;
+}
+
+img.action-text1:active, img.action-text2:active, img.action-text3:active {
+	height: 14px;
+	width: 14px;
+}
+
+img.action-text1, img.action-text2, img.action-text3 {
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+}
+
+.action-arrows {
+	margin: 4px;
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+}
+
+.action-arrows:hover {
+	margin: 3px;
+	height: 18px;
+	width: 18px;
+}
+
+.action-arrows:active {
+	margin: 5px;
+	height: 14px;
+	width: 14px;
+}
+
+/*.action-texts {*/
+/*	white-space: nowrap;*/
+/*}*/
+
+/* DIY fields */
+.diy-fieldset dt {
+	width: 8%;
+}
+
+.diy-fieldset dd {
+	margin-left: 9%;
+}
+
+.diy-fieldset textarea {
+	width: 80%;
+}
+
+/* SQL fields */
+dt.sql-rows {
+	width: 12%;
+}
+
+dd.sql-rows {
+	margin-left: 13%;
+}
+
+textarea.sql-rows {
+	width: 92%;
+}
+
+/* Copy fields */
+dt.copy-rows {
+	width: 20%;
+}
+
+dd.copy-rows {
+	margin-left: 21%;
+}
+
+/* Links fields */
+dt.link-rows {
+	width: 12%;
+}
+
+dd.link-rows {
+	margin-left: 13%;
+}
+
+/* History fields */
+dt.history-rows {
+	width: 12%;
+}
+
+dd.history-rows {
+	margin-left: 13%;
+}
+
+/* Author fields */
+dt.author-rows {
+	width: 20%;
+}
+
+dd.author-rows {
+	margin-left: 21%;
+}
+
+/* Form elements */
+dt label {
+	font-weight: bold;
+	text-align: left;
+}
+
+dd label {
+	/*white-space: nowrap;*/
+	color: #333;
+}
+
+dd input, dd textarea {
+	margin-right: 3px;
+}
+
+dd select {
+	width: auto;
+	padding-left: 5px;
+	vertical-align: top;
+}
+
+/*dd textarea {*/
+/*	width: 70%;*/
+/*}*/
+
+/* Hover effects */
+fieldset dl:hover {
+	background-color: #e9e9e9;
+}
+
+/* header fieldset */
+fieldset.white {
+	background-color: white;
+}
+
+/* Submit button fieldset */
+fieldset.submit-buttons {
+	text-align: center;
+	vertical-align: middle;
+	margin: 5px 0;
+}
+
+fieldset.submit-buttons input {
+	vertical-align: middle;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
