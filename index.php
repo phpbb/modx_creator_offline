@@ -588,7 +588,7 @@ if($dload || $preview)
 {
 	if(!empty($error))
 	{
-		$error_field = '<span id="error-span">There where errors</span>';
+		$error_field = '<span id="error-span">There were errors</span>';
 	}
 	else
 	{
