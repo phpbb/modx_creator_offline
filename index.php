@@ -253,7 +253,7 @@ if(!empty($author))
 				}
 			}
 		}
-		$author_fields .= '</fieldset><input type="button" value="Add contribution" onclick="add_contributor(\'' . $field_id . '\');" />' . (($cnt == 1) ? '<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip(\'The contributor fields are optional and every author can have several contributor fields.<br />If you choose to add contributor fields, the only required field is the status. The other are optional.\')" onmouseout="UnTip()" />' : '');
+		$author_fields .= '</fieldset><input type="button" value="Add contribution" onclick="add_contributor(\'' . $field_id . '\');" />' . (($cnt == 1) ? '<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip(\'The contributor fields are optional and every author can have several contributor fields.<br />If you choose to add contributor fields, the only field required is the status. The other are optional.\')" onmouseout="UnTip()" />' : '');
 		$author_fields .= '</fieldset>' . "\n";
 	}
 }
@@ -274,7 +274,7 @@ if(empty($author_fields))
 	$author_fields .= '<dd class="author-rows"><input type="text" name="author[af_pre][homepage]" id="author-af_pre-homepage" size="40" maxlength="255" value="" /></dd></dl>';
 	$author_fields .= '<dl><dt class="author-rows"><label for="author-af_pre-email">E-mail:</label></dt>';
 	$author_fields .= '<dd class="author-rows"><input type="text" name="author[af_pre][email]" id="author-af_pre-email" size="40" maxlength="255" value="" /></dd></dl><fieldset id="af_pre" style="border: none;"></fieldset>';
-	$author_fields .= '<input type="button" value="Add contribution" onclick="add_contributor(\'af_pre\');" /><img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip(\'The contributor fields are optional and every author can have several contributor fields.<br />If you choose to add contributor fields, the only required field is the status. The other are optional.\')" onmouseout="UnTip()" /></fieldset>' . "\n";
+	$author_fields .= '<input type="button" value="Add contribution" onclick="add_contributor(\'af_pre\');" /><img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip(\'The contributor fields are optional and every author can have several contributor fields.<br />If you choose to add contributor fields, the only field required is the status. The other are optional.\')" onmouseout="UnTip()" /></fieldset>' . "\n";
 }
 
 // Links
@@ -302,9 +302,6 @@ if(!empty($links))
 		}
 	}
 }
-
-// <span><select name="notes[' . $field_id . '][lang]">' . lang_select($value['lang']) . '</select></span>
-// if(!preg_match('#(\d+)\.(\d+)\.\d+[a-z]?#', $target))
 
 // History
 $cnt = 0;
@@ -430,11 +427,6 @@ if($copy)
 }
 $copy_fields = ($is_copy) ? $copy_fields : '';
 
-// <img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'' . $field_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />
-// $title_fields .= ($cnt > 1) ? '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'' . $field_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />' : '';
-//  id="' . $field_id . '"
-// $title_fields .= '</dd>';
-
 // DIY fields
 if($diy)
 {
@@ -493,9 +485,9 @@ if($modx)
 				if($key2 != 'file')
 				{
 					$edit_id = 'e_pre_' . $edit_cnt++;
-					$modx_fields .= '<fieldset class="white" id="' . $edit_id . '"><legend>Edit<img class="sign" src="./images/info.png" alt="" onmouseover="Tip(\'Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains.&lt;br /&gt;All finds within a edit tag should be processed before any action tag.\')" onmouseout="UnTip()">';
-					$modx_fields .= '<img class="do-stuff" src="./images/plus_up.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . ']\', \'' . $edit_id . '\', \'edit\', \'above\', 1)" onmouseover="Tip(\'Add a edit field above this edit field\')" onmouseout="UnTip()">';
-					$modx_fields .= '<img class="do-stuff" src="./images/plus_down.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . ']\', \'' . $edit_id . '\', \'edit\', \'below\', 1)" onmouseover="Tip(\'Add a edit field below this edit field\')" onmouseout="UnTip()">';
+					$modx_fields .= '<fieldset class="white" id="' . $edit_id . '"><legend>Edit<img class="sign" src="./images/info.png" alt="" onmouseover="Tip(\'Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains.&lt;br /&gt;All finds within an edit tag should be processed before any action tag.\')" onmouseout="UnTip()">';
+					$modx_fields .= '<img class="do-stuff" src="./images/plus_up.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . ']\', \'' . $edit_id . '\', \'edit\', \'above\', 1)" onmouseover="Tip(\'Add an edit field above this edit field\')" onmouseout="UnTip()">';
+					$modx_fields .= '<img class="do-stuff" src="./images/plus_down.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . ']\', \'' . $edit_id . '\', \'edit\', \'below\', 1)" onmouseover="Tip(\'Add an edit field below this edit field\')" onmouseout="UnTip()">';
 					$modx_fields .= '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'' . $edit_id . '\').remove()" onmouseover="Tip(\'Delete this edit\')" onmouseout="UnTip()"></legend><p>NOTE: Each discreet change to a file must be wrapped in its own edit tag.</p>';
 
 					foreach($value2 as $key3 => $value3)
@@ -573,15 +565,6 @@ if($modx)
 		}
 	}
 }
-
-//print_r($modx);
-//echo '<br><br>';
-//print_r($modx_fields);
-//echo '<br><br>';
-
-//print_r($error);
-
-//$warning['fel'] = 'fel';
 
 $modx_url = $error_field = '';
 if($dload || $preview)

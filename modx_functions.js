@@ -122,7 +122,7 @@ function modx_add_field(obj_id, parent_id, sort, position, if_edit)
 	{
 		var element = Builder.node('fieldset', { className: 'white', id: edit_id }, [
 			Builder.node('legend', 'Edit', [
-				Builder.node('img', { className: 'sign', src: './images/info.png', alt: 'Info icon', onmouseover: "Tip('Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains.<br />All finds within a edit tag should be processed before any action tag.')", onmouseout: 'UnTip()' }),
+				Builder.node('img', { className: 'sign', src: './images/info.png', alt: 'Info icon', onmouseover: "Tip('Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains.<br />All finds within an edit tag should be processed before any action tag.')", onmouseout: 'UnTip()' }),
 				Builder.node('img', { className: 'do-stuff', src: './images/plus_up.png', alt: 'Arrow up icon', onclick: 'modx_add_field(\'' + obj_id + '\', \'' + edit_id + '\', \'edit\', \'above\', 1)', onmouseover: "Tip('Add a edit field above this edit field')", onmouseout: 'UnTip()' }),
 				Builder.node('img', { className: 'do-stuff', src: './images/plus_down.png', alt: 'Arrow down icon', onclick: 'modx_add_field(\'' + obj_id + '\', \'' + edit_id + '\', \'edit\', \'below\', 1)', onmouseover: "Tip('Add a edit field below this edit field')", onmouseout: 'UnTip()' }),
 				Builder.node('img', { className: 'do-stuff', src: './images/delete.png', alt: 'Delete icon', onclick: "$('" + edit_id + "').remove()", onmouseover: "Tip('Delete this edit')", onmouseout: 'UnTip()' }),
@@ -222,7 +222,7 @@ function act_file()
 		]),
 		Builder.node('fieldset', { className: 'white', id: edit_id }, [
 			Builder.node('legend', 'Edit', [
-				Builder.node('img', { className: 'sign', src: './images/info.png', alt: 'Info icon', onmouseover: "Tip('Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains.<br />All finds within a edit tag should be processed before any action tag.')", onmouseout: 'UnTip()' }),
+				Builder.node('img', { className: 'sign', src: './images/info.png', alt: 'Info icon', onmouseover: "Tip('Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains.<br />All finds within an edit tag should be processed before any action tag.')", onmouseout: 'UnTip()' }),
 				Builder.node('img', { className: 'do-stuff', src: './images/plus_up.png', alt: 'Arrow up icon', onclick: 'modx_add_field(\'modx[' + file_id + ']\', \'' + edit_id + '\', \'edit\', \'above\', 1)', onmouseover: "Tip('Add edit above')", onmouseout: 'UnTip()' }),
 				Builder.node('img', { className: 'do-stuff', src: './images/plus_down.png', alt: 'Arrow down icon', onclick: 'modx_add_field(\'modx[' + file_id + ']\', \'' + edit_id + '\', \'edit\', \'below\', 1)', onmouseover: "Tip('Add edit below')", onmouseout: 'UnTip()' }),
 				Builder.node('img', { className: 'do-stuff', src: './images/delete.png', alt: 'Delete icon', onclick: "$('" + edit_id + "').remove()", onmouseover: "Tip('Delete this edit')", onmouseout: 'UnTip()' }),

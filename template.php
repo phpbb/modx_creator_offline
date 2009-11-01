@@ -63,7 +63,7 @@ if(!defined('IN_MODX'))
 							<dt>
 								<label for="title">Title:*</label>
 								<img class="sign plus-sign" src="./images/plus.png" alt="Add title in some other language" onmouseover="Tip('Add title in some other language')" onmouseout="UnTip()" onclick="add_title();" />
-								<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('One title in English is required&lt;br /&gt;but you can add as many as you want in other languages.')" onmouseout="UnTip()" />
+								<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('One title in English is required, but you can use titles in other languages as well.')" onmouseout="UnTip()" />
 							</dt>
 							<?= $title_fields ?>
 						</dl>
@@ -72,8 +72,8 @@ if(!defined('IN_MODX'))
 						<dl id="desc-field"<?= ((isset($error['desc'])) ? ' class="error-dl"' : '') ?>>
 							<dt>
 								<label for="desc">Description:*</label>
-								<img class="sign plus-sign" src="./images/plus.png" alt="Add a description in some other language" onmouseover="Tip('Add a description in some other language')" onmouseout="UnTip()" onclick="add_desc();" />
-								<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('One description in English is required&lt;br /&gt;but you can add as many as you want in other languages.')" onmouseout="UnTip()" />
+								<img class="sign plus-sign" src="./images/plus.png" alt="Add a description in another language." onmouseover="Tip('Add a description in another language.')" onmouseout="UnTip()" onclick="add_desc();" />
+								<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('One description in English is required. You can add descriptions in other languages as well.&lt;br /&gt;This needs to be descriptive; &quot;Install instructions for my MOD&quot; is not enough.')" onmouseout="UnTip()" />
 							</dt>
 							<?= $desc_fields ?>
 						</dl>
@@ -82,7 +82,7 @@ if(!defined('IN_MODX'))
 						<dl<?= ((isset($error['version'])) ? ' class="error-dl"' : '') ?>>
 							<dt>
 								<label for="version">MOD version:*</label>
-								<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('All versions less 1.0.0 are development versions')" onmouseout="UnTip()" />
+								<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('All versions less than 1.0.0 are development versions')" onmouseout="UnTip()" />
 							</dt>
 							<dd><input type="text" name="version" id="version" size="10" maxlength="25" value="<?= gen_value($version) ?>" /></dd>
 						</dl>
@@ -160,7 +160,7 @@ if(!defined('IN_MODX'))
 							<?= $history_fields ?>
 						</div>
 						<input type="button" value="Add changelog entry" onclick="add_history();" />
-						<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('You can have as many changelog fields that you want, or none.&lt;br /&gt;If you choose to have changelog all fields are required.&lt;br /&gt;You must have at least one cange per changelog entry, but can have as many as you want.&lt;br /&gt;&lt;br /&gt;If you want to reverse the changelog order to add more changelogs at the end, check the ’Reverse changelog order’-checkbox and hit preview.')" onmouseout="UnTip()" />
+						<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('You can have as many changelog fields as you want, or none.&lt;br /&gt;If you choose to have a changelog, all fields are required.&lt;br /&gt;You must have at least one change per changelog entry, but can have as many as you want.&lt;br /&gt;&lt;br /&gt;If you want to reverse the changelog order to add more changelogs at the end, check the ’Reverse changelog order’-checkbox and hit preview.')" onmouseout="UnTip()" />
 						<label style="font-size: .8em">Reverse changelog order
 						<input type="checkbox" name="reverse_history" /></label>
 					</fieldset>
@@ -186,7 +186,7 @@ if(!defined('IN_MODX'))
 							<?= $copy_fields ?>
 						</div>
 						<input type="button" value="Add copy field" onclick="add_copy();" />
-						<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('Both from and to fields are required.&lt;br /&gt;You can have as many copy fields as you need and each copy field can contain as many filecopy’s as needed.&lt;ul&gt;&lt;li&gt;The from field must contain the relative path from the current MODX file to the source file. Example: root/survey.php.&lt;br /&gt;Can also be a wildcard match using *.* Example: root/*.*&lt;/li&gt;&lt;li&gt;The to field must contain the the relative path from the phpBB root to the destination of the file.&lt;br /&gt;Should be an exact filename if an exact file name was given in the from attribute, or a directory name if a wildcard was used.&lt;/li&gt;')" onmouseout="UnTip()" />
+						<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('Both from and to fields are required.&lt;br /&gt;You can have as many copy fields as you need and each copy field can contain as many filecopies as needed.&lt;ul&gt;&lt;li&gt;The from field must contain the relative path from the current MODX file to the source file. Example: root/survey.php.&lt;br /&gt;Can also be a wildcard match using *.* Example: root/*.*&lt;/li&gt;&lt;li&gt;The to field must contain the the relative path from the phpBB root to the destination of the file.&lt;br /&gt;Should be an exact filename if an exact file name was given in the from attribute, or a directory name if a wildcard was used.&lt;/li&gt;')" onmouseout="UnTip()" />
 					</fieldset>
 
 					<!-- SQL querys -->
@@ -196,7 +196,7 @@ if(!defined('IN_MODX'))
 							<?= $sql_fields ?>
 						</div>
 						<input type="button" value="Add SQL query" onclick="add_sql();" />
-						<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('You can have as many SQL fields as you want.&lt;br /&gt;DBMS is the dialect of the query, it defaults to sql-parser and leave it at that if you are not sure it would be set to something else.&lt;br /&gt;You can have multiple querys in the same field separated by a line feed.')" onmouseout="UnTip()" />
+						<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('You can have as many SQL fields as you want.&lt;br /&gt;DBMS is the dialect of the query, it defaults to sql-parser and leave it at that if you are not sure it would be set to something else.&lt;br /&gt;You can have multiple queries in the same field separated by a line feed.')" onmouseout="UnTip()" />
 					</fieldset>
 
 				</fieldset>
@@ -207,7 +207,7 @@ if(!defined('IN_MODX'))
 						<?= $modx_fields ?>
 					</div>
 					<input type="button" value="Add file" onclick="act_file();" />
-					<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('Files will be ordered alphabetically within their directory’s. Files first.')" onmouseout="UnTip()" />
+					<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('Files will be ordered alphabetically within their directories (files first).')" onmouseout="UnTip()" />
 				</fieldset>
 
 				<fieldset class="outer diy-fieldset">
@@ -216,7 +216,7 @@ if(!defined('IN_MODX'))
 					<dl id="diy-field">
 						<dt>
 							<img class="sign plus-sign" src="./images/plus.png" alt="Add icon'] ?>" onmouseover="Tip('Add a DIY field')" onmouseout="UnTip()" onclick="add_diy();" />
-							<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('You can have multiple DIY fields or none&lt;br /&gt;The Do It Yourself Instructions, or instructions that cannot be described accurately using the other MODX commands')" onmouseout="UnTip()" />
+							<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip('You can have multiple DIY fields or none&lt;br /&gt;Do It Yourself Instructions, or instructions that cannot be described accurately using the other MODX commands.')" onmouseout="UnTip()" />
 						</dt>
 						<?= $diy_fields ?>
 					</dl>
