@@ -448,7 +448,7 @@ if($diy)
 
 if(empty($diy_fields))
 {
-	$diy_fields = '<dd><textarea name="diy[desc_pre][diy]" id="diy_0" rows="5"></textarea><span><select name="diy[desc_pre][lang]">' . lang_select() . '</select></span><img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'diy_0\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" /><img id="diy0-plus" class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.diy_0.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" /><img id="diy0-minus" class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.diy_0.rows>7){document.mainform.diy_0.rows-=4}else{document.mainform.diy_0.rows-=(document.mainform.diy_0.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" /></dd>';
+	$diy_fields = '<dd id="diy_0"><textarea name="diy[desc_pre][diy]" id="diy_01" rows="5"></textarea><span><select name="diy[desc_pre][lang]">' . lang_select() . '</select></span><img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'diy_0\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" /><img id="diy0-plus" class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.diy_01.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" /><img id="diy0-minus" class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.diy_01.rows>7){document.mainform.diy_01.rows-=4}else{document.mainform.diy_01.rows-=(document.mainform.diy_01.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" /></dd>';
 }
 
 // The Action fields...
