@@ -283,6 +283,7 @@ if($modx)
 
 								case 'after-add' || 'before-add' || 'replace-with' || 'operation':
 									write_element('action', $value3['data'], array('type' => $value3['type']));
+								break;
 
 								case 'inline-find':
 									write_element('inline-find', $value3['data']);
