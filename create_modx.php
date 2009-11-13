@@ -37,7 +37,7 @@ $xml->startElement('header');
 write_element('meta', '', array(
 	'name' => 'generator',
 	'content' => 'MODX file generated with PP MODX Creator by tumba25',
-));
+), false, false);
 // </meta>
 
 // <license>
@@ -91,7 +91,7 @@ foreach($author as $key => $value)
 		write_element('username', trim($value['username']), ((isset($value['phpbbcom'])) ? array('phpbbcom' => 'no') : false));
 		write_element('homepage', trim($value['homepage']));
 		write_element('email', trim($value['email']));
-		if(sizeof($contributor[$key]))
+		if(!empty($contributor[$key]))
 		{
 			// <contributions-group>
 			$xml->startElement('contributions-group');
@@ -117,13 +117,13 @@ $xml->endElement();
 // </author-group>
 
 // <mod-version>
-write_element('mod-version', trim($version));
+write_element('mod-version', trim($version), false, false);
 
 // <installation>'
 $xml->startElement('installation');
-write_element('level', $install_level);
-write_element('time', $install_time * 60);
-write_element('target-version', trim($target));
+write_element('level', $install_level, false, false);
+write_element('time', $install_time * 60, false, false);
+write_element('target-version', trim($target), false, false);
 $xml->endElement();
 // </installation>
 
@@ -137,8 +137,8 @@ if($history)
 		{
 			// <entry>
 			$xml->startElement('entry');
-			write_element('date', trim($value['date']));
-			write_element('rev-version', trim($value['version']));
+			write_element('date', trim($value['date']), false, false);
+			write_element('rev-version', trim($value['version']), false, false);
 
 			$hist_entry = array();
 			// We need to sort the change array by language.
@@ -182,7 +182,7 @@ if(!empty($links))
 				'type' => $value['type'],
 				'href' => trim($value['href']),
 				'lang' => $value['lang'],
-			));
+			), false, false);
 		}
 	}
 	$xml->endElement();
@@ -219,7 +219,7 @@ if($copy)
 			write_element('file', '', array(
 				'from' => trim($cval['from']),
 				'to' => trim($cval['to']),
-			));
+			), false, false);
 		}
 		$xml->endElement();
 		// </copy>
@@ -277,14 +277,6 @@ if($modx)
 							// Now lets make the real changes...
 							switch($value3['type'])
 							{
-								case 'find':
-									write_element('find', $value3['data']);
-								break;
-
-								case 'after-add' || 'before-add' || 'replace-with' || 'operation':
-									write_element('action', $value3['data'], array('type' => $value3['type']));
-								break;
-
 								case 'inline-find':
 									write_element('inline-find', $value3['data']);
 								break;
@@ -309,9 +301,16 @@ if($modx)
 									$inline_action = true;
 								break;
 
-								default;
-									// The comment is default because it won't break anything.
+								case 'find':
+									write_element('find', $value3['data']);
+								break;
+
+								case 'comment':
 									write_element('comment', $value3['data'], array('lang' => ((isset($value3['lang'])) ? $value3['lang'] : 'en')));
+								break;
+
+								default:
+									write_element('action', $value3['data'], array('type' => $value3['type']));
 								break;
 							}
 						}

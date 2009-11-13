@@ -23,8 +23,8 @@ if(!$modx_version)
 	$warning['modx_version'] = 'modx_version';
 }
 // Then we get the one-liners that's suposed to "occur exactly once"
-$license = get_tag($modx_data, 'license', false);
-$version = get_tag($modx_data, 'mod-version', false);
+$license = trim_cdata(get_tag($modx_data, 'license', false));
+$version = trim_cdata(get_tag($modx_data, 'mod-version', false));
 if($modx_version == MODX_V1)
 {
 	// The old style version number for the MOD
@@ -36,7 +36,7 @@ if($modx_version == MODX_V1)
 	unset($tmp_arr);
 }
 
-$target = get_tag($modx_data, 'target-version', false);
+$target = trim_cdata(get_tag($modx_data, 'target-version', false));
 if($modx_version == MODX_V1)
 {
 	// The old style phpBB target version
@@ -83,6 +83,7 @@ foreach($tmp_arr as $value)
 	$author[$field_id]['realname'] = get_tag($value, 'realname', false);
 	$author[$field_id]['homepage'] = get_tag($value, 'homepage', false);
 	$author[$field_id]['email'] = get_tag($value, 'email', false);
+	trim_cdata($author[$field_id]);
 	$arr2 = get_empty_tag($value, 'contributions');
 	$ccnt = 0;
 	foreach($arr2 as $cval)
@@ -106,6 +107,7 @@ foreach($tmp_arr as $value)
 	$links[$field_id]['href'] = get_attribute($value, 'href');
 	$links[$field_id]['lang'] = get_attribute($value, 'lang');
 	$links[$field_id]['title'] = get_tag($value, 'link', false);
+	trim_cdata($links[$field_id]);
 }
 unset($tmp_arr);
 
@@ -136,7 +138,7 @@ foreach($tmp_arr as $value)
 		foreach($arr3 as $cval2)
 		{
 			$history[$field_id]['change'][$ccnt]['lang'] = $cval_lang;
-			$history[$field_id]['change'][$ccnt]['data'] = $cval2;
+			$history[$field_id]['change'][$ccnt]['data'] = trim_cdata($cval2);
 			$ccnt++;
 		}
 	}

@@ -25,7 +25,7 @@ if(!defined('IN_MODX'))
 * @param string $text
 * @param array $attributes
 */
-function write_element($name, $text, $attributes = false)
+function write_element($name, $text, $attributes = false, $cdata = true)
 {
 	global $xml;
 
@@ -34,6 +34,12 @@ function write_element($name, $text, $attributes = false)
 		// nothing to write
 		return;
 	}
+
+	if(!version_compare(PHP_VERSION, '6.0.0-dev', '>=') && get_magic_quotes_gpc())
+	{
+		$text = stripslashes($text);
+	}
+
 	$xml->startElement($name);
 	if($attributes != false)
 	{
@@ -47,7 +53,7 @@ function write_element($name, $text, $attributes = false)
 	}
 	if($text != '')
 	{
-		if (preg_match('#(<|&)#s', $text))
+		if($cdata)
 		{
 			$xml->writeCdata($text);
 		}
@@ -154,8 +160,10 @@ function get_attribute($data, $attribute, $len = 0)
 	if(isset($out_arr[1]))
 	{
 		$out_arr[1] = (strlen($out_arr[1]) > $len && $len > 0) ? substr($out_arr[1], 0, $len) : $out_arr[1];
+		trim_cdata($out_arr[1]);
 		return($out_arr[1]);
 	}
+	return('');
 }
 
 /**
@@ -169,6 +177,7 @@ function get_tagdata($data, $tag)
 {
 	preg_match('/>(.*?)<\/' . $tag . '>/s', $data, $out_arr);
 	$return = (isset($out_arr[1])) ? $out_arr[1] : '';
+	trim_cdata($return);
 	return($return);
 }
 
@@ -199,11 +208,10 @@ function get_single_arr($data, $tag, $data_name, $attribute = '')
 		{
 			$out_arr[$field_id][$attribute] = get_attribute($value, $attribute);
 		}
-
 		// Then the data
 		$out_arr[$field_id][$data_name] = get_tagdata($value, $tag);
 	}
-
+	trim_cdata($out_arr);
 	return($out_arr);
 }
 
@@ -219,14 +227,25 @@ function trim_cdata(&$data)
 	if($data == '' || $data == '<![CDATA[]]>')
 	{
 		$data = '';
+		return($data);
 	}
 	else
 	{
-		preg_match('/<\!\[CDATA\[(.*?)\]\]>/s', $data, $out_arr);
-		// $out_arr[1] Will be empty if there is no CDATA
-		$data = (empty($out_arr[1])) ? $data : $out_arr[1];
+		if(is_array($data))
+		{
+			foreach($data as $key => $value)
+			{
+				trim_cdata($data[$key]);
+			}
+		}
+		else
+		{
+			preg_match('/<\!\[CDATA\[(.*?)\]\]>/s', $data, $out_arr);
+			// $out_arr[1] Will be empty if there is no CDATA
+			$data = (empty($out_arr[1])) ? $data : $out_arr[1];
+			return($data);
+		}
 	}
-	return($data);
 }
 
 /**
@@ -312,7 +331,7 @@ function get_mod_type($str, $extension)
 	if($extension == 'xml')
 	{
 		// It's trying to be a MODX file, so we'll check for <?xml in the file
-		if(substr($str, 0, 5) == '<?xml')
+		if(strpos($str, '<?xml') !== false)
 		{
 			return(MODX);
 		}
@@ -476,6 +495,8 @@ function lang_select($lang = 'en')
 	);
 
 	// What language are we gonna use
+	$lang = trim($lang);
+	$lang = (in_array($lang, $target_lang)) ? $lang : 'en';
 	$language_options = '';
 	foreach($target_lang as $key => $value)
 	{

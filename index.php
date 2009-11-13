@@ -28,7 +28,7 @@ if($submit_file && !$submit)
 	{
 		// Lets start with the extension...
 		$extension = strtolower(array_pop(explode('.', $_FILES['upload-file']['name'])));
-		$str = file_get_contents($_FILES['upload-file']['tmp_name'], 0, NULL, 0, 100);
+		$str = file_get_contents($_FILES['upload-file']['tmp_name'], 0, NULL, 0, 20);
 
 		// We'll need to know what kind of file it is
 		$submit_file = get_mod_type($str, $extension);
@@ -66,7 +66,6 @@ if(!$submit_file && $submit)
 	$install_level= (isset($_POST['install_level'])) ? stripslashes(trim($_POST['install_level'])) : '';
 	$install_time = (isset($_POST['install_time'])) ? intval(trim($_POST['install_time'])) : 0;
 	$license = (isset($_POST['license'])) ? stripslashes(trim($_POST['license'])) : '';
-	$reverse_history = (isset($_POST['reverse_history'])) ? true : false;
 
 	// Arrays
 	$title = (isset($_POST['title'])) ? modx_stripslashes($_POST['title']) : false;
@@ -84,7 +83,8 @@ if(!$submit_file && $submit)
 	$sql = (isset($_POST['sql'])) ? modx_stripslashes($_POST['sql']) : false;
 }
 
-$license = ($license == '') ? 'http://opensource.org/licenses/gpl-license.php GNU General Public License v2' : $license;
+$reverse_history = (isset($_POST['reverse_history'])) ? true : false;
+$license = (empty($license)) ? 'http://opensource.org/licenses/gpl-license.php GNU General Public License v2' : $license;
 
 // Check the vars that are not cheched later.
 if($submit)
@@ -126,7 +126,7 @@ if($submit)
 $history_fields = $link_fields = $author_fields = $sql_fields = $title_fields = $desc_fields = $notes_fields = $diy_fields = $copy_fields = '';
 
 // MOD title
-if($title)
+if(!empty($title))
 {
 	$cnt = 0;
 	foreach($title as $value)
@@ -153,7 +153,7 @@ if(empty($title_fields))
 }
 
 // MOD description
-if($desc)
+if(!empty($desc))
 {
 	$cnt = 0;
 	foreach($desc as $value)
@@ -186,7 +186,7 @@ if(empty($desc_fields))
 }
 
 // Author notes
-if($notes)
+if(!empty($notes))
 {
 	$cnt = 0;
 	foreach($notes as $value)
@@ -232,7 +232,7 @@ if(!empty($author))
 		$author_fields .= '<dd class="author-rows"><input type="text" name="author[' . $field_id . '][homepage]" id="author-' . $field_id . '-homepage" size="40" maxlength="255" value="' . ((isset($value['homepage'])) ? gen_value($value['homepage']) : '') . '" /></dd></dl>';
 		$author_fields .= '<dl><dt class="author-rows"><label for="author-' . $field_id . '-email">E-mail:</label></dt>';
 		$author_fields .= '<dd class="author-rows"><input type="text" name="author[' . $field_id . '][email]" id="author-' . $field_id . '-email" size="40" maxlength="255" value="' . ((isset($value['email'])) ? gen_value($value['email']) : '') . '" /></dd></dl><fieldset id="' . $field_id . '" style="border: none;">';
-		if(sizeof($contributor[$key]))
+		if(!empty($contributor) && sizeof($contributor[$key]))
 		{
 			$ccnt = 0;
 			foreach($contributor[$key] as $cval)
@@ -305,7 +305,7 @@ if(!empty($links))
 
 // History
 $cnt = 0;
-if($history)
+if(!empty($history))
 {
 	if($reverse_history)
 	{
@@ -368,7 +368,7 @@ unset($temp_fields, $temp_data, $version_warnig, $date_warnig);
 
 // SQL querys
 $cnt = 0;
-if($sql)
+if(!empty($sql))
 {
 	foreach($sql as $value)
 	{
@@ -403,7 +403,7 @@ if($sql)
 // File copy
 $is_copy = false;
 $cnt = 0;
-if($copy)
+if(!empty($copy))
 {
 	foreach($copy as $value)
 	{
@@ -428,7 +428,7 @@ if($copy)
 $copy_fields = ($is_copy) ? $copy_fields : '';
 
 // DIY fields
-if($diy)
+if(!empty($diy))
 {
 	$cnt = 0;
 	foreach($diy as $value)
@@ -439,8 +439,8 @@ if($diy)
 			$diy_fields .= '<dd id="' . $field_id . '"><textarea name="diy[' . $field_id . '][diy]" id="diy_' . $field_id . '_diy" rows="' . count_rows($value['diy'], 88) . '">';
 			$diy_fields .= gen_value($value['diy'], true);
 			$diy_fields .= '</textarea><span><select name="diy[' . $field_id . '][lang]">' . lang_select($value['lang']) . '</select></span><img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'' . $field_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />';
-			$diy_fields .= '<img id="' . $dd_id . '-plus" class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.diy_' . $field_id . '_diy.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" />';
-			$diy_fields .= '<img id="' . $dd_id . '-minus" class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.diy_' . $field_id . '_diy.rows>7){document.mainform.diy_' . $field_id . '_diy.rows-=4}else{document.mainform.diy_' . $field_id . '_diy.rows-=(document.mainform.diy_' . $field_id . '_diy.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" />';
+			$diy_fields .= '<img id="' . $field_id . '-plus" class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.diy_' . $field_id . '_diy.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" />';
+			$diy_fields .= '<img id="' . $field_id . '-minus" class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.diy_' . $field_id . '_diy.rows>7){document.mainform.diy_' . $field_id . '_diy.rows-=4}else{document.mainform.diy_' . $field_id . '_diy.rows-=(document.mainform.diy_' . $field_id . '_diy.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" />';
 			$diy_fields .= '</dd>';
 		}
 	}
@@ -453,7 +453,7 @@ if(empty($diy_fields))
 
 // The Action fields...
 $modx_fields = '';
-if($modx)
+if(!empty($modx))
 {
 	$filenames = $directories = $files = array();
 	foreach($modx as $key => $value)
