@@ -63,7 +63,7 @@ if(!$submit_file && $submit)
 {
 	$version = (isset($_POST['version'])) ? stripslashes(trim($_POST['version'])) : '';
 	$target = (isset($_POST['target'])) ? stripslashes(trim($_POST['target'])) : '';
-	$install_level= (isset($_POST['install_level'])) ? stripslashes(trim($_POST['install_level'])) : '';
+	$install_level = (isset($_POST['install_level'])) ? stripslashes(trim($_POST['install_level'])) : '';
 	$install_time = (isset($_POST['install_time'])) ? intval(trim($_POST['install_time'])) : 0;
 	$license = (isset($_POST['license'])) ? stripslashes(trim($_POST['license'])) : '';
 
@@ -83,6 +83,8 @@ if(!$submit_file && $submit)
 	$sql = (isset($_POST['sql'])) ? modx_stripslashes($_POST['sql']) : false;
 }
 
+$install_level = (empty($install_level)) ? 'easy' : $install_level;
+$install_time = (empty($install_time)) ? 0 : $install_time;
 $reverse_history = (isset($_POST['reverse_history'])) ? true : false;
 $license = (empty($license)) ? 'http://opensource.org/licenses/gpl-license.php GNU General Public License v2' : $license;
 
