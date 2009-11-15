@@ -495,7 +495,7 @@ if(!empty($modx))
 					foreach($value2 as $key3 => $value3)
 					{
 						// Array 3, dl's The string fields
-						if($value3['type'] != '')
+						if($value3['type'] != '' && !empty($value3['data']))
 						{
 							$dl_id = 'dl_pre_' . $dl_cnt++;
 							$dt_id = 'dt_pre_' . $dt_cnt++;
