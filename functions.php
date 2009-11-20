@@ -496,7 +496,7 @@ function lang_select($lang = 'en')
 
 	// What language are we gonna use
 	$lang = trim($lang);
-	$lang = (in_array($lang, $target_lang)) ? $lang : 'en';
+	$lang = (isset($lang[$target_lang])) ? $lang : 'en';
 	$language_options = '';
 	foreach($target_lang as $key => $value)
 	{
