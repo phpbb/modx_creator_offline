@@ -80,6 +80,7 @@ foreach($tmp_arr as $value)
 {
 	$field_id = 'af_in' . $cnt++;
 	$author[$field_id]['username'] = get_tag($value, 'username', false);
+	$author[$field_id]['phpbbcom'] = get_attribute($value, 'phpbbcom');
 	$author[$field_id]['realname'] = get_tag($value, 'realname', false);
 	$author[$field_id]['homepage'] = get_tag($value, 'homepage', false);
 	$author[$field_id]['email'] = get_tag($value, 'email', false);
