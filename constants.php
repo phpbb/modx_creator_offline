@@ -16,7 +16,7 @@ if(!defined('IN_MODX'))
 	exit;
 }
 
-define('PHPBB_LATEST', '3.0.5');
+define('PHPBB_LATEST', '3.0.6');
 define('MODX_LATEST', 'modx-1.2.3.xsd');
 
 define('MOD', 1);
