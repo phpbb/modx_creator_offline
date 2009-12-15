@@ -26,12 +26,10 @@ if(!defined('IN_MODX'))
 	<link rel="shortcut icon" href="favicon.ico" />
 	<link rel="stylesheet" href="creator.css" type="text/css" />
 	<title>MODX-creator</title>
-	<script type="text/javascript" src="js/prototype.js"></script>
-	<script type="text/javascript" src="js/scriptaculous.js"></script>
+	<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="modx_functions.js"></script>
 </head>
 <body>
-	<script type="text/javascript" src="js/wz_tooltip.js"></script>
 
 	<div id="wrap">
 		<div id="header">
@@ -224,8 +222,8 @@ if(!defined('IN_MODX'))
 				</fieldset>
 
 				<fieldset class="submit-buttons">
-					<input class="submit" type="submit" name="preview" value="View" />
-					<input class="submit" type="submit" name="dload" value="Download" />
+					<input class="submit" type="submit" name="preview" value="View" onclick="this.form.target='_blank';" />
+					<input class="submit" type="submit" name="dload" value="Download" onclick="this.form.target='_self';" />
 				</fieldset>
 			</form>
 		</div>
