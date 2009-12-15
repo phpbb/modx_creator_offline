@@ -17,6 +17,8 @@ $preview = (isset($_POST['preview'])) ? true : false;
 $dload = (isset($_POST['dload'])) ? true : false;
 $submit_file = (isset($_POST['submit-file']) && $_FILES['upload-file']['size']) ? true : false;
 
+$strip = (get_magic_quotes_gpc()) ? true : false;
+
 $submit = ($preview || $dload) ? true : false;
 
 $modx_data = '';

@@ -293,6 +293,7 @@ function modx_version($xmlns)
 */
 function modx_stripslashes(&$array)
 {
+	global $strip;
 	if(!is_array($array))
 	{
 		$array = str_replace(chr(13), '', $array);
@@ -308,7 +309,7 @@ function modx_stripslashes(&$array)
 		else
 		{
 			$value = str_replace(chr(13), '', $value);
-			if(defined('STRIP') && STRIP)
+			if($strip)
 			{
 				$array[$key] = stripslashes($value);
 			}
