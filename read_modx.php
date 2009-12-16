@@ -215,14 +215,23 @@ foreach($modx_data as $value)
 
 		// Then actions...
 		$arr2 = get_tag($cval, 'action', true, true);
-		if(!empty($arr2))
+		if(isset($arr2))
 		{
-			foreach($arr2 as $cval2)
+			if(!empty($arr2))
 			{
-				// modx[' . $file_id . '][' . $edit_id . '][' . $dl_id . ']
+				foreach($arr2 as $cval2)
+				{
+					// modx[' . $file_id . '][' . $edit_id . '][' . $dl_id . ']
+					$dd_id = $dl_id;
+					$modx[$file_id][$edit_id][$dl_id]['type'] = get_attribute($cval2, 'type');
+					$modx[$file_id][$edit_id][$dl_id++]['data'] = trim_cdata(get_tag($cval2, 'action', false));
+				}
+			}
+			else if(get_attribute($cval, 'type') == 'replace-with' && strpos($cval, 'inline-action') === false)
+			{
 				$dd_id = $dl_id;
-				$modx[$file_id][$edit_id][$dl_id]['type'] = get_attribute($cval2, 'type');
-				$modx[$file_id][$edit_id][$dl_id++]['data'] = trim_cdata(get_tag($cval2, 'action', false));
+				$modx[$file_id][$edit_id][$dl_id]['type'] = 'replace-with';
+				$modx[$file_id][$edit_id][$dl_id++]['data'] = '';
 			}
 		}
 		unset($arr2, $arr3);
@@ -247,15 +256,24 @@ foreach($modx_data as $value)
 				unset($arr3);
 
 				$arr3 = get_tag($cval2, 'inline-action', true, true);
-				if(!empty($arr3))
+				if(isset($arr3))
 				{
-					foreach($arr3 as $cval3)
+					if(!empty($arr3))
 					{
-						// modx[' . $file_id . '][' . $edit_id . '][' . $dl_id . ']
-						$dd_id = $dl_id;
-						$modx[$file_id][$edit_id][$dl_id]['type'] = get_attribute($cval3, 'type');
-						$modx[$file_id][$edit_id][$dl_id]['type'] = 'inline-' . $modx[$file_id][$edit_id][$dl_id]['type'];
-						$modx[$file_id][$edit_id][$dl_id++]['data'] = trim_cdata(get_tag($cval3, 'inline-action', false));
+						foreach($arr3 as $cval3)
+						{
+							// modx[' . $file_id . '][' . $edit_id . '][' . $dl_id . ']
+							$dd_id = $dl_id;
+							$modx[$file_id][$edit_id][$dl_id]['type'] = get_attribute($cval3, 'type');
+							$modx[$file_id][$edit_id][$dl_id]['type'] = 'inline-' . $modx[$file_id][$edit_id][$dl_id]['type'];
+							$modx[$file_id][$edit_id][$dl_id++]['data'] = trim_cdata(get_tag($cval3, 'inline-action', false));
+						}
+					}
+					else if (get_attribute($cval2, 'type') == 'replace-with')
+					{
+							$dd_id = $dl_id;
+							$modx[$file_id][$edit_id][$dl_id]['type'] = 'inline-replace-with';
+							$modx[$file_id][$edit_id][$dl_id++]['data'] = '';
 					}
 				}
 				unset($arr3);

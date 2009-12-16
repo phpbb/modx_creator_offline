@@ -48,7 +48,7 @@ if(!defined('IN_MODX'))
 							<dd>
 								<input type="hidden" name="MAX_FILE_SIZE" value="307200" />
 								<input type="file" name="upload-file" id="upload-file" accept="text/xml,text/plain" size="70" />
-								<input type="submit" name="submit-file" value="Submit file" />
+								<input type="submit" name="submit-file" value="Submit file" onclick="this.form.target='_self';" />
 							</dd>
 						</dl>
 					</fieldset>
