@@ -243,7 +243,7 @@ if($modx)
 				{
 					// <edit>
 					$xml->startElement('edit');
-					$inline = $inline_action = false;
+					$inline = $inline_action = $action = false;
 
 					foreach($value2 as $key3 => $value3)
 					{
@@ -279,38 +279,98 @@ if($modx)
 							{
 								case 'inline-find':
 									write_element('inline-find', $value3['data']);
+									$action = true;
 								break;
 
 								case 'inline-after-add':
 									write_element('inline-action', $value3['data'], array('type' => 'after-add'));
 									$inline_action = true;
+									$action = true;
 								break;
 
 								case 'inline-before-add':
 									write_element('inline-action', $value3['data'], array('type' => 'before-add'));
 									$inline_action = true;
+									$action = true;
 								break;
 
 								case 'inline-replace-with':
 									write_element('inline-action', $value3['data'], array('type' => 'replace-with'));
 									$inline_action = true;
+									$action = true;
 								break;
 
 								case 'inline-operation':
 									write_element('inline-action', $value3['data'], array('type' => 'operation'));
 									$inline_action = true;
+									$action = true;
 								break;
 
 								case 'find':
+									if ($action)
+									{
+										// There has been a action or inline-* since the edit was opened.
+										// Each find should typically start a new edit.
+										// Let's assume the user doesn't know what (s)he is doing and start a new edit.
+										if ($inline)
+										{
+											// </inline-edit>
+											$xml->endElement();
+											$inline = $inline_action = false;
+										}
+										// </edit>
+										$xml->endElement();
+										$action = false;
+										// <edit>
+										$xml->startElement('edit');
+									}
 									write_element('find', $value3['data']);
 								break;
 
 								case 'comment':
+									if ($action)
+									{
+										$stop = false;
+										// If this comment is followed by a find it should start a new edit.
+										$i = $key + 1;
+										if(isset($value2[$i]))
+										{
+											if ($value2[$i]['type'] == 'find')
+											{
+												$stop = true;
+											}
+											else if ($value2[$key3 + 1]['type'] == 'comment')
+											{
+												// We need to check the next element that is not a comment.
+												while (isset($value2[$i]) && $value2[$i]['type'] == 'comment')
+												{
+													$i++;
+												}
+												$stop = ($value2[$i]['type'] == 'find') ? true : false;
+											}
+										}
+									}
+
+									if($stop)
+									{
+										if ($inline)
+										{
+											// </inline-edit>
+											$xml->endElement();
+											$inline = $inline_action = false;
+										}
+										// </edit>
+										$xml->endElement();
+										$action = false;
+										// <edit>
+										$xml->startElement('edit');
+									}
 									write_element('comment', $value3['data'], array('lang' => ((isset($value3['lang'])) ? $value3['lang'] : 'en')));
 								break;
 
 								default:
 									write_element('action', $value3['data'], array('type' => $value3['type']));
+									$action = true;
 								break;
 							}
 						}
