@@ -510,17 +510,8 @@ if(!empty($modx))
 							{
 								$textarea = false;
 								// Inline stuff can only be one-liners
-								// On some systems \r comes before \n and I bet some systems only uses \r
-								$data = str_replace("\r", "\n", $value3['data']);
-								if ($pos = strpos($value3['data'], "\n") !== false )
-								{
-									$data = substr($value3['data'], 0, $pos);
-								}
-								else
-								{
-									$data = $value3['data'];
-								}
-								$modx_input = '<span id="' . $dd_id . '_field"><textarea id="' . $dd_id . '_data" name="modx[' . $file_id . '][' . $edit_id . '][' . $dl_id . '][data]" rows="0" onKeypress="if((event.keyCode == 10) || (event.keyCode == 13)){return false;}">' . gen_value($data) . '</textarea></span>';
+								sanitize_inlines($value3['data']);
+								$modx_input = '<span id="' . $dd_id . '_field"><textarea id="' . $dd_id . '_data" name="modx[' . $file_id . '][' . $edit_id . '][' . $dl_id . '][data]" rows="0" onKeypress="if((event.keyCode == 10) || (event.keyCode == 13)){return false;}">' . gen_value($value3['data']) . '</textarea></span>';
 								$modx_img = '<img id="' . $dd_id . '_info" class="action-arrows" src="./images/info_8.png" alt="" title="Note that the inline tags may not contain line breaks">';
 							}
 							else if($value3['type'] != 'comment')

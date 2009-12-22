@@ -249,6 +249,22 @@ function trim_cdata(&$data)
 }
 
 /**
+ * sanitize_inlines()
+ *
+ * Remove newlines from inline edits and finds.
+ * @param $data, the inline string to sanitize.
+ */
+function sanitize_inlines(&$data)
+{
+	// On some systems \r comes before \n and I bet some systems only uses \r
+	$data = str_replace("\r", "\n", $data);
+	if ($pos = strpos($data, "\n") !== false )
+	{
+		$data = substr($data, 0, $pos);
+	}
+}
+
+/**
 * generate_value()
 *
 * runs $data trought htmlspecialchars(). It's in a function to save code

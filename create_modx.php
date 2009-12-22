@@ -274,6 +274,13 @@ if($modx)
 								$inline = false;
 								$inline_action = false;
 							}
+
+							if(strpos($value3['type'], 'inline') !== FALSE)
+							{
+								// Remove newlines from inlines.
+								sanitize_inlines($value3['data']);
+							}
+
 							// Now lets make the real changes...
 							switch($value3['type'])
 							{
