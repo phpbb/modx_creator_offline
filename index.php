@@ -512,7 +512,6 @@ if(!empty($modx))
 								// Inline stuff can only be one-liners
 								// On some systems \r comes before \n and I bet some systems only uses \r
 								$data = str_replace("\r", "\n", $value3['data']);
-								$pos2 = strpos($value3['data'], "\r");
 								if ($pos = strpos($value3['data'], "\n") !== false )
 								{
 									$data = substr($value3['data'], 0, $pos);
