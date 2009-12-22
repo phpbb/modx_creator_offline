@@ -141,7 +141,7 @@ if(!empty($title))
 			$field_id = 'title_pre_' . $cnt++;
 			$title_fields .= '<dd id="' . $field_id . '"><input type="text" name="title[' . $field_id . '][title]"' . (($cnt == 1) ? ' id="title"' : '') . ' size="53" maxlength="255" value="' . $value2 . '" />';
 			$title_fields .= '<select name="title[' . $field_id . '][lang]">' . lang_select($value['lang']) . '</select>';
-			$title_fields .= ($cnt > 1) ? '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />' : '';
+			$title_fields .= ($cnt > 1) ? '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" title="Delete" />' : '';
 			$title_fields .= '</dd>';
 		}
 	}
@@ -169,9 +169,9 @@ if(!empty($desc))
 			$desc_fields .= '<dd id="' . $field_id . '"><textarea name="desc[' . $field_id . '][desc]" id="desc_' . $field_id . '_desc" rows="' . count_rows($value2, 73) . '">';
 			$desc_fields .= $value2;
 			$desc_fields .= '</textarea><span><select name="desc[' . $field_id . '][lang]">' . lang_select($value['lang']) . '</select></span>';
-			$desc_fields .= ($cnt > 1) ? '<img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />' : '';
-			$desc_fields .= '<img class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.desc_' . $field_id . '_desc.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" />';
-			$desc_fields .= '<img class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.desc_' . $field_id . '_desc.rows>7){document.mainform.desc_' . $field_id . '_desc.rows-=4}else{document.mainform.desc_' . $field_id . '_desc.rows-=(document.mainform.desc_' . $field_id . '_desc.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" />';
+			$desc_fields .= ($cnt > 1) ? '<img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" title="Delete" />' : '';
+			$desc_fields .= '<img class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.desc_' . $field_id . '_desc.rows+=4" title="Add 4 rows" />';
+			$desc_fields .= '<img class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.desc_' . $field_id . '_desc.rows>7){document.mainform.desc_' . $field_id . '_desc.rows-=4}else{document.mainform.desc_' . $field_id . '_desc.rows-=(document.mainform.desc_' . $field_id . '_desc.rows-4)};" title="Remove 4 rows" />';
 			$desc_fields .= '</dd>';
 		}
 	}
@@ -184,8 +184,8 @@ if(empty($desc_fields))
 		$error['desc'] = 'desc';
 	}
 	$desc_fields = '<dd><textarea name="desc[desc_pre][desc]" id="desc" cols="45" rows="5"></textarea><span><select name="desc[desc_pre][lang]">' . lang_select() . '</select></span>';
-	$desc_fields .= '<img class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.desc.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" />';
-	$desc_fields .= '<img class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.desc.rows>7){document.mainform.desc.rows-=4}else{document.mainform.desc.rows-=(document.mainform.desc.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" />';
+	$desc_fields .= '<img class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.desc.rows+=4" title="Add 4 rows" />';
+	$desc_fields .= '<img class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.desc.rows>7){document.mainform.desc.rows-=4}else{document.mainform.desc.rows-=(document.mainform.desc.rows-4)};" title="Remove 4 rows" />';
 	$desc_fields .= '</dd>';
 }
 
@@ -202,9 +202,9 @@ if(!empty($notes))
 			$notes_fields .= '<dd id="' . $field_id . '"><textarea name="notes[' . $field_id . '][note]" id="notes_' . $field_id . '_note" rows="' . count_rows($value2, 73) . '">';
 			$notes_fields .= $value2;
 			$notes_fields .= '</textarea><span><select name="notes[' . $field_id . '][lang]">' . lang_select($value['lang']) . '</select></span>';
-			$notes_fields .= '<img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />';
-			$notes_fields .= '<img class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.notes_' . $field_id . '_note.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" />';
-			$notes_fields .= '<img class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.notes_' . $field_id . '_note.rows>7){document.mainform.notes_' . $field_id . '_note.rows-=4}else{document.mainform.notes_' . $field_id . '_note.rows-=(document.mainform.notes_' . $field_id . '_note.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" />';
+			$notes_fields .= '<img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" title="Delete" />';
+			$notes_fields .= '<img class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.notes_' . $field_id . '_note.rows+=4" title="Add 4 rows" />';
+			$notes_fields .= '<img class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.notes_' . $field_id . '_note.rows>7){document.mainform.notes_' . $field_id . '_note.rows-=4}else{document.mainform.notes_' . $field_id . '_note.rows-=(document.mainform.notes_' . $field_id . '_note.rows-4)};" title="Remove 4 rows" />';
 			$notes_fields .= '</dd>';
 		}
 	}
@@ -213,9 +213,9 @@ if(!empty($notes))
 if(empty($notes_fields))
 {
 	$notes_fields = '<dd id="notes_pre"><textarea name="notes[desc_pre][note]" id="notes_desc_pre_note" cols="40" rows="5"></textarea><span><select name="notes[desc_pre][lang]">' . lang_select() . '</select></span>';
-	$notes_fields .= '<img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#notes_pre\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />';
-	$notes_fields .= '<img class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.notes_desc_pre_note.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" />';
-	$notes_fields .= '<img class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.notes_desc_pre_note.rows>7){document.mainform.notes_desc_pre_note.rows-=4}else{document.mainform.notes_desc_pre_note.rows-=(document.mainform.notes_desc_pre_note.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" />';
+	$notes_fields .= '<img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#notes_pre\').remove()" title="Delete" />';
+	$notes_fields .= '<img class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.notes_desc_pre_note.rows+=4" title="Add 4 rows" />';
+	$notes_fields .= '<img class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.notes_desc_pre_note.rows>7){document.mainform.notes_desc_pre_note.rows-=4}else{document.mainform.notes_desc_pre_note.rows-=(document.mainform.notes_desc_pre_note.rows-4)};" title="Remove 4 rows" />';
 	$notes_fields .= '</dd>';
 }
 
@@ -227,7 +227,7 @@ if(!empty($author))
 	{
 		$field_id = 'af_pre_' . $cnt++;
 		$author_fields .= '<fieldset class="white" id="' . $field_id . '_a"><dl><dt class="author-rows"><label for="author-' . $field_id . '-username">Username:*</label></dt>';
-		$author_fields .= '<dd class="author-rows"><input type="text" name="author[' . $field_id . '][username]" id="author-' . $field_id . '-username" size="40" maxlength="255" value="' . gen_value($value['username']) . '" />' . (($cnt > 1) ? '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '_a\').remove()" onmouseover="Tip(\'Delete this author\')" onmouseout="UnTip()" />' : '') . '</dd></dl>';
+		$author_fields .= '<dd class="author-rows"><input type="text" name="author[' . $field_id . '][username]" id="author-' . $field_id . '-username" size="40" maxlength="255" value="' . gen_value($value['username']) . '" />' . (($cnt > 1) ? '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '_a\').remove()" title="Delete this author" />' : '') . '</dd></dl>';
 		$author_fields .= '<dl><dt class="author-rows"><label for="author-' . $field_id . '-phpbbcom">Not phpBB.com:</label></dt>';
 		$author_fields .= '<dd class="author-rows"><label><input type="checkbox" name="author[' . $field_id . '][phpbbcom]" id="author-' . $field_id . '-phpbbcom"' . ((!empty($value['phpbbcom'])) ? ' checked="checked"' : '') . ' /><span style="font-size: 12px;">(Check here if this author is not registered at phpbb.com.)</span></label></dd></dl>';
 		$author_fields .= '<dl><dt class="author-rows"><label for="author-' . $field_id . '-realname">Real name:</label></dt>';
@@ -247,7 +247,7 @@ if(!empty($author))
 					$author_fields .= '<fieldset class="noborder" id="' . $temp_id . '"><dl><dt class="author-rows"><label for="contributor-' . $field_id . '-' . $temp_id . '-status">Status:</label></dt><dd class="author-rows"><select name="contributor[' . $field_id . '][' . $temp_id . '][status]" id="contributor-' . $field_id . '-' . $temp_id . '-status">';
 					$author_fields .= '<option value="past"' . (($cval['status'] == 'past') ? ' selected="selected"' : '') . '>Past</option>';
 					$author_fields .= '<option value="current"' . (($cval['status'] == 'current') ? ' selected="selected"' : '') . '>Current</option>';
-					$author_fields .= '</select><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $temp_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" /></dd></dl><dl><dt class="author-rows"><label for="contributor-' . $field_id . '-' . $temp_id . '-position">Position:</label></dt><dd class="author-rows">';
+					$author_fields .= '</select><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $temp_id . '\').remove()" title="Delete" /></dd></dl><dl><dt class="author-rows"><label for="contributor-' . $field_id . '-' . $temp_id . '-position">Position:</label></dt><dd class="author-rows">';
 					$author_fields .= '<input type="text" name="contributor[' . $field_id . '][' . $temp_id . '][position]" id="contributor-' . $field_id . '-' . $temp_id . '-position" size="40" maxlength="255" value="' . ((isset($cval['position'])) ? gen_value($cval['position']) : '') . '" />';
 					$author_fields .= '</dd></dl><dl><dt class="author-rows"><label for="contributor-' . $field_id . '-' . $temp_id . '-from">From date:</label></dt><dd class="author-rows">';
 					$author_fields .= '<input type="text" name="contributor[' . $field_id . '][' . $temp_id . '][from]" id="contributor-' . $field_id . '-' . $temp_id . '-from" size="40" maxlength="255" value="' . ((isset($cval['from'])) ? gen_value($cval['from']) : '') . '" />';
@@ -257,7 +257,7 @@ if(!empty($author))
 				}
 			}
 		}
-		$author_fields .= '</fieldset><input type="button" value="Add contribution" onclick="add_contributor(\'' . $field_id . '\');" />' . (($cnt == 1) ? '<img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip(\'The contributor fields are optional and every author can have several contributor fields.<br />If you choose to add contributor fields, the only field required is the status. The other are optional.\')" onmouseout="UnTip()" />' : '');
+		$author_fields .= '</fieldset><input type="button" value="Add contribution" onclick="add_contributor(\'' . $field_id . '\');" />' . (($cnt == 1) ? '<img class="sign" src="./images/info.png" alt="Info icon" title="The contributor fields are optional and every author can have several contributor fields.<br />If you choose to add contributor fields, the only field required is the status. The other are optional." />' : '');
 		$author_fields .= '</fieldset>' . "\n";
 	}
 }
@@ -278,7 +278,7 @@ if(empty($author_fields))
 	$author_fields .= '<dd class="author-rows"><input type="text" name="author[af_pre][homepage]" id="author-af_pre-homepage" size="40" maxlength="255" value="" /></dd></dl>';
 	$author_fields .= '<dl><dt class="author-rows"><label for="author-af_pre-email">E-mail:</label></dt>';
 	$author_fields .= '<dd class="author-rows"><input type="text" name="author[af_pre][email]" id="author-af_pre-email" size="40" maxlength="255" value="" /></dd></dl><fieldset id="af_pre" style="border: none;"></fieldset>';
-	$author_fields .= '<input type="button" value="Add contribution" onclick="add_contributor(\'af_pre\');" /><img class="sign" src="./images/info.png" alt="Info icon" onmouseover="Tip(\'The contributor fields are optional and every author can have several contributor fields.<br />If you choose to add contributor fields, the only field required is the status. The other are optional.\')" onmouseout="UnTip()" /></fieldset>' . "\n";
+	$author_fields .= '<input type="button" value="Add contribution" onclick="add_contributor(\'af_pre\');" /><img class="sign" src="./images/info.png" alt="Info icon" title="The contributor fields are optional and every author can have several contributor fields.<br />If you choose to add contributor fields, the only field required is the status. The other are optional." /></fieldset>' . "\n";
 }
 
 // Links
@@ -297,7 +297,7 @@ if(!empty($links))
 			$link_fields .= '<option value="parent"' . (($value['type'] == 'parent') ? ' selected="selected"' : '') . '>Parent</option>';
 			$link_fields .= '<option value="template-lang"' . (($value['type'] == 'template-lang') ? ' selected="selected"' : '') . '>Template lang</option>';
 			$link_fields .= '<option value="template"' . (($value['type'] == 'template') ? ' selected="selected"' : '') . '>Template</option>';
-			$link_fields .= '</select><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" onmouseover="Tip(\'Delete this entry\')" onmouseout="UnTip()" /></dd></dl><dl><dt class="link-rows"><label for="links-' . $field_id . '-title">Link title:*</label></dt><dd class="link-rows">';
+			$link_fields .= '</select><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" title="Delete this entry" /></dd></dl><dl><dt class="link-rows"><label for="links-' . $field_id . '-title">Link title:*</label></dt><dd class="link-rows">';
 			$link_fields .= '<input name="links[' . $field_id . '][title]" id="links-' . $field_id . '-title" size="80" maxlength="255" value="' . gen_value($value['title'], true) . '" type="text" />';
 			$link_fields .= '<select name="links[' . $field_id . '][lang]">' . lang_select($value['lang']) . '</select></span>';
 			$link_fields .= '</dd></dl><dl><dt class="link-rows"><label for="links-' . $field_id . '-href">URL:*</label></dt><dd class="link-rows">';
@@ -334,7 +334,7 @@ if(!empty($history))
 			}
 			$field_id = 'hf_pre_' . $cnt++;
 			$temp_fields .= '<fieldset  class="white" id="d' . $field_id . '"><dl' . $version_warnig . '><dt class="history-rows"><label for="history-' . $field_id . '-version">Version:*</label></dt>';
-			$temp_fields .= '<dd class="history-rows"><input name="history[' . $field_id . '][version]" id="history-' . $field_id . '-version" size="10" maxlength="255" value="' . gen_value($value['version']) . '" type="text" /><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#d' . $field_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" /></dd></dl>';
+			$temp_fields .= '<dd class="history-rows"><input name="history[' . $field_id . '][version]" id="history-' . $field_id . '-version" size="10" maxlength="255" value="' . gen_value($value['version']) . '" type="text" /><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#d' . $field_id . '\').remove()" title="Delete" /></dd></dl>';
 			$temp_fields .= '<dl' . $date_warnig . '><dt class="history-rows"><label for="history-' . $field_id . '-date">Date:*</label></dt>';
 			$temp_fields .= '<dd class="history-rows"><input name="history[' . $field_id . '][date]" id="history-' . $field_id . '-date" size="20" maxlength="255" value="' . gen_value($value['date']) . '" type="text" /></dd></dl>';
 			$temp_fields .= '<fieldset id="' . $field_id . '" style="border: none ;">';
@@ -348,7 +348,7 @@ if(!empty($history))
 					$temp_data .= '<dl id="' . $temp_id . '"><dt class="history-rows"><label for="history-' . $field_id . '-change-' . $temp_id . '-data">Change:' . (($ccnt == 1) ? '*' : '') . '</label></dt><dd class="history-rows">';
 					$temp_data .= '<input name="history[' . $field_id . '][change][' . $temp_id . '][data]" id="history-' . $field_id . '-change-' . $temp_id . '-data" size="80" maxlength="255" value="' . gen_value($cval['data'], true) . '" type="text" />';
 					$temp_data .= '<span><select name="history[' . $field_id . '][change][' . $temp_id . '][lang]">' . lang_select($cval['lang']) . '</select></span>';
-					$temp_data .= ($ccnt > 1) ? '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $temp_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />' : '';
+					$temp_data .= ($ccnt > 1) ? '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $temp_id . '\').remove()" title="Delete" />' : '';
 					$temp_data .= '</dd></dl>';
 				}
 			}
@@ -361,7 +361,7 @@ if(!empty($history))
 				$temp_data .= '<dl class="warning-dl" id="' . $temp_id . '"><dt><label for="history-' . $field_id . '-change-' . $temp_id . '-data">Change:' . (($ccnt == 1) ? '*' : '') . '</label></dt><dd>';
 				$temp_data .= '<input name="history[' . $field_id . '][change][' . $temp_id . '][data]" id="history-' . $field_id . '-change-' . $temp_id . '-data" size="40" maxlength="255" value="" type="text" />';
 				$temp_data .= '<span><select name="history[' . $field_id . '][change][' . $temp_id . '][lang]">' . lang_select() . '</select></span>';
-				$temp_data .= ($ccnt > 1) ? '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $temp_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />' : '';
+				$temp_data .= ($ccnt > 1) ? '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $temp_id . '\').remove()" title="Delete" />' : '';
 				$temp_data .= '</dd></dl>';
 			}
 			$history_fields .= $temp_fields . $temp_data . '</fieldset><input value="Add change" onclick="add_history_change(\'' . $field_id . '\');" type="button" /></fieldset>';
@@ -396,9 +396,9 @@ if(!empty($sql))
 			$sql_fields .= '<option value="sql-parser"' . (($dbms == 'sql-parser') ? ' selected="selected"' : '') . '>SQL Parser (default)</option>';
 			$sql_fields .= '</select></dd></dl><dl><dt class="sql-rows"><label for="sql-' . $field_id . '-query">Query:*</label></dt><dd class="sql-rows">';
 			$sql_fields .= '<textarea name="sql[' . $field_id . '][query]" id="sql_' . $field_id . '_query"  class="sql-rows" rows="' . count_rows($value['query'], 95) . '">' . gen_value($value['query']) . '</textarea>';
-			$sql_fields .= '<img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />';
-			$sql_fields .= '<img class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.sql_' . $field_id . '_query.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" />';
-			$sql_fields .= '<img class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.sql_' . $field_id . '_query.rows>7){document.mainform.sql_' . $field_id . '_query.rows-=4}else{document.mainform.sql_' . $field_id . '_query.rows-=(document.mainform.sql_' . $field_id . '_query.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" />';
+			$sql_fields .= '<img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" title="Delete" />';
+			$sql_fields .= '<img class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.sql_' . $field_id . '_query.rows+=4" title="Add 4 rows" />';
+			$sql_fields .= '<img class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.sql_' . $field_id . '_query.rows>7){document.mainform.sql_' . $field_id . '_query.rows-=4}else{document.mainform.sql_' . $field_id . '_query.rows-=(document.mainform.sql_' . $field_id . '_query.rows-4)};" title="Remove 4 rows" />';
 			$sql_fields .= '</dd></dl></fieldset>';
 		}
 	}
@@ -420,10 +420,10 @@ if(!empty($copy))
 			{
 				$is_copy = true;
 				$temp_id = 'fcc_pre_' . $ccnt++;
-				$copy_fields .= ($ccnt == 1) ? '<fieldset class="white" id="dd' . $field_id . '"><dl id="' . $field_id . '"><dt class="copy-rows"><label for="copy-' . $field_id . '-' . $temp_id . 'from">Copy: (from -&gt; to)</label><img class="sign plus-sign" src="./images/plus.png" alt="" title="" onclick="add_file_copy(\'' . $field_id . '\');"><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#dd' . $field_id . '\').remove()" onmouseover="Tip(\'Delete entry\')" onmouseout="UnTip()" /></dt>' : '';
+				$copy_fields .= ($ccnt == 1) ? '<fieldset class="white" id="dd' . $field_id . '"><dl id="' . $field_id . '"><dt class="copy-rows"><label for="copy-' . $field_id . '-' . $temp_id . 'from">Copy: (from -&gt; to)</label><img class="sign plus-sign" src="./images/plus.png" alt="" title="" onclick="add_file_copy(\'' . $field_id . '\');"><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#dd' . $field_id . '\').remove()" title="Delete entry" /></dt>' : '';
 				$copy_fields .= '<dd class="copy-rows" id="' . $temp_id . '"><input name="copy[' . $field_id . '][' . $temp_id . '][from]" id="copy-' . $field_id . '-' . $temp_id . '-from" size="85" maxlength="255" value="' . gen_value($cval['from']) . '" type="text">';
 				$copy_fields .= '<span> -&gt; </span>';
-				$copy_fields .= '<input name="copy[' . $field_id . '][' . $temp_id . '][to]" size="85" maxlength="255" value="' . gen_value($cval['to']) . '" type="text"><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $temp_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" /></dd>';
+				$copy_fields .= '<input name="copy[' . $field_id . '][' . $temp_id . '][to]" size="85" maxlength="255" value="' . gen_value($cval['to']) . '" type="text"><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $temp_id . '\').remove()" title="Delete" /></dd>';
 			}
 		}
 		$copy_fields .= ($ccnt > 0) ? '</dl></fieldset>' : '';
@@ -442,9 +442,9 @@ if(!empty($diy))
 			$field_id = 'diy_pre_' . $cnt++;
 			$diy_fields .= '<dd id="' . $field_id . '"><textarea name="diy[' . $field_id . '][diy]" id="diy_' . $field_id . '_diy" rows="' . count_rows($value['diy'], 88) . '">';
 			$diy_fields .= gen_value($value['diy'], true);
-			$diy_fields .= '</textarea><span><select name="diy[' . $field_id . '][lang]">' . lang_select($value['lang']) . '</select></span><img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />';
-			$diy_fields .= '<img id="' . $field_id . '-plus" class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.diy_' . $field_id . '_diy.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" />';
-			$diy_fields .= '<img id="' . $field_id . '-minus" class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.diy_' . $field_id . '_diy.rows>7){document.mainform.diy_' . $field_id . '_diy.rows-=4}else{document.mainform.diy_' . $field_id . '_diy.rows-=(document.mainform.diy_' . $field_id . '_diy.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" />';
+			$diy_fields .= '</textarea><span><select name="diy[' . $field_id . '][lang]">' . lang_select($value['lang']) . '</select></span><img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#' . $field_id . '\').remove()" title="Delete" />';
+			$diy_fields .= '<img id="' . $field_id . '-plus" class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.diy_' . $field_id . '_diy.rows+=4" title="Add 4 rows" />';
+			$diy_fields .= '<img id="' . $field_id . '-minus" class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.diy_' . $field_id . '_diy.rows>7){document.mainform.diy_' . $field_id . '_diy.rows-=4}else{document.mainform.diy_' . $field_id . '_diy.rows-=(document.mainform.diy_' . $field_id . '_diy.rows-4)};" title="Remove 4 rows" />';
 			$diy_fields .= '</dd>';
 		}
 	}
@@ -452,7 +452,7 @@ if(!empty($diy))
 
 if(empty($diy_fields))
 {
-	$diy_fields = '<dd id="diy_0"><textarea name="diy[desc_pre][diy]" id="diy_01" rows="5"></textarea><span><select name="diy[desc_pre][lang]">' . lang_select() . '</select></span><img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#diy_0\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" /><img id="diy0-plus" class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.diy_01.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" /><img id="diy0-minus" class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.diy_01.rows>7){document.mainform.diy_01.rows-=4}else{document.mainform.diy_01.rows-=(document.mainform.diy_01.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" /></dd>';
+	$diy_fields = '<dd id="diy_0"><textarea name="diy[desc_pre][diy]" id="diy_01" rows="5"></textarea><span><select name="diy[desc_pre][lang]">' . lang_select() . '</select></span><img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#diy_0\').remove()" title="Delete" /><img id="diy0-plus" class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.diy_01.rows+=4" title="Add 4 rows" /><img id="diy0-minus" class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.diy_01.rows>7){document.mainform.diy_01.rows-=4}else{document.mainform.diy_01.rows-=(document.mainform.diy_01.rows-4)};" title="Remove 4 rows" /></dd>';
 }
 
 // The Action fields...
@@ -476,13 +476,13 @@ if(!empty($modx))
 	$file_cnt = $edit_cnt = $dl_cnt = $dt_cnt = $dd_cnt = 0;
 	foreach($files as $key => $value)
 	{
-		if(trim($value) != '')
+		if($value)
 		{
 			// Array 1, files
 			$file_id = 'f_pre_' . $file_cnt++;
 			$dt_id = 'dt_pre_' . $dt_cnt++;
-			$modx_fields .= '<fieldset class="inner" id="' . $file_id . '"><dl id="' . $dt_id . '"><dt><label>File to open:</label><img class="sign" src="./images/info.png" alt="" onmouseover="Tip(\'Relative path from the phpBB root for the file to open. For example, viewforum.php or includes/functions.php\')" onmouseout="UnTip()"></dt>';
-			$modx_fields .= '<dd><input name="modx[' . $file_id . '][file]" size="88" value="' . gen_value($modx[$key]['file'], true) . '" type="text"><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $file_id . '\').remove()" onmouseover="Tip(\'Delete this file\')" onmouseout="UnTip()" /></dd></dl>';
+			$modx_fields .= '<fieldset class="inner" id="' . $file_id . '"><dl id="' . $dt_id . '"><dt><label>File to open:</label><img class="sign" src="./images/info.png" alt="" title="Relative path from the phpBB root for the file to open. For example, viewforum.php or includes/functions.php"></dt>';
+			$modx_fields .= '<dd><input name="modx[' . $file_id . '][file]" size="88" value="' . gen_value($modx[$key]['file'], true) . '" type="text"><img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $file_id . '\').remove()" title="Delete this file" /></dd></dl>';
 
 			foreach($modx[$key] as $key2 => $value2)
 			{
@@ -490,10 +490,10 @@ if(!empty($modx))
 				if($key2 != 'file')
 				{
 					$edit_id = 'e_pre_' . $edit_cnt++;
-					$modx_fields .= '<fieldset class="white" id="' . $edit_id . '"><legend>Edit<img class="sign" src="./images/info.png" alt="" onmouseover="Tip(\'Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains.&lt;br /&gt;All finds within an edit tag should be processed before any action tag.\')" onmouseout="UnTip()">';
-					$modx_fields .= '<img class="do-stuff" src="./images/plus_up.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . ']\', \'' . $edit_id . '\', \'edit\', \'above\', 1)" onmouseover="Tip(\'Add an edit field above this edit field\')" onmouseout="UnTip()">';
-					$modx_fields .= '<img class="do-stuff" src="./images/plus_down.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . ']\', \'' . $edit_id . '\', \'edit\', \'below\', 1)" onmouseover="Tip(\'Add an edit field below this edit field\')" onmouseout="UnTip()">';
-					$modx_fields .= '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $edit_id . '\').remove()" onmouseover="Tip(\'Delete this edit\')" onmouseout="UnTip()"></legend><p>NOTE: Each discreet change to a file must be wrapped in its own edit tag.</p>';
+					$modx_fields .= '<fieldset class="white" id="' . $edit_id . '"><legend>Edit<img class="sign" src="./images/info.png" alt="" title="Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains.&lt;br /&gt;All finds within an edit tag should be processed before any action tag.">';
+					$modx_fields .= '<img class="do-stuff" src="./images/plus_up.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . ']\', \'' . $edit_id . '\', \'edit\', \'above\', 1)" title="Add an edit field above this edit field">';
+					$modx_fields .= '<img class="do-stuff" src="./images/plus_down.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . ']\', \'' . $edit_id . '\', \'edit\', \'below\', 1)" title="Add an edit field below this edit field">';
+					$modx_fields .= '<img class="do-stuff" src="./images/delete.png" alt="" onclick="$(\'#' . $edit_id . '\').remove()" title="Delete this edit"></legend><p>NOTE: Each discreet change to a file must be wrapped in its own edit tag.</p>';
 
 					foreach($value2 as $key3 => $value3)
 					{
@@ -510,8 +510,19 @@ if(!empty($modx))
 							{
 								$textarea = false;
 								// Inline stuff can only be one-liners
-								$modx_input = '<span id="' . $dd_id . '_field"><input id="' . $dd_id . '_data" name="modx[' . $file_id . '][' . $edit_id . '][' . $dl_id . '][data]" size="88" value="' . gen_value($value3['data']) . '" type="text"></span>';
-								$modx_img = '<img id="' . $dd_id . '_info" class="action-arrows" src="./images/info_8.png" alt="" onmouseover="Tip(\'Note that the inline tags may not contain line breaks\')" onmouseout="UnTip()">';
+								// On some systems \r comes before \n and I bet some systems only uses \r
+								$data = str_replace("\r", "\n", $value3['data']);
+								$pos2 = strpos($value3['data'], "\r");
+								if ($pos = strpos($value3['data'], "\n") !== false )
+								{
+									$data = substr($value3['data'], 0, $pos);
+								}
+								else
+								{
+									$data = $value3['data'];
+								}
+								$modx_input = '<span id="' . $dd_id . '_field"><textarea id="' . $dd_id . '_data" name="modx[' . $file_id . '][' . $edit_id . '][' . $dl_id . '][data]" rows="0" onKeypress="if((event.keyCode == 10) || (event.keyCode == 13)){return false;}">' . gen_value($data) . '</textarea></span>';
+								$modx_img = '<img id="' . $dd_id . '_info" class="action-arrows" src="./images/info_8.png" alt="" title="Note that the inline tags may not contain line breaks">';
 							}
 							else if($value3['type'] != 'comment')
 							{
@@ -519,11 +530,11 @@ if(!empty($modx))
 								$modx_input = '<span id="' . $dd_id . '_field"><textarea class="action-texts" id="' . $dd_id . '_data" name="modx[' . $file_id . '][' . $edit_id . '][' . $dl_id . '][data]" rows="' . count_rows($value3['data'], 85) . '">' . gen_value($value3['data']) . '</textarea></span>';
 								if($value3['type'] == 'find')
 								{
-									$modx_img = '<img id="' . $dd_id . '_info" class="action-arrows" src="./images/info_2.png" alt="" onmouseover="Tip(\'Find tags in the MODX file should be in the order that the find targets appear in the file. In other words, a processor of the MODX file should never need to go backwards in the file to locate all of the finds. When there are multiple finds within a single edit tag, the processor should handle all finds before any actions.\')" onmouseout="UnTip()">';
+									$modx_img = '<img id="' . $dd_id . '_info" class="action-arrows" src="./images/info_2.png" alt="" title="Find tags in the MODX file should be in the order that the find targets appear in the file. In other words, a processor of the MODX file should never need to go backwards in the file to locate all of the finds. When there are multiple finds within a single edit tag, the processor should handle all finds before any actions.">';
 								}
 								else
 								{
-									$modx_img = '<img id="' . $dd_id . '_info" class="action-arrows" src="./images/info_12.png" alt="" onmouseover="Tip(\'The string to add before the find, add after the find, replace the find with, or the operation string described above.&lt;br /&gt;&lt;br /&gt;The syntax for the operation action is a bit obscure because it uses tokens. The find action would have a token like this&lt;br /&gt;colspan=&quot;{:%1}&quot;&lt;br /&gt;The operation action would look like this:&lt;br /&gt;{:%1} + 1\')" onmouseout="UnTip()">';
+									$modx_img = '<img id="' . $dd_id . '_info" class="action-arrows" src="./images/info_12.png" alt="" title="The string to add before the find, add after the find, replace the find with, or the operation string described above.&lt;br /&gt;&lt;br /&gt;The syntax for the operation action is a bit obscure because it uses tokens. The find action would have a token like this&lt;br /&gt;colspan=&quot;{:%1}&quot;&lt;br /&gt;The operation action would look like this:&lt;br /&gt;{:%1} + 1">';
 								}
 							}
 							else
@@ -532,7 +543,7 @@ if(!empty($modx))
 								// The comments needs a lang select
 								$modx_input = '<span id="' . $dd_id . '_field"><textarea class="action-comment" id="' . $dd_id . '_data" name="modx[' . $file_id . '][' . $edit_id . '][' . $dl_id . '][data]" rows="' . count_rows($value3['data'], 70) . '">' . gen_value($value3['data']) . '</textarea>';
 								$modx_input .= '<span id="' . $dd_id . '_lang"><select name="modx[' . $file_id . '][' . $edit_id . '][' . $dl_id . '][lang]">' . lang_select($value3['lang']) . '</select></span></span>';
-								$modx_img = '<img id="' . $dd_id . '_info" class="action-arrows" src="./images/info_17.png" alt="" onmouseover="Tip(\'Comment pertaining to this edit\')" onmouseout="UnTip()">';
+								$modx_img = '<img id="' . $dd_id . '_info" class="action-arrows" src="./images/info_17.png" alt="" title="Comment pertaining to this edit">';
 							}
 
 							$modx_fields .= '<dl id="' . $dl_id . '" style="white-space: nowrap;"><dt id="' . $dt_id . '"><label>Type:</label><span>';
@@ -550,16 +561,16 @@ if(!empty($modx))
 							$modx_fields .= '<option value="inline-replace-with"' . (($value3['type'] == 'inline-replace-with') ? ' selected="selected"' : '') . '>Inline replace with</option>';
 							$modx_fields .= '<option value="inline-operation"' . (($value3['type'] == 'inline-operation') ? ' selected="selected"' : '') . '>Inline operation</option>';
 							$modx_fields .= '<option value="-"' . (($value3['type'] == '-') ? ' selected="selected"' : '') . '>Select type</option></select></span>';
-							$modx_fields .= '<br /><img class="action-arrows" src="./images/plus_up.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . '][' . $edit_id . ']\', \'' . $dl_id . '\', \'dl\', \'above\')" onmouseover="Tip(\'Add action above\')" onmouseout="UnTip()">';
-							$modx_fields .= '<img class="action-arrows" src="./images/plus_down.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . '][' . $edit_id . ']\', \'' . $dl_id . '\', \'dl\', \'below\')" onmouseover="Tip(\'Add action below\')" onmouseout="UnTip()">';
+							$modx_fields .= '<br /><img class="action-arrows" src="./images/plus_up.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . '][' . $edit_id . ']\', \'' . $dl_id . '\', \'dl\', \'above\')" title="Add action above">';
+							$modx_fields .= '<img class="action-arrows" src="./images/plus_down.png" alt="" onclick="modx_add_field(\'modx[' . $file_id . '][' . $edit_id . ']\', \'' . $dl_id . '\', \'dl\', \'below\')" title="Add action below">';
 							$modx_fields .= $modx_img;
 							$modx_fields .= '</dt><dd id="' . $dd_id . '"><span>';
 
 							$modx_fields .= $modx_input;
 
-							$modx_fields .= '<img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#' . $dl_id . '\').remove()" onmouseover="Tip(\'Delete\')" onmouseout="UnTip()" />';
-							$modx_fields .= ($textarea) ? '<img id="' . $dd_id . '-plus" class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.' . $dd_id . '_data.rows+=4" onmouseover="Tip(\'Add 4 rows\')" onmouseout="UnTip()" />' : '';
-							$modx_fields .= ($textarea) ? '<img id="' . $dd_id . '-minus" class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.' . $dd_id . '_data.rows>7){document.mainform.' . $dd_id . '_data.rows-=4}else{document.mainform.' . $dd_id . '_data.rows-=(document.mainform.' . $dd_id . '_data.rows-4)};" onmouseover="Tip(\'Remove 4 rows\')" onmouseout="UnTip()" />' : '';
+							$modx_fields .= '<img class="action-text1" src="./images/delete.png" alt="" onclick="$(\'#' . $dl_id . '\').remove()" title="Delete" />';
+							$modx_fields .= ($textarea) ? '<img id="' . $dd_id . '-plus" class="action-text2" src="./images/add.png" alt="" onclick="document.mainform.' . $dd_id . '_data.rows+=4" title="Add 4 rows" />' : '';
+							$modx_fields .= ($textarea) ? '<img id="' . $dd_id . '-minus" class="action-text3" src="./images/del.png" alt="" onclick="if(document.mainform.' . $dd_id . '_data.rows>7){document.mainform.' . $dd_id . '_data.rows-=4}else{document.mainform.' . $dd_id . '_data.rows-=(document.mainform.' . $dd_id . '_data.rows-4)};" title="Remove 4 rows" />' : '';
 							$modx_fields .= '</span></dd></dl>';
 						}
 					}

@@ -92,7 +92,7 @@ function get_select_change(value, dt_id, dd_id, file_name)
 
 		case 2:
 			var element = '<span id="' + dd_id + '_field">';
-				element += '<input type="text" name="' + file_name + '[data]" class="" id="' + dd_id + '_data" size="88" maxlength="255" value="' + tmp_data + '" />';
+				element += '<textarea id="' + dd_id + '_data" name="' + file_name + '[data]" rows="1"  onKeypress="if((event.keyCode == 10) || (event.keyCode == 13)){return false;}">' + tmp_data + '</textarea>';
 			element += '</span>';
 		break;
 
