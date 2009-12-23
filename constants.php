@@ -34,6 +34,10 @@ define('ACTION', 3);
 define('INLINE', 4);
 define('OUTLINE', 5);
 
+// We request that you keep the meta tag intact.
+// Removing it might affected future developmet of this tool.
+define('META', 'MODX file generated with PP MODX Creator by tumba25 (offline version)');
+
 $target_lang = array(
 	'ab' => 'Abkhazian',
 	'aa' => 'Afar',

@@ -222,6 +222,7 @@ if(!defined('IN_MODX'))
 				</fieldset>
 
 				<fieldset class="submit-buttons">
+					<?php echo $meta_fields; ?>
 					<input class="submit" type="submit" name="preview" value="View" onclick="this.form.target='_blank';" />
 					<input class="submit" type="submit" name="dload" value="Download" onclick="this.form.target='_self';" />
 				</fieldset>

@@ -34,10 +34,18 @@ $xml->writeAttribute('xmlns', 'http://www.phpbb.com/mods/xml/' . MODX_LATEST);
 $xml->startElement('header');
 
 // <meta>
-write_element('meta', '', array(
+$meta[] = array(
 	'name' => 'generator',
-	'content' => 'MODX file generated with PP MODX Creator by tumba25',
-), false, false);
+	'content' => META,
+);
+
+foreach ($meta as $value)
+{
+	write_element('meta', '', array(
+		'name' => $value['name'],
+		'content' => $value['content'],
+	), false, false);
+}
 // </meta>
 
 // <license>

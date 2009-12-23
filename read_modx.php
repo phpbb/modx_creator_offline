@@ -61,6 +61,18 @@ $author = get_tag($modx_data, 'author-group', false);
 $links = get_tag($modx_data, 'link-group', false);
 $history = get_tag($modx_data, 'history', false);
 
+$tmp_arr = get_empty_tag($modx_data, 'meta');
+if (!empty($tmp_arr))
+{
+	$cnt = 0;
+	foreach ($tmp_arr as $value)
+	{
+		$meta[$cnt]['name'] = get_attribute($value, 'name');
+		$meta[$cnt]['content'] = get_attribute($value, 'content');
+		$cnt++;
+	}
+}
+
 $modx = get_tag($modx_data, 'action-group', false);
 
 // Let's save some memory

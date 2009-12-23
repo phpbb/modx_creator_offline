@@ -258,7 +258,7 @@ function sanitize_inlines(&$data)
 {
 	// On some systems \r comes before \n and I bet some systems only uses \r
 	$data = str_replace("\r", "\n", $data);
-	if ($pos = strpos($data, "\n") !== false )
+	if ($pos = strpos($data, "\n") !== false)
 	{
 		$data = substr($data, 0, $pos);
 	}

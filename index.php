@@ -75,6 +75,7 @@ if(!$submit_file && $submit)
 	$notes = (isset($_POST['notes'])) ? modx_stripslashes($_POST['notes']) : false;
 	$diy = (isset($_POST['diy'])) ? modx_stripslashes($_POST['diy']) : false;
 	$copy = (isset($_POST['copy'])) ? modx_stripslashes($_POST['copy']) : false;
+	$meta = (isset($_POST['meta'])) ? modx_stripslashes($_POST['meta']) : false;
 
 	$modx = (isset($_POST['modx'])) ? modx_stripslashes($_POST['modx']) : false;
 
@@ -127,7 +128,7 @@ if($submit)
 }
 
 // Then do some checking.
-$history_fields = $link_fields = $author_fields = $sql_fields = $title_fields = $desc_fields = $notes_fields = $diy_fields = $copy_fields = '';
+$history_fields = $link_fields = $author_fields = $sql_fields = $title_fields = $desc_fields = $notes_fields = $diy_fields = $copy_fields  = $meta_fields = '';
 
 // MOD title
 if(!empty($title))
@@ -430,6 +431,24 @@ if(!empty($copy))
 	}
 }
 $copy_fields = ($is_copy) ? $copy_fields : '';
+
+// meta tags
+$is_meta = false;
+$cnt = 0;
+if(!empty($meta))
+{
+	foreach($meta as $value)
+	{
+		if (trim($value['content']) != '' && $value['content'] != META)
+		{
+			$is_meta = true;
+			$temp_id = 'meta_' . $cnt++;
+			$meta_fields .= '<input type="hidden" name="meta[' . $temp_id . '][name]" value="' . gen_value($value['name']) . '" />';
+			$meta_fields .= '<input type="hidden" name="meta[' . $temp_id . '][content]" value="' . gen_value($value['content']) . '" />';
+		}
+	}
+}
+$meta_fields = ($is_meta) ? $meta_fields : '';
 
 // DIY fields
 if(!empty($diy))
