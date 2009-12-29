@@ -35,10 +35,14 @@ function write_element($name, $text, $attributes = false, $cdata = true)
 		return;
 	}
 
+/**
+ * This doesn't work as intended.
+ * I'll comment it for now and return later.
 	if(!version_compare(PHP_VERSION, '6.0.0-dev', '>=') && get_magic_quotes_gpc())
 	{
 		$text = stripslashes($text);
 	}
+*/
 
 	$xml->startElement($name);
 	if($attributes != false)

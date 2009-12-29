@@ -49,6 +49,9 @@ if($submit_file && $modx_data != '' && !$submit)
 {
 	if($submit_file == MODX)
 	{
+		include('./modx_parser.php');
+		$parser = new modx_parser($modx_data);
+
 		include('./read_modx.php');
 	}
 	else if($submit_file == MOD)
@@ -476,7 +479,6 @@ if(empty($diy_fields))
 
 // The Action fields...
 $modx_fields = '';
-
 if(!empty($modx))
 {
 	$filenames = $directories = $files = array();
@@ -506,7 +508,7 @@ if(!empty($modx))
 			foreach($modx[$key] as $key2 => $value2)
 			{
 				// Array 2, edits We dont need the filenames here
-				if($key2 != 'file')
+				if(is_int($key2) || $key2 != 'file')
 				{
 					$edit_id = 'e_pre_' . $edit_cnt++;
 					$modx_fields .= '<fieldset class="white" id="' . $edit_id . '"><legend>Edit<img class="sign" src="./images/info.png" alt="" title="Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains.&lt;br /&gt;All finds within an edit tag should be processed before any action tag.">';
