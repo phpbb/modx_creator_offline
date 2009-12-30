@@ -21,8 +21,8 @@ define('MODX_LATEST', 'modx-1.2.3.xsd');
 
 define('MOD', 1);
 define('MODX', 2);
-define('MODX_V1', 1);
-define('MODX_V2', 2);
+define('MODX_10', 1);
+define('MODX_12', 2);
 
 define('EASY', 1);
 define('INTERMEDIATE', 2);

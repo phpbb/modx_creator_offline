@@ -30,7 +30,7 @@ if($submit_file && !$submit)
 	{
 		// Lets start with the extension...
 		$extension = strtolower(array_pop(explode('.', $_FILES['upload-file']['name'])));
-		$str = file_get_contents($_FILES['upload-file']['tmp_name'], 0, NULL, 0, 20);
+		$str = file_get_contents($_FILES['upload-file']['tmp_name'], 0, NULL, 0, 200);
 
 		// We'll need to know what kind of file it is
 		$submit_file = get_mod_type($str, $extension);
@@ -56,7 +56,10 @@ if($submit_file && $modx_data != '' && !$submit)
 	}
 	else if($submit_file == MOD)
 	{
-		include('./read_mod.php');
+		include('./mod_parser.php');
+		$parser = new mod_parser($modx_data);
+
+		include('./read_modx.php');
 	}
 	else
 	{

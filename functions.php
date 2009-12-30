@@ -294,11 +294,11 @@ function modx_version($xmlns)
 {
 	if(preg_match('#modx\\-1\\.0(\\.\d)*\\.xsd#s', $xmlns))
 	{
-		return(MODX_V1);
+		return(MODX_10);
 	}
 	if(preg_match('#modx\\-1\\.2(\\.\d)\\.xsd#s', $xmlns))
 	{
-		return(MODX_V2);
+		return(MODX_12);
 	}
 	return(false);
 }

@@ -23,11 +23,6 @@ if(!defined('IN_MODX'))
  * First I need to add a new MOD template parser and a parser for the post data.
  */
 
-// Temporary var to use for loops.
-$temp_data = '';
-
-// Initiate the parser.
-
 $license = $parser->get_modx_license();
 $version = $parser->get_modx_mod_version();
 $target = $parser->get_modx_target_version();
@@ -63,7 +58,10 @@ while($temp_data = $parser->get_modx_diy())
 
 while($temp_data = $parser->get_modx_authors())
 {
-	$contributor[] = $temp_data['contributions'];
+	if (!empty($temp_data['contributions']))
+	{
+		$contributor[] = $temp_data['contributions'];
+	}
 	unset($temp_data['contributions']);
 	$author[] = $temp_data;
 }
@@ -95,23 +93,31 @@ while($temp_data = $parser->get_modx_history())
 
 while($temp_data = $parser->get_modx_meta())
 {
-	$meta[] = $temp_data;
+	if(!empty($temp_data['content']))
+	{
+		$meta[] = $temp_data;
+	}
 }
 
 while($temp_data = $parser->get_modx_sql())
 {
-	$temp_data['query'] = $temp_data['data'];
-	unset($temp_data['data']);
-	$sql[] = $temp_data;
+	if(!empty($temp_data['data']))
+	{
+		$temp_data['query'] = $temp_data['data'];
+		unset($temp_data['data']);
+		$sql[] = $temp_data;
+	}
 }
 
 while($temp_data = $parser->get_modx_copy())
 {
-	$copy[0][] = $temp_data;
+	if(!empty($temp_data['from']))
+	{
+		$copy[0][] = $temp_data;
+	}
 }
 
 while($temp_data = $parser->get_modx_action())
 {
 	$modx[] = $temp_data;
 }
-
