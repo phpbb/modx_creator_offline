@@ -63,7 +63,7 @@ if($submit_file && $modx_data != '' && !$submit)
 	}
 }
 
-if(!$submit_file && $submit)
+if(!isset($parser))
 {
 	include('./post_parser.php');
 	$parser = new post_parser($_POST);
