@@ -10,7 +10,7 @@
 /**
 * @ignore
 */
-if(!defined('IN_MODX'))
+if (!defined('IN_MODX'))
 {
 	exit;
 }
@@ -33,17 +33,20 @@ $xml->writeAttribute('xmlns', 'http://www.phpbb.com/mods/xml/' . MODX_LATEST);
 // <header>
 $xml->startElement('header');
 
+// Need to reset the counters.
+$parser->modx_reset();
 // <meta>
-$meta[] = array(
+// Start with the own meta tag
+write_element('meta', '', array(
 	'name' => 'generator',
 	'content' => META,
-);
+), false, false);
 
-foreach ($meta as $value)
+while($meta = $parser->get_modx_meta())
 {
 	write_element('meta', '', array(
-		'name' => $value['name'],
-		'content' => $value['content'],
+		'name' => $meta['name'],
+		'content' => $meta['content'],
 	), false, false);
 }
 // </meta>
@@ -52,58 +55,55 @@ foreach ($meta as $value)
 write_element('license', $license);
 
 // <title>
-foreach($title as $value)
+while($title = $parser->get_modx_title())
 {
-	$text = trim($value['title']);
-	if($text != '')
+	$text = trim($title['title']);
+	if ($text != '')
 	{
-		write_element('title', $text, array('lang' => $value['lang']));
+		write_element('title', $text, array('lang' => $title['lang']));
 	}
 }
 // </title>
 
 // <description>
-foreach($desc as $value)
+while($desc = $parser->get_modx_description())
 {
-	$text = trim($value['desc']);
-	if($text != '')
+	$text = trim($desc['desc']);
+	if ($text != '')
 	{
-		write_element('description', $text, array('lang' => $value['lang']));
+		write_element('description', $text, array('lang' => $desc['lang']));
 	}
 }
 // </description>
 
 // <author-notes>
-if($notes)
+while($notes = $parser->get_modx_notes())
 {
-	foreach($notes as $value)
+	$text = trim($notes['note']);
+	if ($text != '')
 	{
-		$text = trim($value['note']);
-		if($text != '')
-		{
-			write_element('author-notes', $text, array('lang' => $value['lang']));
-		}
+		write_element('author-notes', $text, array('lang' => $notes['lang']));
 	}
 }
 // </author-notes>
 
 // <author-group>
 $xml->startElement('author-group');
-foreach($author as $key => $value)
+while($author = $parser->get_modx_authors())
 {
-	if(trim($value['username']) != '')
+	if (trim($author['username']) != '')
 	{
 		// <author>
 		$xml->startElement('author');
-		write_element('realname', trim($value['realname']));
-		write_element('username', trim($value['username']), ((isset($value['phpbbcom'])) ? array('phpbbcom' => 'no') : false));
-		write_element('homepage', trim($value['homepage']));
-		write_element('email', trim($value['email']));
-		if(!empty($contributor[$key]))
+		write_element('realname', trim($author['realname']));
+		write_element('username', trim($author['username']), ((isset($author['phpbbcom'])) ? array('phpbbcom' => 'no') : false));
+		write_element('homepage', trim($author['homepage']));
+		write_element('email', trim($author['email']));
+		if (!empty($author['contributions']))
 		{
 			// <contributions-group>
 			$xml->startElement('contributions-group');
-			foreach($contributor[$key] as $cval)
+			foreach($author['contributions'] as $cval)
 			{
 				// <contributions>
 				write_element('contributions', '', array(
@@ -135,24 +135,24 @@ write_element('target-version', trim($target), false, false);
 $xml->endElement();
 // </installation>
 
-if($history)
+if ($parser->count_history())
 {
 	// <history>
 	$xml->startElement('history');
-	foreach($history as $value)
+	while($history = $parser->get_modx_history())
 	{
-		if(trim($value['version']) != '' && trim($value['date']) != ''  && !empty($value['change']))
+		if (trim($history['version']) != '' && trim($history['date']) != ''  && !empty($history['changelog']))
 		{
 			// <entry>
 			$xml->startElement('entry');
-			write_element('date', trim($value['date']), false, false);
-			write_element('rev-version', trim($value['version']), false, false);
+			write_element('date', trim($history['date']), false, false);
+			write_element('rev-version', trim($history['version']), false, false);
 
 			$hist_entry = array();
 			// We need to sort the change array by language.
-			foreach($value['change'] as $ckey => $cvalue)
+			foreach($history['changelog'] as $ckey => $cvalue)
 			{
-				$hist_entry[$cvalue['lang']][] = $cvalue['data'];
+				$hist_entry[$cvalue['lang']][] = $cvalue['change'];
 			}
 
 			// Now dump out the sorted history
@@ -177,19 +177,19 @@ if($history)
 	// </history>
 }
 
-if(!empty($links))
+if ($parser->count_link())
 {
 	// <link-group>
 	$xml->startElement('link-group');
 
-	foreach($links as $value)
+	while($links = $parser->get_modx_links())
 	{
-		if(trim($value['title']) != '' && trim($value['href']) != '')
+		if (trim($links['title']) != '' && trim($links['href']) != '')
 		{
-			write_element('link', trim($value['title']), array(
-				'type' => $value['type'],
-				'href' => trim($value['href']),
-				'lang' => $value['lang'],
+			write_element('link', trim($links['title']), array(
+				'type' => $links['type'],
+				'href' => trim($links['href']),
+				'lang' => $links['lang'],
 			), false, false);
 		}
 	}
@@ -204,217 +204,211 @@ $xml->endElement();
 $xml->startElement('action-group');
 
 // SQL
-if($sql)
+if ($parser->count_sql())
 {
-	foreach($sql as $value)
+	while($sql = $parser->get_modx_sql())
 	{
-		if(trim($value['dbms']) != '' && trim($value['query']) != '')
+		if (trim($sql['dbms']) != '' && trim($sql['query']) != '')
 		{
-			write_element('sql', trim($value['query']), (($value['dbms'] != 'sql-parser') ? array('dbms' => $value['dbms']) : false));
+			write_element('sql', trim($sql['query']), (($sql['dbms'] != 'sql-parser') ? array('dbms' => $sql['dbms']) : false));
 		}
 	}
 }
 
 // Copy
-if($copy)
+if ($parser->count_copy())
 {
-	foreach($copy as $value)
+	// <copy>
+	$xml->startElement('copy');
+	while($copy = $parser->get_modx_copy())
 	{
-		// <copy>
-		$xml->startElement('copy');
-		foreach($value as $cval)
-		{
-			write_element('file', '', array(
-				'from' => trim($cval['from']),
-				'to' => trim($cval['to']),
-			), false, false);
-		}
-		$xml->endElement();
-		// </copy>
+		write_element('file', '', array(
+			'from' => trim($copy['from']),
+			'to' => trim($copy['to']),
+		), false, false);
 	}
+	$xml->endElement();
+	// </copy>
 }
 
 // And the damage...
-if($modx)
+if ($parser->count_action())
 {
-	foreach($files as $key => $value)
+	while($action = $parser->get_modx_action())
 	{
-		if(trim($value) != '')
+		// <open>
+		$xml->startElement('open');
+		$xml->writeAttribute('src', trim($action['file']));
+		foreach($action as $key2 => $value2)
 		{
-			// <open>
-			$xml->startElement('open');
-			$xml->writeAttribute('src', trim($value));
-			foreach($modx[$key] as $key2 => $value2)
+			// Array 2 edits We dont need the filenames here
+			if (is_int($key2) || $key2 != 'file')
 			{
-				// Array 2 edits We dont need the filenames here
-				if($key2 != 'file')
+				// <edit>
+				$xml->startElement('edit');
+				$inline = $inline_action = $action = false;
+
+				foreach($value2 as $key3 => $value3)
 				{
-					// <edit>
-					$xml->startElement('edit');
-					$inline = $inline_action = $action = false;
-
-					foreach($value2 as $key3 => $value3)
+					// Array 3, the string fields
+					if ($value3['type'] != '' && $value3['type'] != '-')
 					{
-						// Array 3, the string fields
-						if($value3['type'] != '' && $value3['type'] != '-')
+						if ($value3['type'] == 'inline-find' && $inline && $inline_action)
 						{
-							if($value3['type'] == 'inline-find' && $inline && $inline_action)
-							{
-								// </inline-edit>
-								$xml->endElement();
+							// </inline-edit>
+							$xml->endElement();
 
-								// <inline-edit>
-								$xml->startElement('inline-edit');
-								$inline = true;
-								$inline_action = false;
-							}
-							else if(strpos($value3['type'], 'inline') !== FALSE && !$inline)
-							{
-								// <inline-edit>
-								$xml->startElement('inline-edit');
-								$inline = true;
-								$inline_action = false;
-							}
-							else if(strpos($value3['type'], 'inline') === FALSE && $inline)
-							{
-								// </inline-edit>
-								$xml->endElement();
-								$inline = false;
-								$inline_action = false;
-							}
+							// <inline-edit>
+							$xml->startElement('inline-edit');
+							$inline = true;
+							$inline_action = false;
+						}
+						else if (strpos($value3['type'], 'inline') !== FALSE && !$inline)
+						{
+							// <inline-edit>
+							$xml->startElement('inline-edit');
+							$inline = true;
+							$inline_action = false;
+						}
+						else if (strpos($value3['type'], 'inline') === FALSE && $inline)
+						{
+							// </inline-edit>
+							$xml->endElement();
+							$inline = false;
+							$inline_action = false;
+						}
 
-							if(strpos($value3['type'], 'inline') !== FALSE)
-							{
-								// Remove newlines from inlines.
-								sanitize_inlines($value3['data']);
-							}
+						if (strpos($value3['type'], 'inline') !== FALSE)
+						{
+							// Remove newlines from inlines.
+							sanitize_inlines($value3['data']);
+						}
 
-							// Now lets make the real changes...
-							switch($value3['type'])
-							{
-								case 'inline-find':
-									write_element('inline-find', $value3['data']);
-									$action = true;
-								break;
+						// Now lets make the real changes...
+						switch($value3['type'])
+						{
+							case 'inline-find':
+								write_element('inline-find', $value3['data']);
+								$action = true;
+							break;
 
-								case 'inline-after-add':
-									write_element('inline-action', $value3['data'], array('type' => 'after-add'));
-									$inline_action = true;
-									$action = true;
-								break;
+							case 'inline-after-add':
+								write_element('inline-action', $value3['data'], array('type' => 'after-add'));
+								$inline_action = true;
+								$action = true;
+							break;
 
-								case 'inline-before-add':
-									write_element('inline-action', $value3['data'], array('type' => 'before-add'));
-									$inline_action = true;
-									$action = true;
-								break;
+							case 'inline-before-add':
+								write_element('inline-action', $value3['data'], array('type' => 'before-add'));
+								$inline_action = true;
+								$action = true;
+							break;
 
-								case 'inline-replace-with':
-									write_element('inline-action', $value3['data'], array('type' => 'replace-with'));
-									$inline_action = true;
-									$action = true;
-								break;
+							case 'inline-replace-with':
+								write_element('inline-action', $value3['data'], array('type' => 'replace-with'));
+								$inline_action = true;
+								$action = true;
+							break;
 
-								case 'inline-operation':
-									write_element('inline-action', $value3['data'], array('type' => 'operation'));
-									$inline_action = true;
-									$action = true;
-								break;
+							case 'inline-operation':
+								write_element('inline-action', $value3['data'], array('type' => 'operation'));
+								$inline_action = true;
+								$action = true;
+							break;
 
-								case 'find':
-									if ($action)
+							case 'find':
+								if ($action)
+								{
+									// There has been a action or inline-* since the edit was opened.
+									// Each find should typically start a new edit.
+									// Let's assume the user doesn't know what (s)he is doing and start a new edit.
+									if ($inline)
 									{
-										// There has been a action or inline-* since the edit was opened.
-										// Each find should typically start a new edit.
-										// Let's assume the user doesn't know what (s)he is doing and start a new edit.
-										if ($inline)
-										{
-											// </inline-edit>
-											$xml->endElement();
-											$inline = $inline_action = false;
-										}
-										// </edit>
+										// </inline-edit>
 										$xml->endElement();
-										$action = false;
-										// <edit>
-										$xml->startElement('edit');
+										$inline = $inline_action = false;
 									}
-									write_element('find', $value3['data']);
-								break;
+									// </edit>
+									$xml->endElement();
+									$action = false;
+									// <edit>
+									$xml->startElement('edit');
+								}
+								write_element('find', $value3['data']);
+							break;
 
-								case 'comment':
-									if ($action)
+							case 'comment':
+								if ($action)
+								{
+									$stop = false;
+									// If this comment is followed by a find it should start a new edit.
+									$i = $key + 1;
+									if (isset($value2[$i]))
 									{
-										$stop = false;
-										// If this comment is followed by a find it should start a new edit.
-										$i = $key + 1;
-										if(isset($value2[$i]))
+										if ($value2[$i]['type'] == 'find')
 										{
-											if ($value2[$i]['type'] == 'find')
+											$stop = true;
+										}
+										else if ($value2[$key3 + 1]['type'] == 'comment')
+										{
+											// We need to check the next element that is not a comment.
+											while (isset($value2[$i]) && $value2[$i]['type'] == 'comment')
 											{
-												$stop = true;
+												$i++;
 											}
-											else if ($value2[$key3 + 1]['type'] == 'comment')
-											{
-												// We need to check the next element that is not a comment.
-												while (isset($value2[$i]) && $value2[$i]['type'] == 'comment')
-												{
-													$i++;
-												}
-												$stop = ($value2[$i]['type'] == 'find') ? true : false;
-											}
+											$stop = ($value2[$i]['type'] == 'find') ? true : false;
 										}
 									}
+								}
 
-									if($stop)
+								if ($stop)
+								{
+									if ($inline)
 									{
-										if ($inline)
-										{
-											// </inline-edit>
-											$xml->endElement();
-											$inline = $inline_action = false;
-										}
-										// </edit>
+										// </inline-edit>
 										$xml->endElement();
-										$action = false;
-										// <edit>
-										$xml->startElement('edit');
+										$inline = $inline_action = false;
 									}
-									write_element('comment', $value3['data'], array('lang' => ((isset($value3['lang'])) ? $value3['lang'] : 'en')));
-								break;
+									// </edit>
+									$xml->endElement();
+									$action = false;
+									// <edit>
+									$xml->startElement('edit');
+								}
+								write_element('comment', $value3['data'], array('lang' => ((isset($value3['lang'])) ? $value3['lang'] : 'en')));
+							break;
 
-								default:
-									write_element('action', $value3['data'], array('type' => $value3['type']));
-									$action = true;
-								break;
-							}
+							default:
+								write_element('action', $value3['data'], array('type' => $value3['type']));
+								$action = true;
+							break;
 						}
 					}
+				}
 
-					if($inline)
-					{
-						// </inline-edit>
-						$xml->endElement();
-					}
-					// </edit>
+				if ($inline)
+				{
+					// </inline-edit>
 					$xml->endElement();
 				}
+				// </edit>
+				$xml->endElement();
 			}
-			// </open>
-			$xml->endElement();
 		}
+		// </open>
+		$xml->endElement();
 	}
 }
 
 // DIY
-if($diy)
+if ($parser->count_diy())
 {
-	foreach($diy as $value)
+	while($diy = $parser->get_modx_diy())
 	{
-		if(trim($value['diy']) != '')
+		if (trim($diy['diy']) != '')
 		{
 			// <diy-instructions>
-			write_element('diy-instructions', trim($value['diy']), array('lang' => $value['lang']));
+			write_element('diy-instructions', trim($diy['diy']), array('lang' => $diy['lang']));
 		}
 	}
 }
@@ -429,13 +423,13 @@ $xml->endElement();
 
 $modx_data = $xml->outputMemory();
 
-if($preview)
+if ($preview)
 {
 	header('content-type: text/xml');
 	echo $modx_data;
 	exit;
 }
-else if($dload)
+else if ($dload)
 {
 	header("Content-type: file");
 	header('Content-Disposition: attachment;filename=install_mod.xml');

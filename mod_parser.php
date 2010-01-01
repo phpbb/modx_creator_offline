@@ -19,7 +19,7 @@ if(!defined('IN_MODX'))
 include('./parser_outdata.php');
 
 /**
- * A class to parse old mod template files.
+ * A class to parse old mod template files. The data is output through parser_outdata.
  * Its not pretty, but will not need to be updated either.
  * I need this to easier upgrade the other parts of the creator.
  */
@@ -56,7 +56,6 @@ class mod_parser extends parser_outdata
 		$this->cnt_edit = -1;
 		$this->cnt_open = -1;
 
-
 		// Think it's faster too loop trough the array twice and get the anything except the action first.
 		$cnt = 0;
 		foreach ($mod_arr as $key => $data)
@@ -81,7 +80,7 @@ class mod_parser extends parser_outdata
 					switch($data)
 					{
 						case (strpos(substr($data, 0, 13), 'MOD Title') !== false && empty($this->title)):
-							$this->title[0]['data'] = trim(preg_replace(array('/##/', '/MOD/', '/Title/', '/:/'), '', $data, 1));
+							$this->title[0]['title'] = trim(preg_replace(array('/##/', '/MOD/', '/Title/', '/:/'), '', $data, 1));
 							$this->title[0]['lang'] = 'en';
 						break;
 
@@ -93,7 +92,7 @@ class mod_parser extends parser_outdata
 
 						case (strpos(substr($data, 0, 20), 'MOD Description') !== false && empty($this->description)):
 							$this->description[0]['lang'] = 'en';
-							$this->description[0]['data'] = trim(preg_replace(array('/##/', '/MOD/', '/Description/', '/:/'), '', $data, 1));
+							$this->description[0]['desc'] = trim(preg_replace(array('/##/', '/MOD/', '/Description/', '/:/'), '', $data, 1));
 
 							// The description
 							$ccnt = $key + 1;
@@ -102,7 +101,7 @@ class mod_parser extends parser_outdata
 							$tmp_str = trim($tmp_str);
 							while($tmp_str != '' && strpos(substr($tmp_str, 0, 7), 'MOD') === false && strpos(substr($tmp_str, 0, 11), 'Install') === false)
 							{
-								$this->description[0]['data'] .= $tmp_str;
+								$this->description[0]['desc'] .= $tmp_str;
 								$tmp_str = $mod_arr[$ccnt++];
 								$tmp_str = trim($tmp_str, '#');
 								$tmp_str = trim($tmp_str);
@@ -167,25 +166,25 @@ class mod_parser extends parser_outdata
 					$this->in_action = false;
 					// SQL
 					$this->sql[$this->cnt_sql]['dbms'] = '';
-					$this->sql[$this->cnt_sql]['data'] = '';
+					$this->sql[$this->cnt_sql]['query'] = '';
 
 					$ccnt = $key + 1;
 					while(isset($mod_arr[$ccnt]) && substr($mod_arr[$ccnt], 0, 1) != '#')
 					{
 						if(trim($mod_arr[$ccnt]) == '')
 						{
-							$this->sql[$this->cnt_sql]['data'] = trim($this->sql[$this->cnt_sql]['data']);
+							$this->sql[$this->cnt_sql]['query'] = trim($this->sql[$this->cnt_sql]['query']);
 							$this->cnt_sql++;
-							$this->sql[$this->cnt_sql]['data'] = '';
+							$this->sql[$this->cnt_sql]['query'] = '';
 							$this->sql[$this->cnt_sql]['dbms'] = '';
 						}
 						else
 						{
-							$this->sql[$this->cnt_sql]['data'] .= $mod_arr[$ccnt] . "\n";
+							$this->sql[$this->cnt_sql]['query'] .= $mod_arr[$ccnt] . "\n";
 						}
 						$ccnt++;
 					}
-					$this->sql[$this->cnt_sql]['data'] = trim($this->sql[$this->cnt_sql]['data']);
+					$this->sql[$this->cnt_sql]['query'] = trim($this->sql[$this->cnt_sql]['query']);
 					$this->cnt_sql++;
 				}
 				else if(strpos($check_str, 'copy') !== false)
@@ -211,15 +210,15 @@ class mod_parser extends parser_outdata
 				{
 					$this->in_action = false;
 					$this->diy[$this->cnt_diy]['lang'] = 'en';
-					$this->diy[$this->cnt_diy]['data'] = '';
+					$this->diy[$this->cnt_diy]['diy'] = '';
 
 					$ccnt = $key + 1;
 					while(isset($mod_arr[$ccnt]) && substr($mod_arr[$ccnt], 0, 1) != '#')
 					{
-						$this->diy[$this->cnt_diy]['data'] .= $mod_arr[$ccnt] . "\n";
+						$this->diy[$this->cnt_diy]['diy'] .= $mod_arr[$ccnt] . "\n";
 						$ccnt++;
 					}
-					$this->diy[$this->cnt_diy]['data'] = rtrim($this->diy[$this->cnt_diy]['data']);
+					$this->diy[$this->cnt_diy]['diy'] = rtrim($this->diy[$this->cnt_diy]['diy']);
 				}
 				else if(strpos($check_str, 'open') !== false)
 				{
@@ -365,7 +364,6 @@ class mod_parser extends parser_outdata
 		$this->cnt_edit = 0;
 		$this->cnt_history = 0;
 		$this->cnt_link = 0;
-		$this->cnt_meta = 0;
 		$this->cnt_open = 0;
 		$this->cnt_sql = 0;
 		$this->cnt_title = 0;

@@ -13,6 +13,7 @@ var edit_cnt = 1;
 var dl_cnt = 1;
 var dt_cnt = 1;
 var dd_cnt = 1;
+var copy_field = '';
 
 /**
 * Change the input type depending on what is selected
@@ -336,7 +337,7 @@ function add_contributor(field_id)
 				element += '<label class="" for="contributor-' + field_id + '-' + temp + '-status">Status:*</label>';
 			element += '</dt>';
 			element += '<dd class="author-rows" id="">';
-				element += '<select class="" name="contributor[' + field_id + '][' + temp + '][status]" id="contributor-' + field_id + '-' + temp + '-status">';
+				element += '<select class="" name="author[' + field_id + '][contributions][' + temp + '][status]" id="contributor-' + field_id + '-' + temp + '-status">';
 					element += '<option value="past">Past</option>';
 					element += '<option value="current">Current</option>';
 				element += '</select>';
@@ -349,7 +350,7 @@ function add_contributor(field_id)
 				element += '<label class="" for="contributor-' + field_id + '-' + temp + '-position">Position:</label>';
 			element += '</dt>';
 			element += '<dd class="author-rows" id="">';
-				element += '<input type="text" class="" id="contributor-' + field_id + '-' + temp + '-position" name="contributor[' + field_id + '][' + temp + '][position]" size="40" maxlength="255" value="" />';
+				element += '<input type="text" class="" id="contributor-' + field_id + '-' + temp + '-position" name="author[' + field_id + '][contributions][' + temp + '][position]" size="40" maxlength="255" value="" />';
 			element += '</dd>';
 		element += '</dl>';
 
@@ -358,7 +359,7 @@ function add_contributor(field_id)
 				element += '<label class="" for="contributor-' + field_id + '-' + temp + '-from">From date:</label>';
 			element += '</dt>';
 			element += '<dd class="author-rows" id="">';
-				element += '<input type="text" class="" id="contributor-' + field_id + '-' + temp + '-from" name="contributor[' + field_id + '][' + temp + '][from]" size="40" maxlength="255" value="" />';
+				element += '<input type="text" class="" id="contributor-' + field_id + '-' + temp + '-from" name="author[' + field_id + '][contributions][' + temp + '][from]" size="40" maxlength="255" value="" />';
 			element += '</dd>';
 		element += '</dl>';
 
@@ -367,7 +368,7 @@ function add_contributor(field_id)
 				element += '<label class="" for="contributor-' + field_id + '-' + temp + '-to">To date:</label>';
 			element += '</dt>';
 			element += '<dd class="author-rows" id="">';
-				element += '<input type="text" class="" id="contributor-' + field_id + '-' + temp + '-to" name="contributor[' + field_id + '][' + temp + '][to]" size="40" maxlength="255" value="" />';
+				element += '<input type="text" class="" id="contributor-' + field_id + '-' + temp + '-to" name="author[' + field_id + '][contributions][' + temp + '][to]" size="40" maxlength="255" value="" />';
 			element += '</dd>';
 		element += '</dl>';
 	element += '</fieldset>';
@@ -401,28 +402,48 @@ function add_desc()
 */
 function add_copy()
 {
+	var a_new_one = false;
+	if (copy_field == '')
+	{
+		copy_field = 'fc_' + field_cnt++;
+		a_new_one = true;
+	}
+
 	var field_id = 'fc_' + field_cnt++;
 	var temp = 'tm_' + field_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 	var dd_id2 = 'dd_' + dd_cnt++;
+	var element = '';
 
-	var element = '<fieldset class="white" id="' + dd_id + '">';
-		element += '<dl class="" id="' + field_id + '">';
-			element += '<dt class="copy-rows" id="">';
-				element += '<label class="" for="copy-' + field_id + '-' + temp + '-from">Copy: (from -&gt; to)</label>';
-				element += '<img class="sign plus-sign" id="" src="./images/plus.png" alt="Add file copy" title="Add file copy" onclick="add_file_copy(\'' + field_id + '\');" />';
-				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
-			element += '</dt>';
+	if(a_new_one)
+	{
+		element += '<fieldset class="white" id="' + dd_id + '">';
+			element += '<dl class="" id="' + copy_field + '">';
+				element += '<dt class="copy-rows" id="">';
+					element += '<label class="" for="copy-' + copy_field + '-' + temp + '-from">Copy: (from -&gt; to)</label>';
+					element += '<img class="sign plus-sign" id="" src="./images/plus.png" alt="Add file copy" title="Add file copy" onclick="add_file_copy(\'' + copy_field + '\');" />';
+					element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove(); copy_field = \'\';" />';
+				element += '</dt>';
+	}
+
 			element += '<dd class="copy-rows" id="' + dd_id2 + '">';
-				element += '<input type="text" class="" id="copy-' + field_id + '-' + temp + '-from" name="copy[' + field_id + '][' + temp + '][from]" size="85" maxlength="255" value="" />';
+				element += '<input type="text" class="" id="copy-' + copy_field + '-' + temp + '-from" name="copy[' + temp + '][from]" size="85" maxlength="255" value="" />';
 				element += '<span class="" id=""> -> </span>';
-				element += '<input type="text" class="" id="" name="copy[' + field_id + '][' + temp + '][to]" size="85" maxlength="255" value="" />';
+				element += '<input type="text" class="" id="" name="copy[' + temp + '][to]" size="85" maxlength="255" value="" />';
 				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id2 + '\').remove()" />';
 			element += '</dd>';
-		element += '</dl>';
-	element += '</fieldset>';
 
-	$('#copy-field').append(element);
+	if(a_new_one)
+	{
+			element += '</dl>';
+		element += '</fieldset>';
+
+		$('#copy-field').append(element);
+	}
+	else
+	{
+		$('#' + copy_field).append(element);
+	}
 }
 
 /**
@@ -480,8 +501,8 @@ function add_history()
 					element += '<label class="" for="history-' + field_id + '-change-' + temp + '-data">Change:*</label>';
 				element += '</dt>';
 				element += '<dd class="history-rows" id="">';
-					element += '<input type="text" class="" id="history-' + field_id + '-change-' + temp + '-data" name="history[' + field_id + '][change][' + temp + '][data]" size="80" maxlength="255" value="" />';
-					element += '<span class="" id="">' + lang_select('history[' + field_id + '][change][' + temp + '][lang]') + '</span>';
+					element += '<input type="text" class="" id="history-' + field_id + '-change-' + temp + '-data" name="history[' + field_id + '][changelog][' + temp + '][change]" size="80" maxlength="255" value="" />';
+					element += '<span class="" id="">' + lang_select('history[' + field_id + '][changelog][' + temp + '][lang]') + '</span>';
 				element += '</dd>';
 			element += '</dl>';
 		element += '</fieldset>';
@@ -505,8 +526,8 @@ function add_history_change(field_id)
 			element += '<label class="" for="history-' + field_id + '-change-' + temp + '-data">Change:</label>';
 		element += '</dt>';
 		element += '<dd class="history-rows" id="">';
-			element += '<input type="text" class="" id="history-' + field_id + '-change-' + temp + '-data" name="history[' + field_id + '][change][' + temp + '][data]" size="80" maxlength="255" value="" />';
-			element += '<span>' + lang_select('history[' + field_id + '][change][' + temp + '][lang]') + '</span>';
+			element += '<input type="text" class="" id="history-' + field_id + '-change-' + temp + '-data" name="history[' + field_id + '][changelog][' + temp + '][change]" size="80" maxlength="255" value="" />';
+			element += '<span>' + lang_select('history[' + field_id + '][changelog][' + temp + '][lang]') + '</span>';
 			element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
 		element += '</dd>';
 	element += '</dl>';

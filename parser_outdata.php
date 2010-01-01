@@ -17,7 +17,7 @@ if(!defined('IN_MODX'))
 }
 
 /**
- * This class is to output what the parsers collect
+ * This class is to output what the parsers collect.
  */
 
 class parser_outdata
@@ -414,7 +414,7 @@ class parser_outdata
 		{}
 		else
 		{
-			if ($this->cnt_title < sizeof($this->title))
+			if (sizeof($this->title) && $this->cnt_title < sizeof($this->title))
 			{
 				return($this->title[$this->cnt_title++]);
 			}
@@ -462,7 +462,7 @@ class parser_outdata
 	 * Get the action in order.
 	 *
 	 * $action[] = array(
-	 * 	'src',
+	 * 	'file',
 	 * 	x[] => array( // x == int
 	 * 		'type',
 	 * 		'data',
@@ -482,4 +482,124 @@ class parser_outdata
 			return(false);
 		}
 	}
+
+	/**
+	 * modx_reset
+	 *
+	 * Reset all counters.
+	 */
+	public function modx_reset()
+	{
+		$this->cnt_action = 0;
+		$this->cnt_author = 0;
+		$this->cnt_author_notes = 0;
+		$this->cnt_change = 0;
+		$this->cnt_changelog = 0;
+		$this->cnt_copy = 0;
+		$this->cnt_description = 0;
+		$this->cnt_diy = 0;
+		$this->cnt_edit = 0;
+		$this->cnt_history = 0;
+		$this->cnt_link = 0;
+		$this->cnt_meta = 0;
+		$this->cnt_open = 0;
+		$this->cnt_sql = 0;
+		$this->cnt_title = 0;
+	}
+
+	/**
+	 * These functions returns the array sizes.
+	 * Mostly to tell if they are empty or not.
+	 * Start
+	 */
+	public function count_action()
+	{
+		return(sizeof($this->action));
+	}
+
+	public function count_author()
+	{
+		return(sizeof($this->author));
+	}
+
+	public function count_author_notes()
+	{
+		return(sizeof($this->author_notes));
+	}
+
+	public function count_copy()
+	{
+		return(sizeof($this->copy));
+	}
+
+	public function count_description()
+	{
+		return(sizeof($this->description));
+	}
+
+	public function count_diy()
+	{
+		return(sizeof($this->diy));
+	}
+
+	public function count_history()
+	{
+		return(sizeof($this->history));
+	}
+
+	public function count_link()
+	{
+		return(sizeof($this->link));
+	}
+
+	public function count_meta()
+	{
+		return(sizeof($this->meta));
+	}
+
+	public function count_sql()
+	{
+		return(sizeof($this->sql));
+	}
+
+	public function count_title()
+	{
+		return(sizeof($this->title));
+	}
+	/**
+	 * These functions returns the array sizes.
+	 * End
+	 */
+
+	/**
+	 * sort_modx_action
+	 *
+	 * Sorts the files and dirs alpabetically within their dirs.
+	 *
+	 */
+	public function sort_modx_action()
+	{
+		$filenames = $directories = $files = array();
+		foreach($this->action as $key => $value)
+		{
+			$files[$key] = $value['file'];
+			$filenames[$key] = basename($value['file']);
+			$directories[$key] = dirname($value['file']);
+		}
+		array_multisort($directories, SORT_STRING, $filenames, SORT_STRING, $files);
+
+		$tmp_arr = $this->action;
+		$this->action = array();
+		foreach ($files as $file)
+		{
+			foreach ($tmp_arr as $row)
+			{
+				if ($row['file'] == $file)
+				{
+					$this->action[] = $row;
+				}
+			}
+		}
+	}
+
 }
