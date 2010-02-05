@@ -556,6 +556,8 @@ function add_link()
 					element += '<option value="parent">Parent</option>';
 					element += '<option value="template-lang">Template_lang</option>';
 					element += '<option value="template">Template</option>';
+					element += '<option value="text">Text file</option>';
+					element += '<option value="php-installer">PHP install file</option>';
 				element += '</select>';
 				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete this entry" onclick="$(\'#' + dd_id + '\').remove()" />';
 			element += '</dd>';

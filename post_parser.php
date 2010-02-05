@@ -119,9 +119,10 @@ class post_parser extends parser_outdata
 
 		$this->history = (isset($post_data['history'])) ? $this->modx_stripslashes($post_data['history']) : array();
 		$this->history = $this->int_keys($this->history);
+		usort($this->history, array($this, 'version_sort'));
 		if (isset($post_data['reverse_history']))
 		{
-			$this->history = array_reverse($this->history, true);
+			$this->history = array_reverse($this->history);
 		}
 
 		$this->sql = (isset($post_data['sql'])) ? $this->modx_stripslashes($post_data['sql']) : array();
@@ -146,6 +147,16 @@ class post_parser extends parser_outdata
 	}
 
 	// private functions.
+
+	/**
+	 * version_sort
+	 *
+	 * Callback function to sort the history array.
+	 */
+	private function version_sort($a, $b)
+	{ // sorterar ratingen
+		return (version_compare($a['version'], $b['version']));
+	}
 
 	/**
 	 * int_keys

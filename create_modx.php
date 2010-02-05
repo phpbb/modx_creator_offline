@@ -7,6 +7,7 @@
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
+
 /**
 * @ignore
 */
@@ -14,6 +15,7 @@ if (!defined('IN_MODX'))
 {
 	exit;
 }
+
 $xml = new XMLWriter();
 $xml->openMemory();
 $xml->setIndent(true);
@@ -30,11 +32,13 @@ $xml->startElement('mod');
 $xml->writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
 $xml->writeAttribute('xmlns', 'http://www.phpbb.com/mods/xml/' . MODX_LATEST);
 
+
 // <header>
 $xml->startElement('header');
 
 // Need to reset the counters.
 $parser->modx_reset();
+
 // <meta>
 // Start with the own meta tag
 write_element('meta', '', array(
@@ -42,7 +46,7 @@ write_element('meta', '', array(
 	'content' => META,
 ), false, false);
 
-while($meta = $parser->get_modx_meta())
+while ($meta = $parser->get_modx_meta())
 {
 	write_element('meta', '', array(
 		'name' => $meta['name'],
@@ -55,7 +59,7 @@ while($meta = $parser->get_modx_meta())
 write_element('license', $license);
 
 // <title>
-while($title = $parser->get_modx_title())
+while ($title = $parser->get_modx_title())
 {
 	$text = trim($title['title']);
 	if ($text != '')
@@ -66,7 +70,7 @@ while($title = $parser->get_modx_title())
 // </title>
 
 // <description>
-while($desc = $parser->get_modx_description())
+while ($desc = $parser->get_modx_description())
 {
 	$text = trim($desc['desc']);
 	if ($text != '')
@@ -77,7 +81,7 @@ while($desc = $parser->get_modx_description())
 // </description>
 
 // <author-notes>
-while($notes = $parser->get_modx_notes())
+while ($notes = $parser->get_modx_notes())
 {
 	$text = trim($notes['note']);
 	if ($text != '')
@@ -89,7 +93,7 @@ while($notes = $parser->get_modx_notes())
 
 // <author-group>
 $xml->startElement('author-group');
-while($author = $parser->get_modx_authors())
+while ($author = $parser->get_modx_authors())
 {
 	if (trim($author['username']) != '')
 	{
@@ -127,7 +131,7 @@ $xml->endElement();
 // <mod-version>
 write_element('mod-version', trim($version), false, false);
 
-// <installation>'
+// <installation>
 $xml->startElement('installation');
 write_element('level', $install_level, false, false);
 write_element('time', $install_time * 60, false, false);
@@ -135,11 +139,11 @@ write_element('target-version', trim($target), false, false);
 $xml->endElement();
 // </installation>
 
+// <history>
 if ($parser->count_history())
 {
-	// <history>
 	$xml->startElement('history');
-	while($history = $parser->get_modx_history())
+	while ($history = $parser->get_modx_history())
 	{
 		if (trim($history['version']) != '' && trim($history['date']) != ''  && !empty($history['changelog']))
 		{
@@ -174,28 +178,35 @@ if ($parser->count_history())
 		}
 	}
 	$xml->endElement();
-	// </history>
 }
+// </history>
 
+// <link-group>
 if ($parser->count_link())
 {
-	// <link-group>
 	$xml->startElement('link-group');
 
-	while($links = $parser->get_modx_links())
+	while ($links = $parser->get_modx_links())
 	{
 		if (trim($links['title']) != '' && trim($links['href']) != '')
 		{
-			write_element('link', trim($links['title']), array(
+			$link_arr = array(
 				'type' => $links['type'],
 				'href' => trim($links['href']),
 				'lang' => $links['lang'],
-			), false, false);
+			);
+
+			if (!empty($links['realname']))
+			{
+				$link_arr = array_merge($link_arr, array('realname' => $links['realname']));
+			}
+
+			write_element('link', trim($links['title']), $link_arr, false, false);
 		}
 	}
 	$xml->endElement();
-	// </link-group>
 }
+// </link-group>
 
 $xml->endElement();
 // </header>
@@ -203,10 +214,10 @@ $xml->endElement();
 // <action-group>
 $xml->startElement('action-group');
 
-// SQL
+// <sql>
 if ($parser->count_sql())
 {
-	while($sql = $parser->get_modx_sql())
+	while ($sql = $parser->get_modx_sql())
 	{
 		if (trim($sql['dbms']) != '' && trim($sql['query']) != '')
 		{
@@ -214,13 +225,13 @@ if ($parser->count_sql())
 		}
 	}
 }
+// </sql>
 
-// Copy
+// <copy>
 if ($parser->count_copy())
 {
-	// <copy>
 	$xml->startElement('copy');
-	while($copy = $parser->get_modx_copy())
+	while ($copy = $parser->get_modx_copy())
 	{
 		write_element('file', '', array(
 			'from' => trim($copy['from']),
@@ -228,18 +239,18 @@ if ($parser->count_copy())
 		), false, false);
 	}
 	$xml->endElement();
-	// </copy>
 }
+// </copy>
 
 // And the damage...
 if ($parser->count_action())
 {
-	while($action = $parser->get_modx_action())
+	while ($action = $parser->get_modx_action())
 	{
 		// <open>
 		$xml->startElement('open');
 		$xml->writeAttribute('src', trim($action['file']));
-		foreach($action as $key2 => $value2)
+		foreach ($action as $key2 => $value2)
 		{
 			// Array 2 edits We dont need the filenames here
 			if (is_int($key2) || $key2 != 'file')
@@ -403,7 +414,7 @@ if ($parser->count_action())
 // DIY
 if ($parser->count_diy())
 {
-	while($diy = $parser->get_modx_diy())
+	while ($diy = $parser->get_modx_diy())
 	{
 		if (trim($diy['diy']) != '')
 		{

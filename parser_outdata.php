@@ -72,11 +72,11 @@ class parser_outdata
 	{
 		if ($string)
 		{
-			return($this->mod_version);
+			return($this->installation_level);
 		}
 		else
 		{
-			switch ($this->mod_version)
+			switch ($this->installation_level)
 			{
 				case 'easy':
 					return(EASY);
