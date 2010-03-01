@@ -52,8 +52,8 @@ class post_parser extends parser_outdata
 		// The strings
 		$this->mod_version = (isset($post_data['version'])) ? stripslashes(trim($post_data['version'])) : '';
 		$this->target_version = (isset($post_data['target'])) ? stripslashes(trim($post_data['target'])) : '';
-		$this->installation_level = (isset($post_data['install_level'])) ? stripslashes(trim($post_data['install_level'])) : '';
-		$this->installation_time = (isset($post_data['install_time'])) ? intval(trim($post_data['install_time'])) : 0;
+		$this->installation_level = (isset($post_data['install-level'])) ? stripslashes(trim($post_data['install-level'])) : '';
+		$this->installation_time = (isset($post_data['install-time'])) ? intval(trim($post_data['install-time'])) : 0;
 		$this->installation_time = (!empty($this->installation_time)) ? $this->installation_time * 60 : 0;
 		$this->license = (isset($post_data['license'])) ? stripslashes(trim($post_data['license'])) : '';
 
@@ -183,23 +183,22 @@ class post_parser extends parser_outdata
 	*/
 	private function modx_stripslashes(&$array)
 	{
-		global $strip;
-		if(!is_array($array))
+		if (!is_array($array))
 		{
 			$array = str_replace(chr(13), '', $array);
 			return(stripslashes($array));
 		}
 
-		foreach($array as $key => $value)
+		foreach ($array as $key => $value)
 		{
-			if(is_array($value))
+			if (is_array($value))
 			{
 				$this->modx_stripslashes($array[$key]);
 			}
 			else
 			{
 				$value = str_replace(chr(13), '', $value);
-				if($strip)
+				if (STRIP)
 				{
 					$array[$key] = stripslashes($value);
 				}

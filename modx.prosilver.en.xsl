@@ -698,10 +698,10 @@ var enStrings = "dir=ltr\n" +
 "link-d=Dependency\n" +
 "link-l=Language\n" +
 "link-p=Parent\n" +
-"link-php=PHP install file\n" +
 "link-te=Template\n" +
 "link-txt=Text file\n" +
 "link-tl=Template lang\n" +
+"link-un=Uninstall instructions\n" +
 "atm=About this MOD";
 
 var box = codes_ll;
@@ -1758,36 +1758,38 @@ function toggle_edit(o)
 
 		<ul class="link-group" id="link-group">
 			<xsl:for-each select="mod:link-group/mod:link">
-				<li lang="{@lang}">
-					<span class="link-group-lang"><xsl:value-of select="@lang" />&nbsp;</span>
-					<strong>
-						<xsl:if test="@type = 'contrib'">
-							<span id="lang-link-c[{generate-id()}]">Contrib</span>:
-						</xsl:if>
-						<xsl:if test="@type = 'dependency'">
-							<span id="lang-link-d[{generate-id()}]">Dependency</span>:
-						</xsl:if>
-						<xsl:if test="@type = 'language'">
-							<span id="lang-link-l[{generate-id()}]">Language</span>:
-						</xsl:if>
-						<xsl:if test="@type = 'parent'">
-							<span id="lang-link-p[{generate-id()}]">Parent</span>:
-						</xsl:if>
-						<xsl:if test="@type = 'php-installer'">
-							<span id="lang-link-php[{generate-id()}]">PHP install file</span>:
-						</xsl:if>
-						<xsl:if test="@type = 'template'">
-							<span id="lang-link-te[{generate-id()}]">Template</span>:
-						</xsl:if>
-						<xsl:if test="@type = 'template-lang'">
-							<span id="lang-link-tl[{generate-id()}]">Template lang</span>:
-						</xsl:if>
-						<xsl:if test="@type = 'text'">
-							<span id="lang-link-txt[{generate-id()}]">Text file</span>:
-						</xsl:if>
-					</strong>
-					&nbsp;<a href="{@href}"><xsl:value-of select="current()" /></a>
-				</li>
+				<xsl:if test="@type != 'php-installer'">
+					<li lang="{@lang}">
+						<span class="link-group-lang"><xsl:value-of select="@lang" />&nbsp;</span>
+						<strong>
+							<xsl:if test="@type = 'contrib'">
+								<span id="lang-link-c[{generate-id()}]">Contrib</span>:
+							</xsl:if>
+							<xsl:if test="@type = 'dependency'">
+								<span id="lang-link-d[{generate-id()}]">Dependency</span>:
+							</xsl:if>
+							<xsl:if test="@type = 'language'">
+								<span id="lang-link-l[{generate-id()}]">Language</span>:
+							</xsl:if>
+							<xsl:if test="@type = 'parent'">
+								<span id="lang-link-p[{generate-id()}]">Parent</span>:
+							</xsl:if>
+							<xsl:if test="@type = 'template'">
+								<span id="lang-link-te[{generate-id()}]">Template</span>:
+							</xsl:if>
+							<xsl:if test="@type = 'template-lang'">
+								<span id="lang-link-tl[{generate-id()}]">Template lang</span>:
+							</xsl:if>
+							<xsl:if test="@type = 'text'">
+								<span id="lang-link-txt[{generate-id()}]">Text file</span>:
+							</xsl:if>
+							<xsl:if test="@type = 'uninstall'">
+								<span id="lang-link-un[{generate-id()}]">Uninstall instructions</span>:
+							</xsl:if>
+						</strong>
+						&nbsp;<a href="{@href}"><xsl:value-of select="current()" /></a>
+					</li>
+				</xsl:if>
 			</xsl:for-each>
 		</ul>
 		<hr />

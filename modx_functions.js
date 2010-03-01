@@ -1,10 +1,5 @@
 /**
-*
-* @package MODX creator
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-*
+* JavaScript for modx-creator @ phpbb.com
 */
 
 var field_cnt = 1;
@@ -13,12 +8,11 @@ var edit_cnt = 1;
 var dl_cnt = 1;
 var dt_cnt = 1;
 var dd_cnt = 1;
-var copy_field = '';
 
 /**
 * Change the input type depending on what is selected
 */
-function get_select_change(value, dt_id, dd_id, file_name)
+function get_select_change(value, dt_id, dd_id, file_name, dl5_id)
 {
 	var data_type = 0;
 	var row_count;
@@ -35,27 +29,27 @@ function get_select_change(value, dt_id, dd_id, file_name)
 		}
 		$('#' + dd_id + '_field').remove();
 	}
-
 	if($('#' + dd_id + '_info'))
 	{
 		$('#' + dd_id + '_info').remove();
 	}
 
-	if($('#' + dd_id + '-plus'))
+	if($('#' + dd_id + '_toolbox'))
 	{
-		$('#' + dd_id + '-plus').remove();
+		$('#' + dd_id + '_toolbox').remove();
 	}
 
-	if($('#' + dd_id + '-minus'))
+	if($('#' + dd_id + '_delete_tool'))
 	{
-		$('#' + dd_id + '-minus').remove();
+		$('#' + dd_id + '_delete_tool').remove();
 	}
+
 
 	switch(value)
 	{
 		case 'find':
 			data_type = 1;
-			info_img = '<img id="' + dd_id + '_info" class="action-arrows" src="./images/info_2.png" alt="Find explain" title="Find tags in the MODX file should be in the order that the find targets appear in the file. In other words, a processor of the MODX file should never need to go backwards in the file to locate all of the finds. When there are multiple finds within a single edit tag, the processor should handle all finds before any actions." />';
+			info_img = '<img id="' + dd_id + '_info" class="sign" src="./images/info.png" alt="Find explain" title="Find tags in the MODX file should be in the order that the find targets appear in the file. In other words, a processor of the MODX file should never need to go backwards in the file to locate all of the finds. When there are multiple finds within a single edit tag, the processor should handle all finds before any actions." />';
 		break;
 
 		case 'after-add':
@@ -63,54 +57,59 @@ function get_select_change(value, dt_id, dd_id, file_name)
 		case 'replace-with':
 		case 'operation':
 			data_type = 1;
-			info_img = '<img id="' + dd_id + '_info" class="action-arrows" src="./images/info_12.png" alt="Action explain" title="the string to add before the find, add after the find, replace the find with, or the operation string." />';
+			info_img = '<img id="' + dd_id + '_info" class="sign" src="./images/info.png" alt="Action explain" title="the string to add before the find, add after the find, replace the find with, or the operation string." />';
 		break;
 
 		case 'inline-find':
-		case 'inline-operation':
-		case 'inline-replace-with':
-		case 'inline-before-add':
 		case 'inline-after-add':
+		case 'inline-before-add':
+		case 'inline-replace-with':
+		case 'inline-operation':
 			data_type = 2;
-			info_img = '<img id="' + dd_id + '_info" class="action-arrows" src="./images/info_8.png" alt="Inline explain" title="Note that the inline tags may not contain line breaks." />';
+			info_img = '<img id="' + dd_id + '_info" class="sign" src="./images/info.png" alt="Inline explain" title="Note that the inline tags may not contain line breaks." />';
 		break;
 
 		default:
 			data_type = 3;
-			info_img = '<img id="' + dd_id + '_info" class="action-arrows" src="./images/info_17.png" alt="Comment explain" title="Comment pertaining to this edit." />';
+			info_img = '<img id="' + dd_id + '_info" class="sign" src="./images/info.png" alt="Comment explain" title="Comment pertaining to this edit." />';
 		break;
 	}
 
 	switch(data_type)
 	{
 		case 1:
-			var element = '<span class="" id="' + dd_id + '_field">';
-				element += '<textarea id="' + dd_id + '_data" name="' + file_name + '[data]" rows="' + count_rows(tmp_data, 85, 20, 4) + '">' + tmp_data + '</textarea>';
-				element += '<img class="action-text2" id="' + dd_id + '-plus" src="./images/add.png" onclick="document.mainform.' + dd_id + '_data.rows+=4" alt="Add 4 rows" title="Add 4 rows to the textfield" />';
-				element += '<img class="action-text3" id="' + dd_id + '-minus" src="./images/del.png" alt="Remove 4 rows" title="Remove 4 rows" onclick="if(document.mainform.' + dd_id + '_data.rows>7){document.mainform.' + dd_id + '_data.rows-=4}else{document.mainform.' + dd_id + '_data.rows-=(document.mainform.' + dd_id + '_data.rows-4)};" />';
-			element += '</span>';
+			var element = '<div id="' + dd_id + '_field">';
+				element += '<textarea class="inputbox right-tools" id="' + dd_id + '_data" name="' + file_name + '[data]" rows="' + count_rows(tmp_data, 85, 20, 4) + '">' + tmp_data + '</textarea>';
+				element += '<div class="right-tools" id="' + dd_id + '_toolbox">';
+					element += '<img id="' + dd_id + '_delete_tool" class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dl5_id + '\').remove()" />';
+					element += '<img id="' + dd_id + '-plus" class="action-image" src="./images/plus.png" alt="Add 4 rows" onclick="document.forms[\'modxform\'].' + dd_id + '_data.rows+=4" title="Add 4 rows to the textfield" />';
+					element += '<img id="' + dd_id + '-minus" class="action-image" src="./images/del.png" alt="Remove 4 rows" onclick="if(document.forms[\'modxform\'].' + dd_id + '_data.rows>7){document.forms[\'modxform\'].' + dd_id + '_data.rows-=4}else{document.forms[\'modxform\'].' + dd_id + '_data.rows-=(document.forms[\'modxform\'].' + dd_id + '_data.rows-4)};" title="Remove 4 rows from the textfield" />';
+				element += '</div>';
+			element += '</div>';
 		break;
 
 		case 2:
 			var element = '<span id="' + dd_id + '_field">';
-				element += '<textarea id="' + dd_id + '_data" name="' + file_name + '[data]" rows="1"  onKeypress="if((event.keyCode == 10) || (event.keyCode == 13)){return false;}">' + tmp_data + '</textarea>';
+				element += '<textarea class="inputbox" id="' + dd_id + '_data" name="' + file_name + '[data]" rows="1" onKeypress="if((event.keyCode == 10) || (event.keyCode == 13)){return false;}">' + tmp_data + '</textarea>';
+				element += '<img id="' + dd_id + '_delete_tool" class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dl5_id + '\').remove()" />';
 			element += '</span>';
 		break;
 
 		default:
-			var element = '<span class="" id="' + dd_id + '_field">';
-				element += '<textarea class="action-comment" id="' + dd_id + '_data" name="' + file_name + '[data]" rows="' + count_rows(tmp_data, 70, 20, 4) + '">' + tmp_data + '</textarea>';
-				element += '<span class="" id="' + dd_id + '_lang">';
-					element += lang_select(file_name + '[lang]');
-				element += '</span>';
-				element += '<img class="action-text2" id="' + dd_id + '-plus" src="./images/add.png" alt="Add 4 rows" onclick="document.mainform.' + dd_id + '_data.rows+=4" title="Add 4 rows" />';
-				element += '<img class="action-text3" id="' + dd_id + '-minus" src="./images/del.png" alt="Remove 4 rows" title="Remove 4 rows" onclick="if(document.mainform.' + dd_id + '_data.rows>7){document.mainform.' + dd_id + '_data.rows-=4}else{document.mainform.' + dd_id + '_data.rows-=(document.mainform.' + dd_id + '_data.rows-4)};" />';
-			element += '</span>';
+			var element = '<div id="' + dd_id + '_field">';
+				element += '<textarea class="inputbox right-tools" id="' + dd_id + '_data" name="' + file_name + '[data]" rows="' + count_rows(tmp_data, 70, 20, 4) + '">' + tmp_data + '</textarea>';
+				element += '<div class="right-tools" id="' + dd_id + '_toolbox">';
+					element += '<img id="' + dd_id + '_delete_tool" class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dl5_id + '\').remove()" />';
+					element += '<img id="' + dd_id + '-plus" class="action-image" src="./images/plus.png" alt="Add 4 rows" onclick="document.forms[\'modxform\'].' + dd_id + '_data.rows+=4" title="Add 4 rows to the textfield" />';
+					element += '<img id="' + dd_id + '-minus" class="action-image" src="./images/del.png" alt="Remove 4 rows" onclick="if(document.forms[\'modxform\'].' + dd_id + '_data.rows>7){document.forms[\'modxform\'].' + dd_id + '_data.rows-=4}else{document.forms[\'modxform\'].' + dd_id + '_data.rows-=(document.forms[\'modxform\'].' + dd_id + '_data.rows-4)};" title="Remove 4 rows from the textfield" />';
+				element += '</div>';
+				element += '<div id="' + dd_id + '_lang">' + lang_select(file_name + '[lang]') + '</div>';
+			element += '</div>';
 		break;
 	}
 
-	$('#' + dt_id).append(info_img);
-	$('#' + dd_id).prepend(element);
+	$('#' + dd_id).append(element);
+	$('#' + dt_id + '_options').append(info_img);
 }
 
 /**
@@ -126,50 +125,50 @@ function modx_add_field(obj_id, parent_id, sort, position, if_edit)
 
 	if(sort == 'edit')
 	{
-		var element = '<fieldset class="white" id="' + edit_id + '">';
-			element += '<legend>Edit';
-				element += '<img class="sign" id="" src="./images/info.png" alt="Find info" title="Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains. All finds within an edit tag should be processed before any action tag." />';
-				element += '<img class="do-stuff" id="" src="./images/plus_up.png" alt="Arrow up icon" title="Add a edit field above this edit field" onclick="modx_add_field(\'' + obj_id + '\', \'' + edit_id + '\', \'edit\', \'above\', 1);" />';
-				element += '<img class="do-stuff" id="" src="./images/plus_down.png" alt="Arrow down icon" title="Add a edit field below this edit field" onclick="modx_add_field(\'' + obj_id + '\', \'' + edit_id + '\', \'edit\', \'below\', 1)" />';
-				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete this edit" onclick="$(\'#' + edit_id + '\').remove()" />';
-			element += '</legend>';
-			element += '<p class="">NOTE: Each discreet change to a file must be wrapped in its own edit tag.</p>';
-			element += '<dl class="" id="' + dl_id + '" style="white-space: nowrap;">';
-				element += '<dt class="" id="' + dt_id + '">';
-					element += '<label>Type:</label>';
-					element += '<span>';
-						element += modx_select(obj_id + '[' + edit_id + '][' + dl_id + ']', dt_id, dd_id);
-					element += '</span><br />';
-					element += '<img class="action-arrows" id="" src="./images/plus_up.png" alt="Arrow up icon" title="" onclick="modx_add_field(\'' + obj_id + new_edit + '\', \'' + dl_id + '\', \'dl\', \'above\', 0)" />';
-					element += '<img class="action-arrows" id="" src="./images/plus_down.png" alt="Arrow down icon" title="Add action below" onclick="modx_add_field(\'' + obj_id + new_edit + '\', \'' + dl_id + '\', \'dl\', \'below\', 0" />';
-					element += '<img class="action-arrows" id="' + dd_id + '_info" src="./images/info.png" alt="Info icon" title="Select the type for this action" onclick="" />';
+		var element = '<fieldset class="modx-level2" id="' + edit_id + '">';
+			element += '<legend class="sub-legend"> Edit';
+				element += ' <img class="sign" src="./images/info.png" alt="Info icon" title="Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains. All finds within an edit tag should be processed before any action tag." />';
+				element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + edit_id + '\').remove()" /> ';
+				element += '<button type="button" class="button1" onclick="modx_add_field(\'' + obj_id + '\', \'' + edit_id + '\', \'edit\', \'above\', 1)">Add edit above</button> ';
+				element += '<button type="button" class="button1" onclick="modx_add_field(\'' + obj_id + '\', \'' + edit_id + '\', \'edit\', \'below\', 1)">Add edit below</button>';
+			element += ' <strong>Each FIND typically requires to start a new EDIT</strong></legend>';
+			element += '<p style="font-size: 1em;">NOTE: Each discreet change to a file must be wrapped in its own edit tag. </p>';
+			element += '<dl id="' + dl_id + '">';
+				element += '<dt id="' + dt_id + '">';
+					element += '<label>Type: </label>';
+					element += '<span>' + modx_select(obj_id + '[' + edit_id + '][' + dl_id + ']', dt_id, dd_id, dl_id) + '</span>';
+					element += '<div id="' + dt_id + '_options" style="margin-top: 5px">';
+						element += '<img class="action-image" src="./images/plus_up.png" alt="Add action above" onclick="modx_add_field(\'' + obj_id + new_edit + '\', \'' + dl_id + '\', \'dl\', \'above\', 0);" title="Add an action field above this field" /> ';
+						element += '<img class="action-image" src="./images/plus_down.png" onclick="modx_add_field(\'' + obj_id + new_edit + '\', \'' + dl_id + '\', \'dl\', \'below\', 0);" title="Add an action field below this field" /> ';
+						element += '<img id="' + dd_id + '_info" class="sign" src="./images/info.png" title="Select type for this action field." />';
+					element += '</div>';
 				element += '</dt>';
-				element += '<dd class="" id="' + dd_id + '">';
-					element += '<span class="" id="' + dd_id + '_field">';
-						element += '<input type="text" name="' + obj_id + new_edit + '[' + dl_id + '][data]" class="" id="' + dd_id + '_data" disabled="disabled" size="30" value="" />';
+				element += '<dd id="' + dd_id + '">';
+					element += '<span id="' + dd_id + '_field">';
+						element += '<input class="inputbox autowidth" id="' + dd_id + '_data" type="text" name="' + obj_id + new_edit + '[' + dl_id + '][data]" disabled="disabled" size="30" value="" />';
 					element += '</span>';
-					element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dl_id + '\').remove()" />';
+					element += '<img id="' + dd_id + '_delete_tool" class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dl_id + '\').remove()" />';
 				element += '</dd>';
 			element += '</dl>';
 		element += '</fieldset>';
 	}
 	else
 	{
-		var element = '<dl class="" id="' + dl_id + '" style="white-space: nowrap;">';
-			element += '<dt class="" id="' + dt_id + '">';
-				element += '<label class="">Type:</label>';
-				element += '<span class="" id="">';
-					element += modx_select(obj_id + '[' + dl_id + ']', dt_id, dd_id);
-				element += '</span><br />';
-				element += '<img class="action-arrows" id="" src="./images/plus_up.png" alt="Arrow up icon" title="Add action above" onclick="modx_add_field(\'' + obj_id + new_edit + '\', \'' + dl_id + '\', \'dl\', \'above\', 0)" />';
-				element += '<img class="action-arrows" id="" src="./images/plus_down.png" alt="Arrow down icon" title="Add action below" onclick="modx_add_field(\'' + obj_id + new_edit + '\', \'' + dl_id + '\', \'dl\', \'below\', 0)" />';
-				element += '<img class="action-arrows" id="' + dd_id + '_info" src="./images/info.png" alt="Info icon" title="Select the type for the string field" onclick="" />';
+		var element = '<dl id="' + dl_id + '">';
+			element += '<dt id="' + dt_id + '">';
+				element += '<label>Type: </label>';
+				element += '<span>' + modx_select(obj_id + '[' + dl_id + ']', dt_id, dd_id, dl_id) + '</span>';
+				element += '<div id="' + dt_id + '_options" style="margin-top: 5px">';
+					element += '<img class="action-image" src="./images/plus_up.png" alt="Add action above" onclick="modx_add_field(\'' + obj_id + new_edit + '\', \'' + dl_id + '\', \'dl\', \'above\', 0);" title="Add action above" /> ';
+					element += '<img class="action-image" src="./images/plus_down.png" alt="Add action below" onclick="modx_add_field(\'' + obj_id + new_edit + '\', \'' + dl_id + '\', \'dl\', \'below\', 0)" title="Add an action field below this field" /> ';
+					element += '<img id="' + dd_id + '_info" class="sign" src="./images/info.png" alt="Type explain" title="Select type for this action field" />';
+				element += '</div>';
 			element += '</dt>';
-			element += '<dd class="" id="' + dd_id + '">';
-				element += '<span class="" id="' + dd_id + '_field">';
-					element += '<input type="text" class="" id="' + dd_id + '_data" name="' + obj_id + '[' + dl_id + '][data]" size="30" value="" disabled="disabled" />';
-				element += '</span>';
-				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dl_id + '\').remove()" />';
+			element += '<dd id="' + dd_id + '">';
+				element += '<span id="' + dd_id + '_field">';
+					element += '<input class="inputbox autowidth" id="' + dd_id + '_data" type="text" name="' + obj_id + '[' + dl_id + '][data]" disabled="disabled" size="30" value="" />';
+				element += '</dd>';
+				element += '<img id="' + dd_id + '_delete_tool" class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dl_id + '\').remove();" />';
 			element += '</dd>';
 		element += '</dl>';
 	}
@@ -187,9 +186,9 @@ function modx_add_field(obj_id, parent_id, sort, position, if_edit)
 /**
 * Generate the type select
 */
-function modx_select(file_name, dt_id, dd_id)
+function modx_select(file_name, dt_id, dd_id, dl_id)
 {
-	var element = '<select class="krav" name="' + file_name + '[type]" onchange="if(this.options[this.selectedIndex].value != \'-\'){ get_select_change(this.options[this.selectedIndex].value, \'' + dt_id + '\', \'' + dd_id + '\', \'' + file_name + '\') }">';
+	var element = '<select class="krav" name="' + file_name + '[type]" onchange="if(this.options[this.selectedIndex].value != \'-\'){ get_select_change(this.options[this.selectedIndex].value, \'' + dt_id + '\', \'' + dd_id + '\', \'' + file_name + '\', \'' + dl_id + '\') }">';
 		element += '<option value="comment">Comment</option>';
 		element += '<option value="find">Find</option>';
 		element += '<option value="after-add">After add</option>';
@@ -216,40 +215,44 @@ function act_file()
 	var dd_id = 'edd_' + dd_cnt++;
 	var dt_id = 'edt_' + dt_cnt++;
 
-	var element = '<fieldset class="inner" id="' + file_id + '">';
-		element += '<dl class="" id="' + dl1_id + '">';
-			element += '<dt class="" id="">';
-				element += '<label class="" for="modx-' + file_id + '-file">File to open:</label>';
-				element += '<img class="sign" id="" src="./images/info.png" alt="Info icon" title="Relative path from the phpBB root for the file to open. For example, viewforum.php or includes/functions.php" onclick="" />';
+	var element = '<fieldset class="modx-level1 fields2 file-edit" id="' + file_id + '">';
+		element += '<dl id="' + dl1_id + '">';
+			element += '<dt>';
+				element += '<label for="modx-' + file_id + '-file">File to open:</label>';
+				element += '<img class="sign" src="./images/info.png" alt="File explain" title="Relative path from the phpBB root for the file to open. For example, viewforum.php or includes/functions.php" />';
 			element += '</dt>';
-			element += '<dd class="" id="">';
-				element += '<input type="text" class="" id="modx-' + file_id + '-file" name="modx[' + file_id + '][file]" size="88" value="" />';
-				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete this file" onclick="$(\'#' + file_id + '\').remove()" />';
+			element += '<dd>';
+				element += '<input class="inputbox medium" type="text" name="modx[' + file_id + '][file]" id="modx-' + file_id + '-file" size="88" value="" />';
+				element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + file_id + '\').remove()" />';
 			element += '</dd>';
 		element += '</dl>';
-		element += '<fieldset class="white" id="' + edit_id + '">';
-			element += '<legend class="">Edit';
-				element += '<img class="sign" id="" src="./images/info.png" alt="Info icon" title="Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains. All finds within an edit tag should be processed before any action tag." onclick="" />';
-				element += '<img class="do-stuff" id="" src="./images/plus_up.png" alt="Arrow up icon" title="Add edit above" onclick="modx_add_field(\'modx[' + file_id + ']\', \'' + edit_id + '\', \'edit\', \'above\', 1)" />';
-				element += '<img class="do-stuff" id="" src="./images/plus_down.png" alt="Arrow down icon" title="Add edit below" onclick="modx_add_field(\'modx[' + file_id + ']\', \'' + edit_id + '\', \'edit\', \'below\', 1)" />';
-				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete this edit" onclick="$(\'#' + edit_id + '\').remove()" />';
-			element += '</legend>';
-			element += '<p class="">NOTE: Each discreet change to a file must be wrapped in its own edit tag.</p>';
-			element += '<dl class="" id="' + dl2_id + '" style="white-space: nowrap;">';
-				element += '<dt class="" id="' + dt_id + '">';
-					element += '<label class="" for="">Type:</label>';
-					element += '<span class="" id="">';
-						element += modx_select('modx[' + file_id + '][' + edit_id + '][' + dl2_id + ']', dt_id, dd_id);
-					element += '</span><br />';
-					element += '<img class="action-arrows" id="" src="./images/plus_up.png" alt="Arrow up icon" title="Add action above" onclick="modx_add_field(\'modx[' + file_id + '][' + edit_id + ']\', \'' + dl2_id + '\', \'dl\', \'above\', 0)" />';
-					element += '<img class="action-arrows" id="" src="./images/plus_down.png" alt="Arrow down icon" title="Add action below" onclick="modx_add_field(\'modx[' + file_id + '][' + edit_id + ']\', \'' + dl2_id + '\', \'dl\', \'below\', 0)" />';
-					element += '<img class="action-arrows" id="' + dd_id + '_info" src="./images/info.png" alt="Info icon" title="Select the type for this action." onclick="" />';
+
+		element += '<hr /><br />';
+
+		element += '<fieldset class="modx-level2" id="' + edit_id + '">';
+			element += '<legend>Edit';
+				element += ' <img class="sign" src="./images/info.png" alt="Edit explain" title="Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains. All finds within an edit tag should be processed before any action tag." /> ';
+				element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + edit_id + '\').remove()" />';
+				element += '<button type="button" class="button1" onclick="modx_add_field(\'modx[' + file_id + ']\', \'' + edit_id + '\', \'edit\', \'above\', 1);">Add edit above</button> ';
+				element += '<button type="button" class="button1" onclick="modx_add_field(\'modx[' + file_id + ']\', \'' + edit_id + '\', \'edit\', \'below\', 1)">Add edit below</button>';
+			element += ' <strong>Each FIND typically requires to start a new EDIT</strong></legend>';
+			element += '<p style="font-size: 1em">NOTE: Each discreet change to a file must be wrapped in its own edit tag.</p>';
+
+			element += '<dl id="' + dl2_id + '">';
+				element += '<dt id="' + dt_id + '">';
+					element += '<label>Type:</label>';
+					element += '<span>' + modx_select('modx[' + file_id + '][' + edit_id + '][' + dl2_id + ']', dt_id, dd_id, dl2_id) + '</span>';
+					element += '<div id="' + dt_id + '_options" style="margin-top: 5px">';
+						element += ' <img class="action-image" src="./images/plus_up.png" alt="Add field above" onclick="modx_add_field(\'modx[' + file_id + '][' + edit_id + ']\', \'' + dl2_id + '\', \'dl\', \'above\', 0);" title="Add an action field above this field" />';
+						element += ' <img class="action-image" src="./images/plus_down.png" alt="Add field below" onclick="modx_add_field(\'modx[' + file_id + '][' + edit_id + ']\', \'' + dl2_id + '\', \'dl\', \'below\', 0);" title="Add action below" />';
+						element += ' <img id="' + dd_id + '_info" class="sign" src="./images/info.png" alt="Type explain" title="Select the type for the action field." />';
+					element += '</div>';
 				element += '</dt>';
-				element += '<dd class="" id="' + dd_id + '">';
-					element += '<span class="" id="' + dd_id + '_field">';
-						element += '<input type="text" class="" id="' + dd_id + '_data" name="modx[' + file_id + '][' + edit_id + '][' + dl2_id + '][data]" size="30" value="" disabled="disabled" />';
+				element += '<dd id="' + dd_id + '">';
+					element += '<span id="' + dd_id + '_field">';
+						element += '<input class="inputbox autowidth" id="' + dd_id + '_data" type="text" name="modx[' + file_id + '][' + edit_id + '][' + dl2_id + '][data]" disabled="disabled" size="30" value="" />';
 					element += '</span>';
-					element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dl2_id + '\').remove()" />';
+					element += '<img id="' + dd_id + '_delete_tool" class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dl2_id + '\').remove();" />';
 				element += '</dd>';
 			element += '</dl>';
 		element += '</fieldset>';
@@ -266,58 +269,45 @@ function add_author()
 	var field_id = 'author_' + field_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 
-	var element = '<fieldset class="white" id="' + dd_id + '">';
-		element += '<dl class="" id="">';
-			element += '<dt class="author-rows" id="">';
-				element += '<label class="" for="author-' + field_id + '-username">Username:*</label>';
-			element += '</dt>';
-			element += '<dd class="author-rows" id="">';
-				element += '<input type="text" class="" id="author-' + field_id + '-username" name="author[' + field_id + '][username]" size="40" value="" maxlength="255" />';
-				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete this author" onclick="$(\'#' + dd_id + '\').remove()" />';
+	var element = '<fieldset class="modx-level1 fields2" id="' + field_id + '">';
+		element += '<dl>';
+			element += '<dt class="author-rows"><label for="author-' + field_id + '-username">Username:*</label>';
+			element += '<dd class="author-rows">';
+				element += '<input class="inputbox autowidth" type="text" name="author[' + field_id + '][username]" id="author-' + field_id + '-username" size="40" maxlength="255" value="" />';
+				element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + field_id + '\').remove()" />';
 			element += '</dd>';
 		element += '</dl>';
 
-		element += '<dl class="" id="">';
-			element += '<dt class="author-rows" id="">';
-				element += '<label class="" for="author-' + field_id + '-phpbbcom">Not phpBB.com:</label>';
-			element += '</dt>';
-			element += '<dd class="author-rows" id="">';
-				element += '<label class="" for="">';
-					element += '<input type="checkbox" id="author-' + field_id + '-phpbbcom" name="author[' + field_id + '][phpbbcom]" />';
-					element += '<span style="font-size: 12px;" id="">(Check here if this author is not registered at phpbb.com.)</span>';
-				element += '</label>';
+		element += '<dl>';
+			element += '<dt class="author-rows"><label for="author-' + field_id + '-phpbbcom">Not phpBB.com:</label></dt>';
+			element += '<dd class="author-rows"><label>';
+				element += '<input type="checkbox" name="author[' + field_id + '][phpbbcom]" id="author-' + field_id + '-phpbbcom" />';
+				element += '<span style="font-size: 12px;">(Check here if this author is not registered at phpBB.com.)</span>';
+			element += '</label></dd>';
+		element += '</dl>';
+
+		element += '<dl>';
+			element += '<dt class="author-rows"><label for="author-' + field_id + '-realname">Real name:</label></dt>';
+			element += '<dd class="author-rows">';
+				element += '<input class="inputbox autowidth" type="text" name="author[' + field_id + '][realname]" id="author-' + field_id + '-realname" size="40" maxlength="255" value="" />';
 			element += '</dd>';
 		element += '</dl>';
 
-		element += '<dl class="" id="">';
-			element += '<dt class="author-rows" id="">';
-				element += '<label class="" for="author-' + field_id + '-realname">Real name:</label>';
-			element += '</dt>';
-			element += '<dd class="author-rows" id="">';
-				element += '<input type="text" class="" id="author-' + field_id + '-realname" name="author[' + field_id + '][realname]" size="40" maxlength="255" value="" />';
+		element += '<dl>';
+			element += '<dt class="author-rows"><label for="author-' + field_id + '-homepage">www:</label></dt>';
+			element += '<dd class="author-rows">';
+				element += '<input class="inputbox autowidth" type="text" name="author[' + field_id + '][homepage]" id="author-' + field_id + '-homepage" size="40" maxlength="255" value="" />';
 			element += '</dd>';
 		element += '</dl>';
-
-		element += '<dl class="" id="">';
-			element += '<dt class="author-rows" id="">';
-				element += '<label class="" for="author-' + field_id + '-homepage">Homepage:</label>';
-			element += '</dt>';
-			element += '<dd class="author-rows" id="">';
-				element += '<input type="text" class="" id="author-' + field_id + '-homepage" name="author[' + field_id + '][homepage]" size="40" maxlength="255" value="" />';
+		element += '<dl>';
+			element += '<dt class="author-rows"><label for="author-' + field_id + '-email">E-mail:</label></dt>';
+			element += '<dd class="author-rows">';
+				element += '<input class="inputbox autowidth" type="text" name="author[' + field_id + '][email]" id="author-' + field_id + '-email" size="40" maxlength="255" value="" />';
 			element += '</dd>';
 		element += '</dl>';
+		element += '<div id="' + field_id + '-pre"></div>';
 
-		element += '<dl class="" id="">';
-			element += '<dt class="author-rows" id="">';
-				element += '<label class="" for="author-' + field_id + '-email">E-mail:</label>';
-			element += '</dt>';
-			element += '<dd class="author-rows" id="">';
-				element += '<input type="text" class="" id="author-' + field_id + '-email" name="author[' + field_id + '][email]" size="40" maxlength="255" value="" />';
-			element += '</dd>';
-		element += '</dl>';
-
-		element += '<fieldset style="border: none;" id="' + field_id + '"></fieldset>';
-		element += '<input type="button" class="" id="" onclick="add_contributor(\'' + field_id + '\');" value="Add contribution" />';
+		element += '<input class="button2" type="button" value="Add contribution" onclick="add_contributor(\'' + field_id + '\');" /> <img class="sign" src="./images/info.png" alt="Info icon" title="The contributor fields are optional and every author can have several contributor fields. If you choose to add contributor fields, the only field required is the status. The others are optional." />';
 	element += '</fieldset>';
 
 	$('#authors').append(element);
@@ -331,49 +321,41 @@ function add_contributor(field_id)
 	var temp = 'tm_' + field_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 
-	var element = '<fieldset class="noborder" id="' + dd_id + '">';
-		element += '<dl class="" id="">';
-			element += '<dt class="author-rows" id="">';
-				element += '<label class="" for="contributor-' + field_id + '-' + temp + '-status">Status:*</label>';
-			element += '</dt>';
-			element += '<dd class="author-rows" id="">';
-				element += '<select class="" name="author[' + field_id + '][contributions][' + temp + '][status]" id="contributor-' + field_id + '-' + temp + '-status">';
+	var element = '<fieldset class="modx-level2" id="' + dd_id + '">';
+		element += '<dl>';
+			element += '<dt class="author-rows"><label for="contributor-' + field_id + '-' + temp + '-status">Status:</label></dt>';
+			element += '<dd class="author-rows">';
+				element += '<select name="author[' + field_id + '][contributions][' + temp + '][status]" id="contributor-' + field_id + '-' + temp + '-status">';
 					element += '<option value="past">Past</option>';
-					element += '<option value="current">Current</option>';
+					element += '<option value="current" selected="selected">Current</option>';
 				element += '</select>';
-				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
+				element += ' <img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
 			element += '</dd>';
 		element += '</dl>';
 
-		element += '<dl class="" id="">';
-			element += '<dt class="author-rows" id="">';
-				element += '<label class="" for="contributor-' + field_id + '-' + temp + '-position">Position:</label>';
-			element += '</dt>';
-			element += '<dd class="author-rows" id="">';
-				element += '<input type="text" class="" id="contributor-' + field_id + '-' + temp + '-position" name="author[' + field_id + '][contributions][' + temp + '][position]" size="40" maxlength="255" value="" />';
+		element += '<dl>';
+			element += '<dt class="author-rows"><label for="contributor-' + field_id + '-' + temp + '-position">Position:</label></dt>';
+			element += '<dd class="author-rows">';
+				element += '<input type="text" name="author[' + field_id + '][contributions][' + temp + '][position]" id="contributor-' + field_id + '-' + temp + '-position" size="40" maxlength="255" value="" />';
 			element += '</dd>';
 		element += '</dl>';
 
-		element += '<dl class="" id="">';
-			element += '<dt class="author-rows" id="">';
-				element += '<label class="" for="contributor-' + field_id + '-' + temp + '-from">From date:</label>';
-			element += '</dt>';
-			element += '<dd class="author-rows" id="">';
-				element += '<input type="text" class="" id="contributor-' + field_id + '-' + temp + '-from" name="author[' + field_id + '][contributions][' + temp + '][from]" size="40" maxlength="255" value="" />';
+		element += '<dl>';
+			element += '<dt class="author-rows"><label for="contributor-' + field_id + '-' + temp + '-from">From:</label></dt>';
+			element += '<dd class="author-rows">';
+				element += '<input type="text" name="author[' + field_id + '][contributions][' + temp + '][from]" id="contributor-' + field_id + '-' + temp + '-from" size="40" maxlength="255" value="" />';
 			element += '</dd>';
 		element += '</dl>';
 
-		element += '<dl class="" id="">';
-			element += '<dt class="author-rows" id="">';
-				element += '<label class="" for="contributor-' + field_id + '-' + temp + '-to">To date:</label>';
-			element += '</dt>';
-			element += '<dd class="author-rows" id="">';
-				element += '<input type="text" class="" id="contributor-' + field_id + '-' + temp + '-to" name="author[' + field_id + '][contributions][' + temp + '][to]" size="40" maxlength="255" value="" />';
+		element += '<dl>';
+			element += '<dt class="author-rows"><label for="contributor-' + field_id + '-' + temp + '-to">To:</label></dt>';
+			element += '<dd class="author-rows">';
+				element += '<input type="text" name="author[' + field_id + '][contributions][' + temp + '][to]" id="contributor-' + field_id + '-' + temp + '-to" size="40" maxlength="255" value="" />';
 			element += '</dd>';
 		element += '</dl>';
 	element += '</fieldset>';
 
-	$('#' + field_id).append(element);
+	$('#' + field_id + '-pre').append(element);
 }
 
 /**
@@ -384,86 +366,62 @@ function add_desc()
 	var field_id = 'desc_' + field_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 
-	var element = '<dd class="" id="' + dd_id + '">';
-		element += '<textarea class="" id="desc_' + field_id + '_desc" name="desc[' + field_id + '][desc]" rows="5"></textarea>';
-		element += '<span class="" id="">';
-			element += lang_select('desc[' + field_id + '][lang]');
-		element += '</span>';
-		element += '<img class="action-text1" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
-		element += '<img class="action-text2" id="' + dd_id + '-plus" src="./images/add.png" alt="Add 4 rows" title="Add 4 rows" onclick="document.mainform.desc_' + field_id + '_desc.rows+=4" />';
-		element += '<img class="action-text3" id="' + dd_id + '-minus" src="./images/del.png" alt="Remove 4 rows" title="Remove 4 rows" onclick="if(document.mainform.desc_' + field_id + '_desc.rows>7){document.mainform.desc_' + field_id + '_desc.rows-=4}else{document.mainform.desc_' + field_id + '_desc.rows-=(document.mainform.desc_' + field_id + '_desc.rows-4)};" />';
+	var element = '<dd id="' + dd_id + '"><br />';
+		element += '<textarea class="inputbox right-tools" name="desc[' + field_id + '][desc]" id="desc_' + field_id + '_desc" rows="5"></textarea>';
+		element += '<div class="right-tools">';
+			element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
+			element += '<img class="action-image" src="./images/plus.png" alt="Add 4 rows" onclick="document.forms[\'modxform\'].desc_' + field_id + '_desc.rows+=4" title="Add 4 rows to the textfield" />';
+			element += '<img class="action-image" src="./images/del.png" alt="Remove  4 rows" onclick="if(document.forms[\'modxform\'].desc_' + field_id + '_desc.rows>7){document.forms[\'modxform\'].desc_' + field_id + '_desc.rows-=4}else{document.forms[\'modxform\'].desc_' + field_id + '_desc.rows-=(document.forms[\'modxform\'].desc_' + field_id + '_desc.rows-4)};" title="Remove 4 rows from the textfield" />';
+		element += '</div>';
+		element += '<div>' + lang_select('desc[' + field_id + '][lang]') + '</div';
 	element += '</dd>';
 
 	$('#desc-field').append(element);
 }
 
 /**
-* Add copy-field
+* Add the main copy-field
 */
 function add_copy()
 {
-	var a_new_one = false;
-	if (copy_field == '')
-	{
-		copy_field = 'fc_' + field_cnt++;
-		a_new_one = true;
-	}
-
 	var field_id = 'fc_' + field_cnt++;
 	var temp = 'tm_' + field_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 	var dd_id2 = 'dd_' + dd_cnt++;
-	var element = '';
 
-	if(a_new_one)
-	{
-		element += '<fieldset class="white" id="' + dd_id + '">';
-			element += '<dl class="" id="' + copy_field + '">';
-				element += '<dt class="copy-rows" id="">';
-					element += '<label class="" for="copy-' + copy_field + '-' + temp + '-from">Copy: (from -&gt; to)</label>';
-					element += '<img class="sign plus-sign" id="" src="./images/plus.png" alt="Add file copy" title="Add file copy" onclick="add_file_copy(\'' + copy_field + '\');" />';
-					element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove(); copy_field = \'\';" />';
-				element += '</dt>';
-	}
+	var element = '<fieldset class="modx-level2 fields2" id="dd-copy">';
+		element += '<dl id="dl-copy">';
+			element += '<dt class="copy-rows">';
+				element += '<label>Copy: (from &raquo; to)</label>';
+				element += '<img class="action-image" src="./images/plus.png" alt="Add file" title="Add file" onclick="add_file_copy();" /><img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#dd-copy\').remove(); document.getElementById(\'addCopyField\').style.display=\'\';" />';
+			element += '</dt>';
 
 			element += '<dd class="copy-rows" id="' + dd_id2 + '">';
-				element += '<input type="text" class="" id="copy-' + copy_field + '-' + temp + '-from" name="copy[' + temp + '][from]" size="85" maxlength="255" value="" />';
-				element += '<span class="" id=""> -> </span>';
-				element += '<input type="text" class="" id="" name="copy[' + temp + '][to]" size="85" maxlength="255" value="" />';
-				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id2 + '\').remove()" />';
+				element += '<input class="inputbox copy-to" name="copy[' + temp + '][from]" size="85" maxlength="255" value="" type="text" /> &raquo; ';
+				element += '<input class="inputbox" name="copy[' + temp + '][to]" size="85" maxlength="255" value="" type="text" />';
+				element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dd_id2 + '\').remove()" />';
 			element += '</dd>';
+		element += '</dl>';
+	element += '</fieldset>';
 
-	if(a_new_one)
-	{
-			element += '</dl>';
-		element += '</fieldset>';
-
-		$('#copy-field').append(element);
-	}
-	else
-	{
-		$('#' + copy_field).append(element);
-	}
+	$('#copy-field').append(element);
 }
 
 /**
-* Add copy-field
+* Add file copy
 */
-function add_file_copy(field_id)
+function add_file_copy()
 {
 	temp = 'tm_' + field_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 
 	var element = '<dd class="copy-rows" id="' + dd_id + '">';
-		element += '<span style="margin-top: 3px" id="">';
-			element += '<input type="text" class="" id="" name="copy[' + field_id + '][' + temp + '][from]" size="85" maxlength="255" value="" />';
-			element += '<span class="" id=""> -> </span>';
-			element += '<input type="text" class="" id="" name="copy[' + field_id + '][' + temp + '][to]" size="85" maxlength="255" value="" />';
-			element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
-		element += '</span>';
+		element += '<input class="inputbox copy-to" name="copy[' + temp + '][from]" size="85" maxlength="255" value="" type="text" /> &raquo; ';
+		element += '<input class="inputbox" name="copy[' + temp + '][to]" size="85" maxlength="255" value="" type="text" />';
+		element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
 	element += '</dd>';
 
-	$('#' + field_id).append(element);
+	$('#dl-copy').append(element);
 }
 
 /**
@@ -475,39 +433,37 @@ function add_history()
 	var temp = 'logdd_' + dd_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 
-	var element = '<fieldset class="white" id="' + dd_id + '">';
-		element += '<dl class="" id="">';
-			element += '<dt class="history-rows" id="">';
-				element += '<label class="" for="history-' + field_id + '-version">Version:*</label>';
-			element += '</dt>';
-			element += '<dd class="history-rows" id="">';
-				element += '<input type="text" class="" id="history-' + field_id + '-version" name="history[' + field_id + '][version]" size="10" maxlength="255" value="" />';
-				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete this entry" onclick="$(\'#' + dd_id + '\').remove()" />';
+	var element = '<fieldset class="modx-level1 fields2" id="' + dd_id + '">';
+		element += '<dl>';
+			element += '<dt class="history-rows"><label for="history-' + field_id + '-version">Version:*</label></dt>';
+			element += '<dd class="history-rows">';
+				element += '<input class="inputbox autowidth" name="history[' + field_id + '][version]" id="history-' + field_id + '-version" size="10" maxlength="255" value="" type="text" />';
+				element += '<img class="action-image" src="./images/delete.png" alt="" onclick="$(\'#' + dd_id + '\').remove()" />';
 			element += '</dd>';
 		element += '</dl>';
 
-		element += '<dl class="" id="">';
-			element += '<dt class="history-rows" id="">';
-				element += '<label class="" for="history-' + field_id + '-date">Date:*</label>';
-			element += '</dt>';
-			element += '<dd class="history-rows" id="">';
-				element += '<input type="text" class="" id="history-' + field_id + '-date" name="history[' + field_id + '][date]" size="20" maxlength="255" value="" />';
+		element += '<dl>';
+			element += '<dt class="history-rows"><label for="history-' + field_id + '-date">Date:*</label></dt>';
+			element += '<dd class="history-rows">';
+				element += '<input class="inputbox autowidth" name="history[' + field_id + '][date]" id="history-' + field_id + '-date" size="20" maxlength="255" value="" type="text" />';
+				element += '<span style="font-size: 12px;"> (The date format needs to be YYYY-MM-DD)</span>';
 			element += '</dd>';
 		element += '</dl>';
 
-		element += '<fieldset style="border: none;" id="' + field_id + '">';
-			element += '<dl class="" id="">';
-				element += '<dt class="history-rows" id="">';
-					element += '<label class="" for="history-' + field_id + '-change-' + temp + '-data">Change:*</label>';
+		element += '<div id="' + field_id + '">';
+			element += '<hr class="dashed" />';
+			element += '<dl>';
+				element += '<dt class="history-rows">';
+					element += '<label for="history-' + field_id + '-change-' + temp + '-data">Change:*</label>';
 				element += '</dt>';
-				element += '<dd class="history-rows" id="">';
-					element += '<input type="text" class="" id="history-' + field_id + '-change-' + temp + '-data" name="history[' + field_id + '][changelog][' + temp + '][change]" size="80" maxlength="255" value="" />';
-					element += '<span class="" id="">' + lang_select('history[' + field_id + '][changelog][' + temp + '][lang]') + '</span>';
+				element += '<dd class="history-rows">';
+					element += '<input class="inputbox medium" name="history[' + field_id + '][changelog][' + temp + '][change]" id="history-' + field_id + '-change-' + temp + '-data" size="80" maxlength="255" value="" type="text" />';
+					element += '<span>' + lang_select('history[' + field_id + '][changelog][' + temp + '][lang]') + '</span>';
 				element += '</dd>';
 			element += '</dl>';
-		element += '</fieldset>';
+		element += '</div>';
 
-		element += '<input type="button" onclick="add_history_change(\'' + field_id + '\');" value="Add change" />';
+		element += '<input class="button2" value="Add change" onclick="add_history_change(\'' + field_id + '\');" type="button" />';
 	element += '</fieldset>';
 
 	$('#history-fields').append(element);
@@ -521,16 +477,19 @@ function add_history_change(field_id)
 	var temp = 'logdd_' + dd_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 
-	var element = '<dl class="" id="' + dd_id + '">';
-		element += '<dt class="history-rows" id="">';
-			element += '<label class="" for="history-' + field_id + '-change-' + temp + '-data">Change:</label>';
-		element += '</dt>';
-		element += '<dd class="history-rows" id="">';
-			element += '<input type="text" class="" id="history-' + field_id + '-change-' + temp + '-data" name="history[' + field_id + '][changelog][' + temp + '][change]" size="80" maxlength="255" value="" />';
-			element += '<span>' + lang_select('history[' + field_id + '][changelog][' + temp + '][lang]') + '</span>';
-			element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
-		element += '</dd>';
-	element += '</dl>';
+	var element = '<div id="' + dd_id + '">';
+		element += '<hr class="dashed" />';
+		element += '<dl>';
+			element += '<dt class="history-rows">';
+				element += '<label for="history-' + field_id + '-change-' + temp + '-data">Change:*</label>';
+			element += '</dt>';
+			element += '<dd class="history-rows">';
+				element += '<input class="inputbox medium" name="history[' + field_id + '][changelog][' + temp + '][change]" id="history-' + field_id + '-change-' + temp + '-data" size="80" maxlength="255" value="" type="text" />';
+				element += '<span>' + lang_select('history[' + field_id + '][changelog][' + temp + '][lang]') + '</span>';
+				element += ' <img class="action-image" src="./images/delete.png" alt="" onclick="$(\'#' + dd_id + '\').remove()" />';
+			element += '</dd>';
+		element += '</dl>';
+	element += '</div>';
 
 	$('#' + field_id).append(element);
 }
@@ -543,12 +502,10 @@ function add_link()
 	var field_id = 'lf_' + field_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 
-	var element = '<fieldset class="white" id="' + dd_id + '">';
-		element += '<dl class="" id="">';
-			element += '<dt class="link-rows" id="">';
-				element += '<label class="" for="links-' + field_id + '-type">Type:*</label>';
-			element += '</dt>';
-			element += '<dd class="link-rows" id="">';
+	var element = '<fieldset class="modx-level2" id="' + dd_id + '">';
+		element += '<dl>';
+			element += '<dt><label for="links-' + field_id + '-type">Type:*</label></dt>';
+			element += '<dd>';
 				element += '<select name="links[' + field_id + '][type]" id="links-' + field_id + '-type">';
 					element += '<option value="contrib" selected="selected">Contrib</option>';
 					element += '<option value="dependency">Dependency</option>';
@@ -559,26 +516,22 @@ function add_link()
 					element += '<option value="text">Text file</option>';
 					element += '<option value="php-installer">PHP install file</option>';
 				element += '</select>';
-				element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete this entry" onclick="$(\'#' + dd_id + '\').remove()" />';
+				element += ' <img class="action-image" src="./images/delete.png" alt="" onclick="$(\'#' + dd_id + '\').remove()" />';
 			element += '</dd>';
 		element += '</dl>';
 
-		element += '<dl class="" id="">';
-			element += '<dt class="link-rows" id="">';
-				element += '<label class="" for="links-' + field_id + '-title">Link title:*</label>';
-			element += '</dt>';
-			element += '<dd class="link-rows" id="">';
-				element += '<input type="text" class="" id="links-' + field_id + '-title" name="links[' + field_id + '][title]" size="80" maxlength="255" value="" />';
-				element += '<span>' + lang_select('links[' + field_id + '][lang]') + '</span>';
+		element += '<dl>';
+			element += '<dt><label for="links-' + field_id + '-title">Link title:*</label></dt>';
+			element += '<dd>';
+				element += '<input class="inputbox medium" name="links[' + field_id + '][title]" id="links-' + field_id + '-title" size="80" maxlength="255" value="" type="text" />';
+				element += lang_select('links[' + field_id + '][lang]');
 			element += '</dd>';
 		element += '</dl>';
 
-		element += '<dl class="" id="">';
-			element += '<dt class="link-rows" id="">';
-				element += '<label class="" for="links-' + field_id + '-href">URL:*</label>';
-			element += '</dt>';
-			element += '<dd class="link-rows" id="">';
-				element += '<input type="text" class="" id="links-' + field_id + '-href" name="links[' + field_id + '][href]" size="80" maxlength="255" value="" />';
+		element += '<dl>';
+			element += '<dt><label for="links-' + field_id + '-href">href:*</label></dt>';
+			element += '<dd>';
+				element += '<input class="inputbox medium" name="links[' + field_id + '][href]" id="links-' + field_id + '-href" size="80" maxlength="255" value="" type="text" />';
 			element += '</dd>';
 		element += '</dl>';
 	element += '</fieldset>';
@@ -594,12 +547,14 @@ function add_notes()
 	var field_id = 'notes_' + field_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 
-	var element = '<dd class="" id="' + dd_id + '">';
-		element += '<textarea class="" id="notes_' + field_id + '_note" name="notes[' + field_id + '][note]" rows="5"></textarea>';
-		element += '<span>' + lang_select('notes[' + field_id + '][lang]') + '</span>';
-		element += '<img class="action-text1" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
-		element += '<img class="action-text2" id="' + dd_id + '-plus" src="./images/add.png" alt="" title="Add 4 rows" onclick="document.mainform.notes_' + field_id + '_note.rows+=4" />';
-		element += '<img class="action-text3" id="' + dd_id + '-minus" src="./images/del.png" alt="" title="Remove 4 rows" onclick="if(document.mainform.notes_' + field_id + '_note.rows>7){document.mainform.notes_' + field_id + '_note.rows-=4}else{document.mainform.notes_' + field_id + '_note.rows-=(document.mainform.notes_' + field_id + '_note.rows-4)};" />';
+	var element = '<dd id="' + dd_id + '"><br />';
+		element += '<textarea class="inputbox right-tools" name="notes[' + field_id + '][note]" id="notes_' + field_id + '_note" rows="4"></textarea>';
+		element += '<div class="right-tools">';
+			element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dd_id + '\').remove();" />';
+			element += '<img class="action-image" src="./images/plus.png" alt="Add 4 rows" onclick="document.forms[\'modxform\'].notes_' + field_id + '_note.rows+=4" title="Add 4 rows to the textfield" />';
+			element += '<img class="action-image" src="./images/del.png" alt="Scale" onclick="if(document.forms[\'modxform\'].notes_' + field_id + '_note.rows>7){document.forms[\'modxform\'].notes_' + field_id + '_note.rows-=4}else{document.forms[\'modxform\'].notes_' + field_id + '_note.rows-=(document.forms[\'modxform\'].notes_' + field_id + '_note.rows-4)};" title="Remove 4 rows from the textfield)" />';
+		element += '</div>';
+		element += lang_select('notes[' + field_id + '][lang]');
 	element += '</dd>';
 
 	$('#notes-field').append(element);
@@ -613,12 +568,14 @@ function add_diy()
 	var field_id = 'diy_' + field_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 
-	var element = '<dd class="" id="' + dd_id + '">';
-		element += '<textarea class="" id="diy_' + field_id + '_diy" name="diy[' + field_id + '][diy]" rows="5"></textarea>';
-		element += '<span>' + lang_select('diy[' + field_id + '][lang]') + '</span>';
-		element += '<img class="action-text1" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
-		element += '<img class="action-text2" id="' + dd_id + '-plus" src="./images/add.png" alt="Add 4 rows" title="Add 4 rows" onclick="document.mainform.diy_' + field_id + '_diy.rows+=4" />';
-		element += '<img class="action-text3" id="' + dd_id + '-minus" src="./images/del.png" alt="Remove 4 rows" title="Remove 4 rows" onclick="if(document.mainform.diy_' + field_id + '_diy.rows>7){document.mainform.diy_' + field_id + '_diy.rows-=4}else{document.mainform.diy_' + field_id + '_diy.rows-=(document.mainform.diy_' + field_id + '_diy.rows-4)};" />';
+	var element = '<dd id="' + dd_id + '"><br />';
+		element += '<textarea class="inputbox right-tools" name="diy[' + field_id + '][diy]" id="diy_' + field_id + '_diy" rows="4"></textarea>';
+		element += '<div class="right-tools">';
+			element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
+			element += '<img id="' + field_id + '-plus" class="action-image" src="./images/plus.png" alt="Make bigger" onclick="document.forms[\'modxform\'].diy_' + field_id + '_diy.rows+=4" title="Add 4 rows to the textfield" />';
+			element += '<img id="' + field_id + '-minus" class="action-image" src="./images/del.png" alt="Make smaller" onclick="if(document.forms[\'modxform\'].diy_' + field_id + '_diy.rows>7){document.forms[\'modxform\'].diy_' + field_id + '_diy.rows-=4}else{document.forms[\'modxform\'].diy_' + field_id + '_diy.rows-=(document.forms[\'modxform\'].diy_' + field_id + '_diy.rows-4)};" title="Remove 4 rows from the textfield" />';
+		element += '</div>';
+		element += lang_select('diy[' + field_id + '][lang]');
 	element += '</dd>';
 
 	$('#diy-field').append(element);
@@ -632,12 +589,10 @@ function add_sql()
 	var field_id = 'sql_' + field_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 
-	var element = '<fieldset class="white" id="' + dd_id + '">';
-		element += '<dl class="" id="">';
-			element += '<dt class="sql-rows" id="">';
-				element += '<label class="" for="sql-' + field_id + '-dbms">DBMS:</label>';
-			element += '</dt>';
-			element += '<dd class="sql-rows" id="">';
+	var element = '<fieldset class="modx-level2 fields2" id="' + dd_id + '">';
+		element += '<dl>';
+			element += '<dt class="sql-rows"><label for="sql-' + field_id + '-dbms">DBMS:</label></dt>';
+			element += '<dd class="sql-rows">';
 				element += '<select name="sql[' + field_id + '][dbms]" id="sql-' + field_id + '-dbms">';
 					element += '<option value="mysql_40">MySQL 4.0</option>';
 					element += '<option value="mysql_41">MySQL 4.1</option>';
@@ -651,15 +606,15 @@ function add_sql()
 			element += '</dd>';
 		element += '</dl>';
 
-		element += '<dl class="" id="">';
-			element += '<dt class="sql-rows" id="">';
-				element += '<label class="" for="sql-' + field_id + '-query">Query:*</label>';
-			element += '</dt>';
-			element += '<dd class="sql-rows" id="">';
-				element += '<textarea class="sql-rows" id="sql_' + field_id + '_query" name="sql[' + field_id + '][query]" rows="5"></textarea>';
-				element += '<img class="action-text1" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
-				element += '<img class="action-text2" id="' + dd_id + '-plus" src="./images/add.png" alt="Add 4 rows" title="Add 4 rows" onclick="document.mainform.sql_' + field_id + '_query.rows+=4" />';
-				element += '<img class="action-text3" id="' + dd_id + '-minus" src="./images/del.png" alt="Remove 4 rows" title="Remove 4 rows" onclick="if(document.mainform.sql_' + field_id + '_query.rows>7){document.mainform.sql_' + field_id + '_query.rows-=4}else{document.mainform.sql_' + field_id + '_query.rows-=(document.mainform.sql_' + field_id + '_query.rows-4)};" />';
+		element += '<dl>';
+			element += '<dt class="sql-rows"><label for="sql-' + field_id + '-query">Query:*</label></dt>';
+			element += '<dd class="sql-rows">';
+				element += '<textarea class="inputbox right-tools" name="sql[' + field_id + '][query]" id="sql_' + field_id + '_query" rows="4"></textarea>';
+				element += '<div class="right-tools">';
+					element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
+					element += '<img class="action-image" src="./images/plus.png" alt="Add rows" onclick="document.forms[\'modxform\'].sql_' + field_id + '_query.rows+=4" title="Add 4 rows to the textfield" />';
+					element += '<img class="action-image" src="./images/del.png" alt="Remove rows" onclick="if(document.forms[\'modxform\'].sql_' + field_id + '_query.rows>7){document.forms[\'modxform\'].sql_' + field_id + '_query.rows-=4}else{document.forms[\'modxform\'].sql_' + field_id + '_query.rows-=(document.forms[\'modxform\'].sql_' + field_id + '_query.rows-4)};" title="Remove 4 rows from the textfield" />';
+				element += '</div>';
 			element += '</dd>';
 		element += '</dl>';
 	element += '</fieldset>';
@@ -675,10 +630,10 @@ function add_title()
 	var field_id = 'title_' + field_cnt++;
 	var dd_id = 'dd_' + dd_cnt++;
 
-	var element = '<dd class="" id="' + dd_id + '">';
-		element += '<input type="text" class="" id="" name="title[' + field_id + '][title]" size="53" maxlength="255" value="" />';
-		element += '<span>' + lang_select('title[' + field_id + '][lang]') + '</span>';
-		element += '<img class="do-stuff" id="" src="./images/delete.png" alt="Delete icon" title="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
+	var element = '<dd id="' + dd_id + '">';
+	element += '<input class="inputbox medium" type="text" name="title[' + field_id + '][title]" size="53" maxlength="255" value="" /> ';
+	element += lang_select('title[' + field_id + '][lang]');
+	element += ' <img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dd_id + '\').remove();" />';
 	element += '</dd>';
 
 	$('#title-field').append(element);

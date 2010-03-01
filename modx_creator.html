@@ -1,0 +1,621 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="stylesheet" href="creator.css" type="text/css" />
+	<title>MODX-creator</title>
+	<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="modx_functions.js"></script>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+</head>
+
+<body class="mods modx-creator">
+
+<div id="wrap">
+	<a id="top" name="top" accesskey="t"></a>
+<form action="./index.php" method="post" id="modxform" enctype="multipart/form-data">
+	<div id="page-header">
+		<span class="side-left"></span>
+		<div class="header" style="position: relative;">
+			<h1>MODX Install File Creator and Text / MODX Convertor</h1>
+			<!-- IF S_ERRORS --><div id="error-div">There were errors. Recheck the fields marked with red.</div><!-- ENDIF -->
+			<!-- IF S_WARNINGS --><div id="warning-div">There were warnings. Recheck the fields marked with yellow.</div><!-- ENDIF -->
+	<div class="panel" style="background: none;">
+		<div>
+				<h3>Upload</h3>
+				<fieldset class="fields2">
+					<strong><label for="upload-file">You can import a MOD text or MODX file.</label></strong><br />
+					<input type="hidden" name="MAX_FILE_SIZE" value="307200" />
+					<input class="inputbox autowidth" type="file" name="upload-file" id="upload-file" accept="text/xml,text/plain" size="60" />
+					<input class="button1" type="submit" name="submit-file" value="Submit" onclick="this.form.target='_self';" />
+
+					<hr class="dashed" />
+					MODX files: <a href="file.php?file=modx.prosilver.en.xsl">Download modx.prosilver.en.xsl</a> &bull;
+					<a href="file.php?file=license.txt">Download GPLv2 license</a>
+				</fieldset>
+			</div>
+	</div>
+
+		</div>
+		<span class="side-right"></span>
+	</div>
+
+	<div id="page-body">
+
+	<div class="panel">
+		<div class="inner"><span class="corners-top"><span></span></span>
+			<h3>About the MOD</h3>
+			<fieldset class="fields2">
+				<!-- begin mod title -->
+				<dl id="title-field"<!-- IF S_ERROR_TITLE --> class="error-dl"<!-- ENDIF -->>
+					<dd id="help-title" class="modx-help" style="display: none;">One title in English is required, but you can use titles in other languages as well.</dd>
+					<dt>
+						<label for="title">Title:*</label>
+						<img class="action-image" src="./images/plus.png" alt="Add title" onclick="add_title();" title="Add title in some other language" />
+						<img class="sign" src="./images/info.png" alt="Info icon" title="One title in English is required, but you can add titles in other languages as well." />
+					</dt>
+					<!-- BEGIN title_row -->
+					<dd id="{title_row.FIELD_ID}">
+						<input class="inputbox medium" type="text" name="title[{title_row.FIELD_ID}][title]"<!-- IF title_row.S_ROW_COUNT == 0 --> id="title"<!-- ENDIF --> size="53" maxlength="255" value="{title_row.VALUE}" />
+						<select name="title[{title_row.FIELD_ID}][lang]">{title_row.LANG}</select>
+						<!-- IF title_row.S_ROW_COUNT > 0 --><img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{title_row.FIELD_ID}').remove()" /><!-- ENDIF -->
+					</dd>
+					<!-- BEGINELSE -->
+					<dd>
+						<input class="inputbox medium" type="text" name="title[title_pre][title]" id="title" size="53" maxlength="255" value="" />
+						<select name="title[title_pre][lang]">{LANG_SELECT}</select>
+					</dd>
+					<!-- END title_row -->
+				</dl>
+				<!-- end mod title -->
+
+				<!-- begin mod description -->
+				<dl id="desc-field"<!-- IF S_ERROR_DESC --> class="error-dl"<!-- ENDIF -->>
+					<dt>
+						<label for="desc">Description:*</label>
+						<img class="action-image" src="./images/plus.png" alt="Add a description" onclick="add_desc();" title="Add a description in another language." />
+						<img class="sign" src="./images/info.png" alt="Info icon" title="One description in English is required. You can add descriptions in other languages as well. This needs to be descriptive; &quot;Install instructions for my MOD&quot; is not enough." />
+					</dt>
+					<!-- BEGIN desc_row -->
+					<dd id="{desc_row.FIELD_ID}">
+						<!-- IF not desc_row.S_FIRST_ROW --><br /><!-- ENDIF -->
+						<textarea class="inputbox right-tools" name="desc[{desc_row.FIELD_ID}][desc]" id="desc_{desc_row.FIELD_ID}_desc" rows="{desc_row.ROWS}">{desc_row.VALUE}</textarea>
+						<div class="right-tools">
+							<!-- IF desc_row.S_ROW_COUNT > 0 -->
+							<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{desc_row.FIELD_ID}').remove()" /><!-- ENDIF -->
+							<img class="action-image" src="./images/plus.png" alt="Add 4 rows" onclick="document.forms['modxform'].desc_{desc_row.FIELD_ID}_desc.rows+=4" title="Add 4 rows to the textfield" />
+							<img class="action-image" src="./images/del.png" alt="Remove  4 rows" onclick="if(document.forms['modxform'].desc_{desc_row.FIELD_ID}_desc.rows>7){document.forms['modxform'].desc_{desc_row.FIELD_ID}_desc.rows-=4}else{document.forms['modxform'].desc_{desc_row.FIELD_ID}_desc.rows-=(document.forms['modxform'].desc_{desc_row.FIELD_ID}_desc.rows-4)};" title="Remove 4 rows from the textfield" />
+						</div>
+						<select name="desc[{desc_row.FIELD_ID}][lang]">{desc_row.LANG}</select>
+					</dd>
+					<!-- BEGINELSE -->
+					<dd>
+						<textarea class="inputbox right-tools" name="desc[desc_pre][desc]" id="desc" cols="45" rows="5"></textarea>
+						<div class="right-tools">
+							<img class="action-image" src="./images/plus.png" alt="" onclick="document.forms['modxform'].desc.rows+=4" title="Add 4 rows to the textfield" />
+							<img class="action-image" src="./images/del.png" alt="" onclick="if(document.forms['modxform'].desc.rows>7){document.forms['modxform'].desc.rows-=4}else{document.forms['modxform'].desc.rows-=(document.forms['modxform'].desc.rows-4)};" title="Remove 4 rows from the textfield" />
+						</div>
+						<select name="desc[desc_pre][lang]">{LANG_SELECT}</select>
+					</dd>
+					<!-- END desc_row -->
+				</dl>
+				<!-- end mod description -->
+
+				<!-- begin mod version -->
+				<dl<!-- IF S_ERROR_VERSION --> class="error-dl"<!-- ENDIF -->>
+					<dt>
+						<label for="version">MOD version:*</label>
+						<img class="sign" src="./images/info.png" alt="Info icon" title="All versions less than 1.0.0 are development versions." />
+					</dt>
+					<dd><input class="inputbox autowidth" type="text" name="version" id="version" size="10" maxlength="25" value="{MOD_VERSION}" /></dd>
+				</dl>
+				<!-- end mod version -->
+
+				<!-- begin phpBB version -->
+				<dl<!-- IF S_ERROR_TARGET --> class="error-dl"<!-- ELSEIF S_WARNING_TARGET --> class="warning-dl"<!-- ENDIF -->>
+					<dt>
+						<label for="target">phpBB version:*</label>
+						<img class="sign" src="./images/info.png" alt="Info icon" title="Version of phpBB for which the MOD was developed. This should be an exact version, for example 3.0.5." />
+					</dt>
+					<dd>
+						<input class="inputbox autowidth" type="text" name="target" id="target" size="10" maxlength="25" value="{TARGET_VERSION}" />
+						The latest phpBB version is: {PHPBB_LATEST}
+					</dd>
+				</dl>
+				<!-- end phpBB version -->
+
+				<!-- begin Installation level -->
+				<dl<!-- IF S_ERROR_INSTALL_LEVEL --> class="error-dl"<!-- ENDIF -->>
+
+					<dt>
+						<label for="install-level">Installation level:*</label>
+					</dt>
+					<dd>
+						<select name="install-level" id="install-level">
+							<option value="easy"<!-- IF INSTALL_LEVEL == 'easy' --> selected="selected"<!-- ENDIF -->>Easy</option>
+							<option value="intermediate"<!-- IF INSTALL_LEVEL == 'intermediate' --> selected="selected"<!-- ENDIF -->>Intermediate</option>
+							<option value="advanced"<!-- IF INSTALL_LEVEL == 'advanced' --> selected="selected"<!-- ENDIF -->>Advanced</option>
+						</select>
+					</dd>
+				</dl>
+				<!-- end Installation level -->
+
+				<!-- begin Installation time -->
+				<dl<!-- IF S_ERROR_INSTALL_TIME --> class="error-dl"<!-- ENDIF -->>
+					<dt>
+						<label for="install-time">Installation time:*</label>
+						<img class="sign" src="./images/info.png" alt="Info icon" title="Estimated time needed to install this MOD by hand, in minutes." />
+					</dt>
+					<dd><input class="inputbox autowidth" type="text" name="install-time" id="install-time" size="2" maxlength="3" value="{INSTALL_TIME}" />Minutes</dd>
+				</dl>
+				<!-- end Installation time -->
+
+				<!-- begin License -->
+				<dl>
+					<dt>
+						<label for="license">License:*</label>
+						<img class="sign" src="./images/info.png" alt="Info icon" title="The name of the license the MOD is released under, along with a URL to the full text of that license. We recommend submitting under GPL v2. Submitting MODs under GPL v3 is not allowed because phpBB3 is released under GPL v2 only and GPL v3 is not compatible with v2. You are allowed to submit it under some other license under condition that it is compatible with GPL v2. Be sure to change the license within the textbox and include a copy of the license in license.txt." />
+					</dt>
+					<dd><input class="inputbox" id="license" type="text" name="license" size="70" maxlength="255" value="{LICENSE}" /></dd>
+				</dl>
+				<!-- end License -->
+
+				<!-- begin Author notes -->
+				<dl id="notes-field">
+					<dt id="notes">
+						<label for="notes">Author notes:</label>
+						<img class="action-image" src="./images/plus.png" alt="Add" onclick="add_notes();" title="Add author notes" />
+						<img class="sign" src="./images/info.png" alt="Info icon" title="Author notes are optional. You can add any notes in any language you want." />
+					</dt>
+					<!-- BEGIN notes_row -->
+					<dd id="{notes_row.FIELD_ID}">
+						<!-- IF not notes_row.S_FIRST_ROW --><br /><!-- ENDIF -->
+						<textarea class="inputbox right-tools" name="notes[{notes_row.FIELD_ID}][note]" id="notes_{notes_row.FIELD_ID}_note" rows="{notes_row.ROWS}">{notes_row.VALUE}</textarea>
+						<div class="right-tools">
+							<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{notes_row.FIELD_ID}').remove()" />
+							<img class="action-image" src="./images/plus.png" alt="Enlarge" onclick="document.forms['modxform'].notes_{notes_row.FIELD_ID}_note.rows+=4" title="Add 4 rows to the textfield" />
+							<img class="action-image" src="./images/del.png" alt="Scale" onclick="if(document.forms['modxform'].notes_{notes_row.FIELD_ID}_note.rows>7){document.forms['modxform'].notes_{notes_row.FIELD_ID}_note.rows-=4}else{document.forms['modxform'].notes_{notes_row.FIELD_ID}_note.rows-=(document.forms['modxform'].notes_{notes_row.FIELD_ID}_note.rows-4)};" title="Remove 4 rows from the textfield" />
+						</div>
+						<select name="notes[{notes_row.FIELD_ID}][lang]">{notes_row.LANG}</select>
+					</dd>
+					<!-- BEGINELSE -->
+					<dd id="notes_pre">
+						<textarea class="inputbox right-tools" name="notes[desc_pre][note]" id="notes_desc_pre_note" cols="40" rows="5"></textarea>
+						<div class="right-tools">
+							<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#notes_pre').remove()" />
+							<img class="action-image" src="./images/plus.png" alt="Enlarge" onclick="document.forms['modxform'].notes_desc_pre_note.rows+=4" title="Add 4 rows to the textfield" />
+							<img class="action-image" src="./images/del.png" alt="Scale" onclick="if(document.forms['modxform'].notes_desc_pre_note.rows>7){document.forms['modxform'].notes_desc_pre_note.rows-=4}else{document.forms['modxform'].notes_desc_pre_note.rows-=(document.forms['modxform'].notes_desc_pre_note.rows-4)};" title="Remove 4 rows from the textfield" />
+						</div>
+						<select name="notes[desc_pre][lang]">{LANG_SELECT}</select>
+					</dd>
+					<!-- END notes_row -->
+				</dl>
+				<!-- end Author notes -->
+			</fieldset>
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+
+	<div class="panel bg2">
+		<div class="inner"><span class="corners-top"><span></span></span>
+			<!-- begin Author fields -->
+				<h3>About the author(s)</h3>
+				<div id="authors">
+					<!-- BEGIN author_row -->
+					<fieldset class="modx-level1 fields2" id="{author_row.FIELD_ID}_a">
+						<dl>
+							<dt class="author-rows"><label for="author-{author_row.FIELD_ID}-username">Username:*</label></dt>
+							<dd class="author-rows">
+								<input class="inputbox autowidth" type="text" name="author[{author_row.FIELD_ID}][username]" id="author-{author_row.FIELD_ID}-username" size="40" maxlength="255" value="{author_row.USERNAME}" />
+								<!-- IF author_row.S_ROW_COUNT > 0 --><img class="action-image" src="./images/delete.png" alt="" onclick="$('#{author_row.FIELD_ID}_a').remove()" /><!-- ENDIF -->
+							</dd>
+						</dl>
+						<dl>
+							<dt class="author-rows"><label for="author-{author_row.FIELD_ID}-phpbbcom">Not phpBB.com:</label></dt>
+							<dd class="author-rows">
+								<label>
+									<input type="checkbox" name="author[{author_row.FIELD_ID}][phpbbcom]" id="author-{author_row.FIELD_ID}-phpbbcom"<!-- IF author_row.S_PHPBB_COM --> checked="checked"<!-- ENDIF --> />
+									<span style="font-size: 12px;">(Check here if this author is not registered at phpBB.com.)</span>
+								</label>
+							</dd>
+						</dl>
+						<dl>
+							<dt class="author-rows"><label for="author-{author_row.FIELD_ID}-realname">Real name:</label></dt>
+							<dd class="author-rows">
+								<input class="inputbox autowidth" type="text" name="author[{author_row.FIELD_ID}][realname]" id="author-{author_row.FIELD_ID}-realname" size="40" maxlength="255" value="{author_row.REALNAME}" />
+							</dd>
+						</dl>
+						<dl>
+							<dt class="author-rows"><label for="author-{author_row.FIELD_ID}-homepage">www:</label></dt>
+							<dd class="author-rows">
+								<input class="inputbox autowidth" type="text" name="author[{author_row.FIELD_ID}][homepage]" id="author-{author_row.FIELD_ID}-homepage" size="40" maxlength="255" value="{author_row.HOMEPAGE}" />
+							</dd>
+						</dl>
+						<dl>
+							<dt class="author-rows"><label for="author-{author_row.FIELD_ID}-email">E-mail:</label></dt>
+							<dd class="author-rows">
+								<input class="inputbox autowidth" type="text" name="author[{author_row.FIELD_ID}][email]" id="author-{author_row.FIELD_ID}-email" size="40" maxlength="255" value="{author_row.EMAIL}" />
+							</dd>
+						</dl>
+						<div id="{author_row.FIELD_ID}-pre">
+						<!-- BEGIN contrib -->
+						<fieldset class="modx-level1" id="{author_row.contrib.CONTRIB_ID}">
+							<dl>
+								<dt class="author-rows"><label for="author_row.contributor-{author_row.FIELD_ID}-{author_row.contrib.CONTRIB_ID}-status">Status:</label></dt>
+								<dd class="author-rows">
+									<select name="author[{author_row.FIELD_ID}][contributions][{author_row.contrib.CONTRIB_ID}][status]" id="author_row.contributor-{author_row.FIELD_ID}-{author_row.contrib.CONTRIB_ID}-status">
+										<option value="past"<!-- IF author_row.contrib.STATUS == 'past' --> selected="selected"<!-- ENDIF -->>Past</option>
+										<option value="current"<!-- IF author_row.contrib.STATUS != 'past' --> selected="selected"<!-- ENDIF -->>Current</option>
+									</select>
+									<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{author_row.contrib.CONTRIB_ID}').remove()" />
+								</dd>
+							</dl>
+							<dl>
+								<dt class="author-rows"><label for="contributor-{author_row.FIELD_ID}-{author_row.contrib.CONTRIB_ID}-position">Position:</label></dt>
+								<dd class="author-rows">
+									<input type="text" name="author[{author_row.FIELD_ID}][contributions][{author_row.contrib.CONTRIB_ID}][position]" id="contributor-{author_row.FIELD_ID}-{author_row.contrib.CONTRIB_ID}-position" size="40" maxlength="255" value="{author_row.contrib.POSITION}" />
+								</dd>
+							</dl>
+							<dl>
+								<dt class="author-rows"><label for="contributor-{author_row.FIELD_ID}-{author_row.contrib.CONTRIB_ID}-from">From:</label></dt>
+								<dd class="author-rows">
+									<input type="text" name="author[{author_row.FIELD_ID}][contributions][{author_row.contrib.CONTRIB_ID}][from]" id="contributor-{author_row.FIELD_ID}-{author_row.contrib.CONTRIB_ID}-from" size="40" maxlength="255" value="{author_row.contrib.FROM}" />
+								</dd>
+							</dl>
+							<dl>
+								<dt class="author-rows"><label for="contributor-{author_row.FIELD_ID}-{author_row.contrib.CONTRIB_ID}-to">To:</label></dt>
+								<dd class="author-rows">
+									<input type="text" name="author[{author_row.FIELD_ID}][contributions][{author_row.contrib.CONTRIB_ID}][to]" id="contributor-{author_row.FIELD_ID}-{author_row.contrib.CONTRIB_ID}-to" size="40" maxlength="255" value="{author_row.contrib.TO}" />
+								</dd>
+							</dl>
+						</fieldset>
+						<!-- END contrib -->
+						</div>
+						<input class="button2" type="button" value="Add contribution" onclick="add_contributor('{author_row.FIELD_ID}');" />
+						<!-- IF author_row.S_ROW_COUNT > 0 --><img class="sign" src="./images/info.png" alt="Info icon" title="The contributor fields are optional and every author can have several contributor fields. If you choose to add contributor fields, the only field required is the status. The others are optional." /><!-- ENDIF -->
+					</fieldset>
+					<!-- BEGINELSE -->
+					<fieldset class="modx-level1 fields2">
+						<dl<!-- IF S_ERROR_AUTHOR --> class="error-dl"<!-- ENDIF -->>
+							<dt class="author-rows"><label for="author-afield-username">Username:*</label></dt>
+							<dd class="author-rows">
+								<input class="inputbox autowidth" type="text" name="author[afield][username]" id="author-afield-username" size="40" maxlength="255" value="" />
+							</dd>
+						</dl>
+						<dl>
+							<dt class="author-rows"><label for="author-afield-phpbbcom">Not phpBB.com:</label></dt>
+							<dd class="author-rows">
+								<label><input type="checkbox" name="author[afield][phpbbcom]" id="author-afield-phpbbcom" /><span style="font-size: 12px;">(Check here if this author is not registered at phpBB.com.)</span></label>
+							</dd>
+						</dl>
+						<dl>
+							<dt class="author-rows"><label for="author-afield-realname">Real name:</label></dt>
+							<dd class="author-rows"><input class="inputbox autowidth" type="text" name="author[afield][realname]" id="author-afield-realname" size="40" maxlength="255" value="" /></dd>
+						</dl>
+						<dl>
+							<dt class="author-rows"><label for="author-afield-homepage">Home page:</label></dt>
+							<dd class="author-rows"><input class="inputbox autowidth" type="text" name="author[afield][homepage]" id="author-afield-homepage" size="40" maxlength="255" value="" /></dd>
+						</dl>
+						<dl>
+							<dt class="author-rows"><label for="author-afield-email">E-mail:</label></dt>
+							<dd class="author-rows"><input class="inputbox autowidth" type="text" name="author[afield][email]" id="author-afield-email" size="40" maxlength="255" value="" /></dd>
+						</dl>
+						<div id="afield-pre"></div>
+						<input class="button2" type="button" value="Add contribution" onclick="add_contributor('afield');" />
+						<img class="sign" src="./images/info.png" alt="Info icon" title="The contributor fields are optional and every author can have several contributor fields. If you choose to add contributor fields, the only field required is the status. The others are optional." />
+					</fieldset>
+					<!-- END author_row -->
+				</div>
+				<input class="button2 adjusted-size" type="button" value="Add author" onclick="add_author();" />
+				<img class="sign" src="./images/info.png" alt="Info icon" title="One author is required. The username is required for each author." />
+			<!-- end Author fields -->
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+
+	<div class="panel">
+		<div class="inner"><span class="corners-top"><span></span></span>
+			<!-- begin History fields -->
+			<h3>History</h3>
+			<div id="history-fields">
+				<!-- BEGIN history_row -->
+				<fieldset class="modx-level1 fields2" id="d{history_row.FIELD_ID}">
+					<dl>
+						<dt class="history-rows"><label for="history-{history_row.FIELD_ID}-version">Version:*</label></dt>
+						<dd class="history-rows">
+							<input name="history[{history_row.FIELD_ID}][version]" id="history-{history_row.FIELD_ID}-version" size="10" maxlength="255" value="{history_row.VERSION}" type="text" />
+							<img class="action-image" src="./images/delete.png" alt="" onclick="$('#d{history_row.FIELD_ID}').remove()" />
+						</dd>
+					</dl>
+					<dl>
+						<dt class="history-rows"><label for="history-{history_row.FIELD_ID}-date">Date:*</label></dt>
+						<dd class="history-rows">
+							<input name="history[{history_row.FIELD_ID}][date]" id="history-{history_row.FIELD_ID}-date" size="20" maxlength="255" value="{history_row.DATE}" type="text" />
+							<span style="font-size: 12px;"> (The date format needs to be YYYY-MM-DD)</span>
+						</dd>
+					</dl>
+					<div id="{history_row.FIELD_ID}">
+
+						<!-- BEGIN changelog -->
+						<hr class="dashed" />
+						<dl id="{history_row.changelog.CHANGE_ID}">
+							<dt class="history-rows">
+								<label for="history-{history_row.FIELD_ID}-changelog-{history_row.changelog.CHANGE_ID}-data">Change:<!-- IF history_row.changelog.S_ROW_COUNT == 0 -->*<!-- ENDIF --></label>
+							</dt>
+							<dd class="history-rows">
+								<input class="inputbox medium" name="history[{history_row.FIELD_ID}][changelog][{history_row.changelog.CHANGE_ID}][change]" id="history-{history_row.FIELD_ID}-changelog-{history_row.changelog.CHANGE_ID}-data" size="80" maxlength="255" value="{history_row.changelog.CHANGE}" type="text" />
+								<span><select name="history[{history_row.FIELD_ID}][changelog][{history_row.changelog.CHANGE_ID}][lang]">{history_row.changelog.LANG}</select></span>
+								<!-- IF history_row.changelog.S_ROW_COUNT > 0 --><img class="action-image" src="./images/delete.png" alt="" onclick="$('#{history_row.changelog.CHANGE_ID}').remove()" /><!-- ENDIF -->
+							</dd>
+						</dl>
+						<!-- END changelog -->
+					</div>
+					<input value="Add change" onclick="add_history_change('{history_row.FIELD_ID}');" type="button" />
+				</fieldset>
+				<!-- END history_row -->
+			</div>
+			<input class="button2 adjusted-size" type="button" value="Add history" onclick="add_history();" />
+			<img class="sign" src="./images/info.png" alt="Info icon" title="You can have as many changelog fields as you want, or none. If you choose to have a changelog, all fields are required. You must have at least one change per changelog entry, but can have as many as you want. The versions will be ordered from oldest to newest or newest to oldest depending on if the checkbox is clicked or not." />
+			<label>Sort history newest version first <input type="checkbox" name="reverse_history" /></label>
+		<!-- end History fields -->
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+
+<div class="panel bg2">
+	<div class="inner"><span class="corners-top"><span></span></span>
+		<h3>Links, File copy and SQL</h3>
+
+			<!-- begin Link fields -->
+			<fieldset class="modx-level1 fields2">
+				<legend class="main-legend">Links</legend>
+				<div id="link-field">
+					<!-- BEGIN link_row -->
+					<fieldset class="modx-level2" id="{link_row.FIELD_ID}">
+						<dl>
+							<dt><label for="links-{link_row.FIELD_ID}-type">Type:*</label></dt>
+							<dd>
+								<select name="links[{link_row.FIELD_ID}][type]" id="links-{link_row.FIELD_ID}-type">
+									<option value="contrib"<!-- IF link_row.TYPE == 'contrib' --> selected="selected"<!-- ENDIF -->>Contrib</option>
+									<option value="dependency"<!-- IF link_row.TYPE == 'dependency' --> selected="selected"<!-- ENDIF -->>Dependency</option>
+									<option value="language"<!-- IF link_row.TYPE == 'language' --> selected="selected"<!-- ENDIF -->>Language</option>
+									<option value="parent"<!-- IF link_row.TYPE == 'parent' --> selected="selected"<!-- ENDIF -->>Parent</option>
+									<option value="template-lang"<!-- IF link_row.TYPE == 'template-lang' --> selected="selected"<!-- ENDIF -->>Template_lang</option>
+									<option value="template"<!-- IF link_row.TYPE == 'template' --> selected="selected"<!-- ENDIF -->>Template</option>
+									<option value="text"<!-- IF link_row.TYPE == 'text' --> selected="selected"<!-- ENDIF -->>Text file</option>
+									<option value="php-installer"<!-- IF link_row.TYPE == 'php-installer' --> selected="selected"<!-- ENDIF -->>PHP install file</option>
+									<option value="uninstall"<!-- IF link_row.TYPE == 'php-installer' --> selected="selected"<!-- ENDIF -->>PHP install file</option>
+								</select>
+								<img class="action-image" src="./images/delete.png" alt="" onclick="$('#{link_row.FIELD_ID}').remove()" />
+							</dd>
+						</dl>
+						<dl>
+							<dt><label for="links-{link_row.FIELD_ID}-title">Link title:*</label></dt>
+							<dd>
+								<input class="inputbox medium" name="links[{link_row.FIELD_ID}][title]" id="links-{link_row.FIELD_ID}-title" size="80" maxlength="255" value="{link_row.TITLE}" type="text" />
+								<select name="links[{link_row.FIELD_ID}][lang]">{link_row.LANG}</select>
+							</dd>
+						</dl>
+						<dl>
+							<dt><label for="links-{link_row.FIELD_ID}-href">href:*</label></dt>
+							<dd>
+								<input class="inputbox medium" name="links[{link_row.FIELD_ID}][href]" id="links-{link_row.FIELD_ID}-href" size="80" maxlength="255" value="{link_row.HREF}" type="text" />
+								<input name="links[{link_row.FIELD_ID}][realname]" value="{link_row.REALNAME}" type="hidden" />
+							</dd>
+						</dl>
+					</fieldset>
+					<!-- END link_row -->
+				</div>
+				<input class="button2" type="button" value="Add link" onclick="add_link();" />
+				<img class="sign" src="./images/info.png" alt="Info icon" title="Links are optional. You can have one or more of the following link types. Dependency – A MOD that is required before the current MOD can be installed. Parent – Link from a contrib, language, or template back to the parent MODX file. Template – Link to template-specific instructions. Language – Link to instructions for installing a non-English translation. Contrib – Link to a contribution, for example an additional feature or upgrade from an older version. Template-lang – Link to a template and language specific instruction. Text – A text file. PHP install file – A php install file that needs to be run in order to install the MOD. All fields are required." />
+			</fieldset>
+			<!-- end Link fields -->
+
+			<!-- begin File copy -->
+			<fieldset class="modx-level1">
+				<legend class="main-legend">File copy</legend>
+				<div id="copy-field">
+					<!-- IF S_IS_COPY -->
+					<fieldset class="modx-level2 fields2" id="dd-copy">
+						<dl id="dl-copy">
+					<!-- ENDIF -->
+					<!-- BEGIN copy_row -->
+						<!-- IF copy_row.S_ROW_COUNT == 0 -->
+								<dt class="copy-rows">
+									<label>Copy: (from &raquo; to)</label>
+									<img class="action-image" src="./images/plus.png" alt="Add file" title="Add file" onclick="add_file_copy();" title="Add file" /><img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#dd-copy').remove(); document.getElementById('addCopyField').style.display='';" />
+								</dt>
+						<!-- ENDIF -->
+								<dd class="copy-rows" id="{copy_row.FILE_ID}">
+									<input class="inputbox copy-to" name="copy[{copy_row.FILE_ID}][from]" id="copy-{copy_row.FILE_ID}-from" size="85" maxlength="255" value="{copy_row.FROM}" type="text" />
+									&raquo;
+									<input class="inputbox" name="copy[{copy_row.FILE_ID}][to]" size="85" maxlength="255" value="{copy_row.TO}" type="text" /><img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{copy_row.FILE_ID}').remove()" />
+								</dd>
+						<!-- END copy_row -->
+					<!-- IF S_IS_COPY -->
+						</dl>
+					</fieldset>
+					<!-- ENDIF -->
+				</div>
+				<input class="button2" id="addCopyField" type="button" value="Add copy field" onclick="add_copy(); document.getElementById('addCopyField').style.display='none';"<!-- IF S_IS_COPY --> style="display: none;"<!-- ENDIF --> />
+				<img class="sign" src="./images/info.png" alt="Info icon" title="Both from and to fields are required. You can have as many copy fields as you need. The from field must contain the relative path from the current MODX file to the source file. Example: root/survey.php. Can also be a wildcard match using *.* Example: root/*.*. The to field must contain the the relative path from the phpBB root to the destination of the file. Should be an exact filename if an exact file name was given in the from attribute, or a directory name if a wildcard was used." />
+			</fieldset>
+			<!-- end File copy -->
+
+			<!-- begin SQL querys -->
+			<fieldset class="modx-level1">
+				<legend class="main-legend">SQL</legend>
+				<div id="sql-field">
+					<!-- BEGIN sql_row -->
+					<fieldset class="modx-level2 fields2" id="{sql_row.FIELD_ID}">
+						<dl>
+							<dt class="sql-rows"><label for="sql-{sql_row.FIELD_ID}-dbms">DBMS:</label></dt>
+							<dd class="sql-rows">
+								<select name="sql[{sql_row.FIELD_ID}][dbms]" id="sql-{sql_row.FIELD_ID}-dbms">
+									<option value="mysql_40"<!-- IF sql_row.DBMS == 'mysql_40' --> selected="selected"<!-- ENDIF -->>MySQL 4.0</option>
+									<option value="mysql_41"<!-- IF sql_row.DBMS == 'mysql_41' --> selected="selected"<!-- ENDIF -->>MySQL 4.1</option>
+									<option value="mssaccess"<!-- IF sql_row.DBMS == 'mssql' --> selected="selected"<!-- ENDIF -->>MSSQL</option>
+									<option value="oracle"<!-- IF sql_row.DBMS == 'oracle' --> selected="selected"<!-- ENDIF -->>Oracle</option>
+									<option value="postgres"<!-- IF sql_row.DBMS == 'postgres' --> selected="selected"<!-- ENDIF -->>PostgreSQL</option>
+									<option value="firebird"<!-- IF sql_row.DBMS == 'firebird' --> selected="selected"<!-- ENDIF -->>FireBird</option>
+									<option value="sqlite"<!-- IF sql_row.DBMS == 'sqlite' --> selected="selected"<!-- ENDIF -->>SQLite</option>
+									<option value="sql-parser"<!-- IF sql_row.DBMS == 'sql-parser' --> selected="selected"<!-- ENDIF -->>SQL Parser (Default)</option>
+								</select>
+							</dd>
+						</dl>
+						<dl>
+							<dt class="sql-rows"><label for="sql-{sql_row.FIELD_ID}-query">Query:*</label></dt>
+							<dd class="sql-rows">
+								<textarea class="inputbox right-tools" name="sql[{sql_row.FIELD_ID}][query]" id="sql_{sql_row.FIELD_ID}_query" rows="{sql_row.ROWS}">{sql_row.QUERY}</textarea>
+								<div class="right-tools">
+									<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{sql_row.FIELD_ID}').remove()" />
+									<img class="action-image" src="./images/plus.png" alt="Add rows" onclick="document.forms['modxform'].sql_{sql_row.FIELD_ID}_query.rows+=4" title="Add 4 rows to the textfield" />
+									<img class="action-image" src="./images/del.png" alt="Remove rows" onclick="if(document.forms['modxform'].sql_{sql_row.FIELD_ID}_query.rows>7){document.forms['modxform'].sql_{sql_row.FIELD_ID}_query.rows-=4}else{document.forms['modxform'].sql_{sql_row.FIELD_ID}_query.rows-=(document.forms['modxform'].sql_{sql_row.FIELD_ID}_query.rows-4)};" title="Remove 4 rows from the textfield" />
+								</div>
+							</dd>
+						</dl>
+					</fieldset>
+					<!-- END sql_row -->
+				</div>
+				<input class="button2" type="button" value="Add SQL query" onclick="add_sql();" />
+				<img class="sign" src="./images/info.png" alt="Info icon" title="You can have as many SQL fields as you want. DBMS is the dialect of the query, it defaults to sql-parser and leave it at that if you are not sure it would be set to something else. You can have multiple queries in the same field separated by a line feed." />
+			<!-- end SQL querys -->
+
+		</fieldset>
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+
+	<div class="panel">
+		<div class="inner"><span class="corners-top"><span></span></span>
+		<h3>File edits</h3>
+			<div id="modx-field">
+				<!-- BEGIN file_row -->
+				<fieldset class="modx-level1 fields2 file-edit" id="{file_row.FILE_ID}">
+					<dl id="{file_row.DT_ID}">
+						<dt><label>File to open:</label><img class="sign" src="./images/info.png" alt="Info icon" title="Relative path from the phpBB root for the file to open. For example, viewforum.php or includes/functions.php" /></dt>
+						<dd>
+							<input class="inputbox medium" name="modx[{file_row.FILE_ID}][file]" size="88" value="{file_row.FILE}" type="text"><img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{file_row.FILE_ID}').remove()" title="Remove this file" />
+						</dd>
+					</dl>
+					<hr />
+					<br />
+					<!-- BEGIN edit -->
+					<fieldset class="modx-level2" id="{file_row.edit.EDIT_ID}">
+						<legend class="sub-legend">
+							Edit
+							<img class="sign" src="./images/info.png" alt="Info icon" title="Every discreet change to a file must be wrapped in its own edit tag, regardless of the number of children it contains. All finds within an edit tag should be processed before any action tag." />
+							<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{file_row.edit.EDIT_ID}').remove()" />
+							<button type="button" class="button1" onclick="modx_add_field('modx[{file_row.FILE_ID}]', '{file_row.edit.EDIT_ID}', 'edit', 'above', 1)">Add edit above</button>
+							<button type="button" class="button1" onclick="modx_add_field('modx[{file_row.FILE_ID}]', '{file_row.edit.EDIT_ID}', 'edit', 'below', 1)">Add edit below</button>
+							<strong>Each FIND typically requires to start a new EDIT</strong>
+						</legend>
+						<p style="font-size: 1em;">NOTE: Each discreet change to a file must be wrapped in its own edit tag.</p>
+						<!-- BEGIN action -->
+						<dl id="{file_row.edit.action.DL_ID}">
+							<dt id="{file_row.edit.action.DT_ID}">
+								<label>Type: </label>
+								<select class="krav" name="modx[{file_row.FILE_ID}][{file_row.edit.EDIT_ID}][{file_row.edit.action.DL_ID}][type]" onchange="if(this.options[this.selectedIndex].value != '-'){ get_select_change(this.options[this.selectedIndex].value, '{file_row.edit.action.DT_ID}', '{file_row.edit.action.DD_ID}', 'modx[{file_row.FILE_ID}][{file_row.edit.EDIT_ID}][{file_row.edit.action.DL_ID}]', '{file_row.edit.action.DL_ID}') }">
+									<option value="comment"<!-- IF file_row.edit.action.TYPE == 'comment' --> selected="selected"<!-- ENDIF -->>Comment</option>
+									<option value="find"<!-- IF file_row.edit.action.TYPE == 'find' --> selected="selected"<!-- ENDIF -->>Find</option>
+									<option value="after-add"<!-- IF file_row.edit.action.TYPE == 'after-add' --> selected="selected"<!-- ENDIF -->>After add</option>
+									<option value="before-add"<!-- IF file_row.edit.action.TYPE == 'before-add' --> selected="selected"<!-- ENDIF -->>Before add</option>
+									<option value="replace-with"<!-- IF file_row.edit.action.TYPE == 'replace-with' --> selected="selected"<!-- ENDIF -->>Replace with</option>
+									<option value="operation"<!-- IF file_row.edit.action.TYPE == 'operation' --> selected="selected"<!-- ENDIF -->>Operation</option>
+									<option value="inline-find"<!-- IF file_row.edit.action.TYPE == 'inline-find' --> selected="selected"<!-- ENDIF -->>Inline find</option>
+									<option value="inline-after-add"<!-- IF file_row.edit.action.TYPE == 'inline-after-add' --> selected="selected"<!-- ENDIF -->>Inline after add</option>
+									<option value="inline-before-add"<!-- IF file_row.edit.action.TYPE == 'inline-before-add' --> selected="selected"<!-- ENDIF -->>Inline before add</option>
+									<option value="inline-replace-with"<!-- IF file_row.edit.action.TYPE == 'inline-replace-with' --> selected="selected"<!-- ENDIF -->>Inline replace with</option>
+									<option value="inline-operation"<!-- IF file_row.edit.action.TYPE == 'inline-operation' --> selected="selected"<!-- ENDIF -->>Inline operation</option>
+									<option value="-"<!-- IF file_row.edit.action.TYPE == '-' --> selected="selected"<!-- ENDIF -->>Select type</option>
+								</select>
+
+								<div id="{file_row.edit.action.DT_ID}_options" style="margin-top: 5px;">
+									<img class="action-image" src="./images/plus_up.png" alt="Add field above" onclick="modx_add_field('modx[{file_row.FILE_ID}][{file_row.edit.EDIT_ID}]', '{file_row.edit.action.DL_ID}', 'dl', 'above')" title="Add an action field above this field" />
+									<img id="{file_row.edit.action.DT_ID}_plus" class="action-image" src="./images/plus_down.png" alt="Add field below" onclick="modx_add_field('modx[{file_row.FILE_ID}][{file_row.edit.EDIT_ID}]', '{file_row.edit.action.DL_ID}', 'dl', 'below')" title="Add an action field below this field" />
+									{file_row.edit.action.MODX_IMG}
+								</div>
+							</dt>
+							<dd id="{file_row.edit.action.DD_ID}">
+									{file_row.edit.action.MODX_INPUT}
+									<!-- IF file_row.edit.action.S_TEXTAREA -->
+									<div class="right-tools" id="{file_row.edit.action.DD_ID}_toolbox">
+										<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{file_row.edit.action.DL_ID}').remove()" />
+										<img id="{file_row.edit.action.DD_ID}-plus" class="action-image" src="./images/plus.png" alt="Make larger" onclick="document.forms['modxform'].{file_row.edit.action.DD_ID}_data.rows+=4" title="Add 4 rows to the textfield" />
+										<img id="{file_row.edit.action.DD_ID}-minus" class="action-image" src="./images/del.png" alt="Make smaller" onclick="if(document.forms['modxform'].{file_row.edit.action.DD_ID}_data.rows>7){document.forms['modxform'].{file_row.edit.action.DD_ID}_data.rows-=4}else{document.forms['modxform'].{file_row.edit.action.DD_ID}_data.rows-=(document.forms['modxform'].{file_row.edit.action.DD_ID}_data.rows-4)};" title="Remove 4 rows from the textfield" />
+									</div>
+									<!-- ELSE --><img id="{file_row.edit.action.DD_ID}_delete_tool" class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{file_row.edit.action.DL_ID}').remove()" />
+									<!-- ENDIF -->
+									{file_row.edit.action.MODX_SELECT}
+							</dd>
+						</dl>
+						<!-- END action -->
+					</fieldset>
+					<br />
+					<!-- END edit -->
+				</fieldset>
+				<!-- END file_row -->
+			</div>
+			<input class="button2 adjusted-size" type="button" value="Add file" onclick="act_file();" />
+			<img class="sign" src="./images/info.png" alt="Info icon" title="Files will be ordered alphabetically within their directories (files first)." />
+
+		<!-- end the damage -->
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+
+	<div class="panel bg2">
+		<div class="inner"><span class="corners-top"><span></span></span>
+		<!-- begin DIY -->
+			<h3>DIY instructions</h3>
+			<fieldset class="fields2">
+			<!-- Do It Yourseld -->
+			<dl id="diy-field">
+				<dt>
+					<img class="action-image" src="./images/plus.png" alt="Add DIY" onclick="add_diy();" title="Add DIY field" />
+					<img class="sign" src="./images/info.png" alt="Info icon" title="You can have multiple DIY fields or none Do It Yourself Instructions, or instructions that cannot be described accurately using the other MODX commands." />
+				</dt>
+				<!-- BEGIN diy_row -->
+				<dd id="{diy_row.FIELD_ID}">
+					<!-- IF not diy_row.S_FIRST_ROW --><br /><!-- ENDIF -->
+					<textarea class="inputbox right-tools" name="diy[{diy_row.FIELD_ID}][diy]" id="diy_{diy_row.FIELD_ID}_diy" rows="{diy_row.ROWS}">{diy_row.DIY}</textarea>
+					<div class="right-tools">
+						<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{diy_row.FIELD_ID}').remove()" />
+						<img id="{diy_row.FIELD_ID}-plus" class="action-image" src="./images/plus.png" alt="Make bigger" onclick="document.forms['modxform'].diy_{diy_row.FIELD_ID}_diy.rows+=4" title="Add 4 rows to the textfield" />
+						<img id="{diy_row.FIELD_ID}-minus" class="action-image" src="./images/del.png" alt="Make smaller" onclick="if(document.forms['modxform'].diy_{diy_row.FIELD_ID}_diy.rows>7){document.forms['modxform'].diy_{diy_row.FIELD_ID}_diy.rows-=4}else{document.forms['modxform'].diy_{diy_row.FIELD_ID}_diy.rows-=(document.forms['modxform'].diy_{diy_row.FIELD_ID}_diy.rows-4)};" title="Remove 4 rows from the textfield" />
+					</div>
+					<select name="diy[{diy_row.FIELD_ID}][lang]">{diy_row.LANG}</select>
+				</dd>
+				<!-- BEGINELSE -->
+				<dd id="diy_0">
+					<textarea class="inputbox right-tools" name="diy[desc_pre][diy]" id="diy_01" cols="20" rows="5"></textarea>
+					<div class="right-tools">
+						<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#diy_0').remove()" />
+						<img id="diy0-plus" class="action-image" src="./images/plus.png" alt="Make bigger" onclick="document.forms['modxform'].diy_01.rows+=4" title="Add 4 rows to the textfield" />
+						<img id="diy0-minus" class="action-image" src="./images/del.png" alt="Make smaller" onclick="if(document.forms['modxform'].diy_01.rows>7){document.forms['modxform'].diy_01.rows-=4}else{document.forms['modxform'].diy_01.rows-=(document.forms['modxform'].diy_01.rows-4)};" title="Remove 4 rows from the textfield" />
+					</div>
+					<select name="diy[desc_pre][lang]">{LANG_SELECT}</select>
+				</dd>
+				<!-- END diy_row -->
+			</dl>
+		</fieldset>
+		<!-- end DIY -->
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+
+	</div>
+<div id="page-footer">
+
+		<fieldset class="submit-buttons">
+
+			<!-- BEGIN meta_row -->
+				<input type="hidden" name="meta[{meta_row.FIELD_ID}][name]" value="{meta_row.NAME}" />
+				<input type="hidden" name="meta[{meta_row.FIELD_ID}][content]" value="{meta_row.CONTENT}" />
+			<!-- END meta_row -->
+
+			<input class="button1" type="submit" name="preview" value="View" onclick="this.form.target='_blank';" />&nbsp;
+			<input class="button1" type="submit" name="dload" value="Download" onclick="this.form.target='_self';" />
+		</fieldset>
+	</form>
+
+	<span class="fcorners-bottom"><span></span></span>
+	</div>
+</div>
+</body>
+</html>
