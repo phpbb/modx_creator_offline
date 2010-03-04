@@ -362,7 +362,7 @@
 
 <div class="panel bg2">
 	<div class="inner"><span class="corners-top"><span></span></span>
-		<h3>Links, File copy and SQL</h3>
+		<h3>Links, File copy, Delete and SQL</h3>
 
 			<!-- begin Link fields -->
 			<fieldset class="modx-level1 fields2">
@@ -381,8 +381,7 @@
 									<option value="template-lang"<!-- IF link_row.TYPE == 'template-lang' --> selected="selected"<!-- ENDIF -->>Template_lang</option>
 									<option value="template"<!-- IF link_row.TYPE == 'template' --> selected="selected"<!-- ENDIF -->>Template</option>
 									<option value="text"<!-- IF link_row.TYPE == 'text' --> selected="selected"<!-- ENDIF -->>Text file</option>
-									<option value="php-installer"<!-- IF link_row.TYPE == 'php-installer' --> selected="selected"<!-- ENDIF -->>PHP install file</option>
-									<option value="uninstall"<!-- IF link_row.TYPE == 'php-installer' --> selected="selected"<!-- ENDIF -->>PHP install file</option>
+									<option value="uninstall"<!-- IF link_row.TYPE == 'uninstall' --> selected="selected"<!-- ENDIF -->>Uninstall instructions</option>
 								</select>
 								<img class="action-image" src="./images/delete.png" alt="" onclick="$('#{link_row.FIELD_ID}').remove()" />
 							</dd>
@@ -439,6 +438,35 @@
 				<img class="sign" src="./images/info.png" alt="Info icon" title="Both from and to fields are required. You can have as many copy fields as you need. The from field must contain the relative path from the current MODX file to the source file. Example: root/survey.php. Can also be a wildcard match using *.* Example: root/*.*. The to field must contain the the relative path from the phpBB root to the destination of the file. Should be an exact filename if an exact file name was given in the from attribute, or a directory name if a wildcard was used." />
 			</fieldset>
 			<!-- end File copy -->
+
+			<!-- begin File delete -->
+			<fieldset class="modx-level1">
+				<legend class="main-legend">Delete</legend>
+				<div id="delete-field">
+					<!-- IF S_IS_DELETE -->
+					<fieldset class="modx-level2 fields2" id="dd-delete">
+						<dl id="dl-delete">
+					<!-- ENDIF -->
+					<!-- BEGIN delete_row -->
+						<!-- IF delete_row.S_ROW_COUNT == 0 -->
+								<dt class="copy-rows">
+									<label>Delete:</label>
+									<img class="action-image" src="./images/plus.png" alt="Add file" title="Add file" onclick="add_file_delete();" title="Add file" /><img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#dd-delete').remove(); document.getElementById('addDeleteField').style.display='';" />
+								</dt>
+						<!-- ENDIF -->
+								<dd class="copy-rows" id="{delete_row.FILE_ID}">
+									<input class="inputbox copy-to" name="delete[{delete_row.FILE_ID}]" id="delete-{delete_row.FILE_ID}" size="85" maxlength="255" value="{delete_row.FILE}" type="text" /><img class="action-image" src="./images/delete.png" alt="Delete" onclick="$('#{delete_row.FILE_ID}').remove()" />
+								</dd>
+						<!-- END delete_row -->
+					<!-- IF S_IS_DELETE -->
+						</dl>
+					</fieldset>
+					<!-- ENDIF -->
+				</div>
+				<input class="button2" id="addDeleteField" type="button" value="Add Delete field" onclick="add_delete(); document.getElementById('addDeleteField').style.display='none';"<!-- IF S_IS_DELETE --> style="display: none;"<!-- ENDIF --> />
+				<img class="sign" src="./images/info.png" alt="Info icon" title="This is aimed for uninstall and update. Both files and directories can be deleted, directories should en with a slash (/)." />
+			</fieldset>
+			<!-- end File delete -->
 
 			<!-- begin SQL querys -->
 			<fieldset class="modx-level1">
@@ -519,11 +547,13 @@
 									<option value="before-add"<!-- IF file_row.edit.action.TYPE == 'before-add' --> selected="selected"<!-- ENDIF -->>Before add</option>
 									<option value="replace-with"<!-- IF file_row.edit.action.TYPE == 'replace-with' --> selected="selected"<!-- ENDIF -->>Replace with</option>
 									<option value="operation"<!-- IF file_row.edit.action.TYPE == 'operation' --> selected="selected"<!-- ENDIF -->>Operation</option>
+									<option value="remove"<!-- IF file_row.edit.action.TYPE == 'remove' --> selected="selected"<!-- ENDIF -->>Remove</option>
 									<option value="inline-find"<!-- IF file_row.edit.action.TYPE == 'inline-find' --> selected="selected"<!-- ENDIF -->>Inline find</option>
 									<option value="inline-after-add"<!-- IF file_row.edit.action.TYPE == 'inline-after-add' --> selected="selected"<!-- ENDIF -->>Inline after add</option>
 									<option value="inline-before-add"<!-- IF file_row.edit.action.TYPE == 'inline-before-add' --> selected="selected"<!-- ENDIF -->>Inline before add</option>
 									<option value="inline-replace-with"<!-- IF file_row.edit.action.TYPE == 'inline-replace-with' --> selected="selected"<!-- ENDIF -->>Inline replace with</option>
 									<option value="inline-operation"<!-- IF file_row.edit.action.TYPE == 'inline-operation' --> selected="selected"<!-- ENDIF -->>Inline operation</option>
+									<option value="inline-remove"<!-- IF file_row.edit.action.TYPE == 'inline-remove' --> selected="selected"<!-- ENDIF -->>Inline remove</option>
 									<option value="-"<!-- IF file_row.edit.action.TYPE == '-' --> selected="selected"<!-- ENDIF -->>Select type</option>
 								</select>
 
@@ -557,6 +587,23 @@
 			<img class="sign" src="./images/info.png" alt="Info icon" title="Files will be ordered alphabetically within their directories (files first)." />
 
 		<!-- end the damage -->
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+
+	<div class="panel bg2">
+		<div class="inner"><span class="corners-top"><span></span></span>
+		<!-- begin PHP-installer -->
+			<h3>PHP install file</h3>
+			<fieldset class="fields2">
+			<dl>
+				<dt>
+					<label for="php-installer">A php file that needs to be run in order to complete the installation.</label>
+					<img class="sign" src="./images/info.png" alt="Info icon" title="This should be the path from the forum root." />
+				</dt>
+				<dd><input class="inputbox" id="php-installer" type="text" name="php-installer" size="70" maxlength="255" value="{PHP_INSTALLER}" /></dd>
+			</dl>
+		</fieldset>
+		<!-- end PHP-installer -->
 		<span class="corners-bottom"><span></span></span></div>
 	</div>
 

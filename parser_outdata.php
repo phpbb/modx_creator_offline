@@ -28,6 +28,7 @@ class parser_outdata
 	protected $license = '';
 	protected $mod_version = '';
 	protected $modx_version = '';
+	protected $php_installer = '';
 	protected $target_version = '';
 
 	// MODX arrays
@@ -35,6 +36,7 @@ class parser_outdata
 	protected $author = array();
 	protected $author_notes = array();
 	protected $copy = array();
+	protected $delete = array();
 	protected $description = array();
 	protected $diy = array();
 	protected $history = array();
@@ -50,6 +52,7 @@ class parser_outdata
 	protected $cnt_change = 0;
 	protected $cnt_changelog = 0;
 	protected $cnt_copy = 0;
+	protected $cnt_delete = 0;
 	protected $cnt_description = 0;
 	protected $cnt_diy = 0;
 	protected $cnt_edit = 0;
@@ -203,6 +206,27 @@ class parser_outdata
 		if ($this->cnt_copy < sizeof($this->copy))
 		{
 			return($this->copy[$this->cnt_copy++]);
+		}
+		else
+		{
+			return(false);
+		}
+	}
+
+	/**
+	 * get_modx_delete
+	 *
+	 * Get the delete actions for this MOD. Loop this to get all.
+	 *
+	 * $delete[] = string filename;
+	 *
+	 * @return string, the delete actions, or false when done.
+	 */
+	public function get_modx_delete()
+	{
+		if ($this->cnt_delete < sizeof($this->delete))
+		{
+			return($this->delete[$this->cnt_delete++]);
 		}
 		else
 		{
@@ -426,6 +450,17 @@ class parser_outdata
 	}
 
 	/**
+	 * get_modx_php_installer
+	 *
+	 * Get php installer for the MOD
+	 * @return string path
+	 */
+	public function get_modx_php_installer()
+	{
+		return($this->php_installer);
+	}
+
+	/**
 	 * get_modx_diy
 	 *
 	 * Get the MOD DIY. Loop for all DIYs.
@@ -496,6 +531,7 @@ class parser_outdata
 		$this->cnt_change = 0;
 		$this->cnt_changelog = 0;
 		$this->cnt_copy = 0;
+		$this->cnt_delete = 0;
 		$this->cnt_description = 0;
 		$this->cnt_diy = 0;
 		$this->cnt_edit = 0;
@@ -530,6 +566,11 @@ class parser_outdata
 	public function count_copy()
 	{
 		return(sizeof($this->copy));
+	}
+
+	public function count_delete()
+	{
+		return(sizeof($this->delete));
 	}
 
 	public function count_description()

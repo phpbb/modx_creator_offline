@@ -23,7 +23,9 @@ $xml->setIndentString("\t");
 
 // The header
 $xml->startDocument('1.0', 'UTF-8', 'yes');
+
 $xml->writePi('xml-stylesheet', 'type="text/xsl" href="modx.prosilver.en.xsl"');
+
 $xml->writeComment('NOTICE: Please open this file in your web browser. If presented with a security warning, you may safely tell it to allow the blocked content.');
 $xml->writeComment('For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD.\nAlthough MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD.\nNo support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/');
 
@@ -31,7 +33,6 @@ $xml->writeComment('For security purposes, please check: http://www.phpbb.com/mo
 $xml->startElement('mod');
 $xml->writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
 $xml->writeAttribute('xmlns', 'http://www.phpbb.com/mods/xml/' . MODX_LATEST);
-
 
 // <header>
 $xml->startElement('header');
@@ -242,6 +243,21 @@ if ($parser->count_copy())
 }
 // </copy>
 
+// <delete>
+if ($parser->count_delete())
+{
+	$xml->startElement('delete');
+	while ($delete = $parser->get_modx_delete())
+	{
+		write_element('file', '', array(
+			'name' => trim($delete),
+		), false, false);
+	}
+	$xml->endElement();
+}
+// </delete>
+
+$stop = false;
 // And the damage...
 if ($parser->count_action())
 {
@@ -303,6 +319,11 @@ if ($parser->count_action())
 								$action = true;
 							break;
 
+							case 'inline-remove':
+								write_element('inline-remove', $value3['data']);
+								$action = true;
+							break;
+
 							case 'inline-after-add':
 								write_element('inline-action', $value3['data'], array('type' => 'after-add'));
 								$inline_action = true;
@@ -346,6 +367,11 @@ if ($parser->count_action())
 									$xml->startElement('edit');
 								}
 								write_element('find', $value3['data']);
+							break;
+
+							case 'remove':
+								write_element('remove', $value3['data']);
+								$action = false;
 							break;
 
 							case 'comment':
@@ -409,6 +435,12 @@ if ($parser->count_action())
 		// </open>
 		$xml->endElement();
 	}
+}
+
+// PHP-installer
+if (!empty($php_installer))
+{
+	write_element('php-installer', $php_installer);
 }
 
 // DIY

@@ -56,6 +56,7 @@ class post_parser extends parser_outdata
 		$this->installation_time = (isset($post_data['install-time'])) ? intval(trim($post_data['install-time'])) : 0;
 		$this->installation_time = (!empty($this->installation_time)) ? $this->installation_time * 60 : 0;
 		$this->license = (isset($post_data['license'])) ? stripslashes(trim($post_data['license'])) : '';
+		$this->php_installer = (isset($post_data['php-installer'])) ? stripslashes(trim($post_data['php-installer'])) : '';
 
 		// Arrays
 		$this->title = (isset($post_data['title'])) ? $this->modx_stripslashes($post_data['title']) : array();
@@ -72,6 +73,9 @@ class post_parser extends parser_outdata
 
 		$this->copy = (isset($post_data['copy'])) ? $this->modx_stripslashes($post_data['copy']) : array();
 		$this->copy = $this->int_keys($this->copy);
+
+		$this->delete = (isset($post_data['delete'])) ? $this->modx_stripslashes($post_data['delete']) : array();
+		$this->delete = $this->int_keys($this->delete);
 
 		$tmp_arr = (isset($post_data['meta'])) ? $this->modx_stripslashes($post_data['meta']) : array();
 		foreach ($tmp_arr as $value)
@@ -106,6 +110,10 @@ class post_parser extends parser_outdata
 							'type' => (isset($value3['type'])) ? $value3['type'] : '',
 							'data' => (isset($value3['data'])) ? $value3['data'] : '',
 						);
+						if (!empty($value3['lang']))
+						{
+							$this->action[$this->cnt_open][$this->cnt_edit][$this->cnt_action]['lang'] = $value3['lang'];
+						}
 					}
 				}
 			}
@@ -135,6 +143,7 @@ class post_parser extends parser_outdata
 		$this->cnt_change = 0;
 		$this->cnt_changelog = 0;
 		$this->cnt_copy = 0;
+		$this->cnt_delete = 0;
 		$this->cnt_description = 0;
 		$this->cnt_diy = 0;
 		$this->cnt_edit = 0;

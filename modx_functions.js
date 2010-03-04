@@ -52,6 +52,11 @@ function get_select_change(value, dt_id, dd_id, file_name, dl5_id)
 			info_img = '<img id="' + dd_id + '_info" class="sign" src="./images/info.png" alt="Find explain" title="Find tags in the MODX file should be in the order that the find targets appear in the file. In other words, a processor of the MODX file should never need to go backwards in the file to locate all of the finds. When there are multiple finds within a single edit tag, the processor should handle all finds before any actions." />';
 		break;
 
+		case 'remove':
+			data_type = 1;
+			info_img = '<img id="' + dd_id + '_info" class="sign" src="./images/info.png" alt="Find and delete explain" title="Remove tags should either be alone in the edit tag or preceded by one find to be sure to delete the right code." />';
+		break;
+
 		case 'after-add':
 		case 'before-add':
 		case 'replace-with':
@@ -61,6 +66,7 @@ function get_select_change(value, dt_id, dd_id, file_name, dl5_id)
 		break;
 
 		case 'inline-find':
+		case 'inline-remove':
 		case 'inline-after-add':
 		case 'inline-before-add':
 		case 'inline-replace-with':
@@ -195,11 +201,13 @@ function modx_select(file_name, dt_id, dd_id, dl_id)
 		element += '<option value="before-add">Before add</option>';
 		element += '<option value="replace-with">Replace with</option>';
 		element += '<option value="operation">Operation</option>';
+		element += '<option value="remove">Remove</option>';
 		element += '<option value="inline-find">Inline find</option>';
 		element += '<option value="inline-after-add">Inline after add</option>';
 		element += '<option value="inline-before-add">Inline before add</option>';
 		element += '<option value="inline-replace-with">Inline replace with</option>';
 		element += '<option value="inline-operation">Inline operation</option>';
+		element += '<option value="inline-remove">Inline remove</option>';
 		element += '<option value="-" selected="selected">Select type</option>';
 	element += '</select>';
 
@@ -425,6 +433,49 @@ function add_file_copy()
 }
 
 /**
+* Add the main delete-field
+*/
+function add_delete()
+{
+	var field_id = 'fc_' + field_cnt++;
+	var temp = 'tm_' + field_cnt++;
+	var dd_id = 'dd_' + dd_cnt++;
+	var dd_id2 = 'dd_' + dd_cnt++;
+
+	var element = '<fieldset class="modx-level2 fields2" id="dd-delete">';
+		element += '<dl id="dl-delete">';
+			element += '<dt class="copy-rows">';
+				element += '<label>delete:</label>';
+				element += '<img class="action-image" src="./images/plus.png" alt="Add file" title="Add file" onclick="add_file_delete();" /><img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#dd-delete\').remove(); document.getElementById(\'addDeleteField\').style.display=\'\';" />';
+			element += '</dt>';
+
+			element += '<dd class="copy-rows" id="' + dd_id2 + '">';
+				element += '<input class="inputbox copy-to" name="delete[' + temp + ']" size="85" maxlength="255" value="" type="text" />';
+				element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dd_id2 + '\').remove()" />';
+			element += '</dd>';
+		element += '</dl>';
+	element += '</fieldset>';
+
+	$('#delete-field').append(element);
+}
+
+/**
+* Add file delete
+*/
+function add_file_delete()
+{
+	temp = 'tm_' + field_cnt++;
+	var dd_id = 'dd_' + dd_cnt++;
+
+	var element = '<dd class="copy-rows" id="' + dd_id + '">';
+		element += '<input class="inputbox copy-to" name="delete[' + temp + ']" size="85" maxlength="255" value="" type="text" />';
+		element += '<img class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dd_id + '\').remove()" />';
+	element += '</dd>';
+
+	$('#dl-delete').append(element);
+}
+
+/**
 * Add a history-field
 */
 function add_history()
@@ -514,7 +565,7 @@ function add_link()
 					element += '<option value="template-lang">Template_lang</option>';
 					element += '<option value="template">Template</option>';
 					element += '<option value="text">Text file</option>';
-					element += '<option value="php-installer">PHP install file</option>';
+					element += '<option value="uninstall">Uninstall instructions</option>';
 				element += '</select>';
 				element += ' <img class="action-image" src="./images/delete.png" alt="" onclick="$(\'#' + dd_id + '\').remove()" />';
 			element += '</dd>';

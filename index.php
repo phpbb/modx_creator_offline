@@ -85,6 +85,8 @@ $license = (empty($license)) ? 'http://opensource.org/licenses/gpl-license.php G
 $version = $parser->get_modx_mod_version();
 $target = $parser->get_modx_target_version();
 
+$php_installer = $parser->get_modx_php_installer();
+
 // Check the vars that are not cheched later.
 if ($submit)
 {
@@ -120,9 +122,6 @@ if ($submit)
 		$error['install_time'] = 'install_time';
 	}
 }
-
-// Then do some checking.
-$history_fields = $link_fields = $author_fields = $sql_fields = $title_fields = $desc_fields = $notes_fields = $diy_fields = $copy_fields  = $meta_fields = '';
 
 // MOD title
 $cnt = 0;
@@ -299,6 +298,27 @@ if ($parser->count_copy())
 	}
 }
 
+// Delete
+$s_is_delete = false;
+$cnt = 0;
+if ($parser->count_delete())
+{
+	$field_id = 'fc_pre';
+	$s_is_delete = true;
+
+	while ($delete = $parser->get_modx_delete())
+	{
+		if (trim($delete) != '')
+		{
+			$file_id = 'fcc_pre_' . $cnt++;
+			$template->assign_block_vars('delete_row', array(
+				'FILE_ID' => $file_id,
+				'FILE' => gen_value($delete),
+			));
+		}
+	}
+}
+
 // SQL querys
 $cnt = 0;
 while ($sql = $parser->get_modx_sql())
@@ -402,6 +422,10 @@ while ($modx = $parser->get_modx_action())
 							{
 								$modx_img = '<img id="' . $dd_id . '_info" class="action-image" src="./images/info.png" alt="Find explain" title="Find tags in the MODX file should be in the order that the find targets appear in the file. In other words, a processor of the MODX file should never need to go backwards in the file to locate all of the finds. When there are multiple finds within a single edit tag, the processor should handle all finds before any actions." />';
 							}
+							else if($value3['type'] == 'remove')
+							{
+								$modx_img = '<img id="' . $dd_id . '_info" class="action-image" src="./images/info.png" alt="Find and delete explain" title="Remove tags should either be alone in the edit tag or preceded by one find to be sure to delete the right code." />';
+							}
 							else
 							{
 								$modx_img = '<img id="' . $dd_id . '_info" class="action-image" src="./images/info.png" alt="Action explain" title="The string to add before the find, add after the find, replace the find with, or the operation string." />';
@@ -451,6 +475,7 @@ $template->assign_vars(array(
 
 	'MOD_VERSION' => (isset($version)) ? $version : '',
 
+	'PHP_INSTALLER' => (!empty($php_installer)) ? $php_installer : '',
 	'PHPBB_LATEST' => PHPBB_LATEST,
 
 	'S_ERROR_TITLE' => (isset($error['title'])) ? true : false,
@@ -463,6 +488,7 @@ $template->assign_vars(array(
 	'S_ERRORS' => (($dload || $preview) && !empty($error)) ? true : false,
 
 	'S_IS_COPY' => $s_is_copy,
+	'S_IS_DELETE' => $s_is_delete,
 	'S_IN_MODX_CREATOR' => true,
 	'S_SUBMIT' => ($submit) ? true : false,
 

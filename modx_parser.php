@@ -27,6 +27,7 @@ class modx_parser extends parser_outdata
 	// Switches only used while parsing.
 	protected $in_author = false;
 	protected $in_copy = false;
+	protected $in_delete = false;
 	protected $in_entry = false;
 	protected $in_history = false;
 	protected $in_mod_version = false;
@@ -117,11 +118,26 @@ class modx_parser extends parser_outdata
 					);
 				break;
 
+				case 'copy';
+					$this->in_copy = ($modx_row['type'] == 'open') ? true : false;
+				break;
+
+				case 'delete';
+					$this->in_delete = ($modx_row['type'] == 'open') ? true : false;
+				break;
+
 				case 'file':
-					$this->copy[] = array(
-						'from' => (!empty($attrs['from'])) ? $attrs['from'] : '',
-						'to' => (!empty($attrs['to'])) ? $attrs['to'] : '',
-					);
+					if ($this->in_copy)
+					{
+						$this->copy[] = array(
+							'from' => (!empty($attrs['from'])) ? $attrs['from'] : '',
+							'to' => (!empty($attrs['to'])) ? $attrs['to'] : '',
+						);
+					}
+					else if ($this->in_delete && !empty($attrs['name']))
+					{
+						$this->delete[] = $attrs['name'];
+					}
 				break;
 
 				case 'link':
@@ -142,6 +158,10 @@ class modx_parser extends parser_outdata
 							'content' => $attrs['content'],
 						);
 					}
+				break;
+
+				case 'php-installer':
+					$this->php_installer = (isset($modx_row['value'])) ? $modx_row['value'] : '';
 				break;
 
 				case 'sql':
@@ -388,6 +408,13 @@ class modx_parser extends parser_outdata
 					);
 				break;
 
+				case 'remove':
+					$this->action[$this->cnt_open][$this->cnt_edit][$this->cnt_action++] = array(
+						'type' => 'remove',
+						'data' =>  (!empty($modx_row['value'])) ? $modx_row['value'] : '',
+					);
+				break;
+
 				case 'inline-action':
 					$this->action[$this->cnt_open][$this->cnt_edit][$this->cnt_action++] = array(
 						'type' => (isset($attrs['type'])) ? 'inline-' . $attrs['type'] : '',
@@ -398,6 +425,13 @@ class modx_parser extends parser_outdata
 				case 'inline-find':
 					$this->action[$this->cnt_open][$this->cnt_edit][$this->cnt_action++] = array(
 						'type' => 'inline-find',
+						'data' =>  (!empty($modx_row['value'])) ? $modx_row['value'] : '',
+					);
+				break;
+
+				case 'inline-remove':
+					$this->action[$this->cnt_open][$this->cnt_edit][$this->cnt_action++] = array(
+						'type' => 'inline-remove',
 						'data' =>  (!empty($modx_row['value'])) ? $modx_row['value'] : '',
 					);
 				break;
@@ -427,6 +461,7 @@ class modx_parser extends parser_outdata
 		$this->cnt_change = 0;
 		$this->cnt_changelog = 0;
 		$this->cnt_copy = 0;
+		$this->cnt_delete = 0;
 		$this->cnt_description = 0;
 		$this->cnt_diy = 0;
 		$this->cnt_edit = 0;
