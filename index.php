@@ -139,7 +139,7 @@ while ($title = $parser->get_modx_title())
 	}
 }
 
-if (!$cnt)
+if (!$cnt && $submit)
 {
 	$error['title'] = true;
 }
@@ -162,7 +162,7 @@ while ($desc = $parser->get_modx_description())
 	}
 }
 
-if (!$cnt)
+if (!$cnt && $submit)
 {
 	$error['desc'] = true;
 }
@@ -218,7 +218,7 @@ while ($author = $parser->get_modx_authors())
 	}
 }
 
-if (!$cnt)
+if (!$cnt && $submit)
 {
 	$error['author'] = true;
 }
@@ -460,10 +460,6 @@ while ($modx = $parser->get_modx_action())
 if (($dload || $preview) && empty($error))
 {
 	include('./create_modx.php');
-}
-else if ($dload || $preview)
-{
-	var_dump($error);
 }
 
 $template->assign_vars(array(
