@@ -138,7 +138,7 @@ function modx_add_field(obj_id, parent_id, sort, position, if_edit)
 				element += '<button type="button" class="button1" onclick="modx_add_field(\'' + obj_id + '\', \'' + edit_id + '\', \'edit\', \'above\', 1)">Add edit above</button> ';
 				element += '<button type="button" class="button1" onclick="modx_add_field(\'' + obj_id + '\', \'' + edit_id + '\', \'edit\', \'below\', 1)">Add edit below</button>';
 			element += ' <strong>Each FIND typically requires to start a new EDIT</strong></legend>';
-			element += '<p style="font-size: 1em;">NOTE: Each discreet change to a file must be wrapped in its own edit tag. </p>';
+			element += '<p style="font-size: 1em;">NOTE: Each discreet change to a file must be wrapped in its own edit tag.</p>';
 			element += '<dl id="' + dl_id + '">';
 				element += '<dt id="' + dt_id + '">';
 					element += '<label>Type: </label>';
