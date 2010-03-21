@@ -105,10 +105,11 @@ class post_parser extends parser_outdata
 					$this->cnt_action = -1;
 					foreach ($value2 as $value3)
 					{
+						$value3['data'] = (isset($value3['data'])) ? $this->parse_cdata($value3['data']) : '';
 						$this->cnt_action++;
 						$this->action[$this->cnt_open][$this->cnt_edit][$this->cnt_action] = array(
 							'type' => (isset($value3['type'])) ? $value3['type'] : '',
-							'data' => (isset($value3['data'])) ? $value3['data'] : '',
+							'data' => $value3['data'],
 						);
 						if (!empty($value3['lang']))
 						{
@@ -165,6 +166,28 @@ class post_parser extends parser_outdata
 	private function version_sort($a, $b)
 	{ // sorterar ratingen
 		return (version_compare($a['version'], $b['version']));
+	}
+
+	/**
+	 * parse_cdata
+	 *
+	 * Handles edits or finds containing <![CDATA[ and/or ]]>.
+	 * Those will brake the xml if not correctly escaped.
+	 */
+	private function parse_cdata($data)
+	{
+		$find = array(
+			'<![CDATA[',
+			']]>',
+			'&lt;![CDATA[',
+			']]&gt;');
+		$replace = array(
+			'&lt;![CDATA[',
+			']]&gt;',
+			']]>&lt;![CDATA[<![CDATA[',
+			']]>]]&gt;<![CDATA[');
+		$data = str_replace($find, $replace, $data);
+		return($data);
 	}
 
 	/**
