@@ -195,6 +195,7 @@ function modx_add_field(obj_id, parent_id, sort, position, if_edit)
 function modx_select(file_name, dt_id, dd_id, dl_id)
 {
 	var element = '<select class="krav" name="' + file_name + '[type]" onchange="if(this.options[this.selectedIndex].value != \'-\'){ get_select_change(this.options[this.selectedIndex].value, \'' + dt_id + '\', \'' + dd_id + '\', \'' + file_name + '\', \'' + dl_id + '\') }">';
+		element += '<option value="-" selected="selected">Select type</option>';
 		element += '<option value="comment">Comment</option>';
 		element += '<option value="find">Find</option>';
 		element += '<option value="after-add">After add</option>';
@@ -208,7 +209,6 @@ function modx_select(file_name, dt_id, dd_id, dl_id)
 		element += '<option value="inline-replace-with">Inline replace with</option>';
 		element += '<option value="inline-operation">Inline operation</option>';
 		element += '<option value="inline-remove">Inline remove</option>';
-		element += '<option value="-" selected="selected">Select type</option>';
 	element += '</select>';
 
 	return(element);

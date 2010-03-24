@@ -5,7 +5,7 @@
 	<link rel="shortcut icon" href="favicon.ico" />
 	<link rel="stylesheet" href="creator.css" type="text/css" />
 	<title>MODX-creator</title>
-	<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="modx_functions.js"></script>
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 </head>
@@ -541,6 +541,7 @@
 							<dt id="{file_row.edit.action.DT_ID}">
 								<label>Type: </label>
 								<select class="krav" name="modx[{file_row.FILE_ID}][{file_row.edit.EDIT_ID}][{file_row.edit.action.DL_ID}][type]" onchange="if(this.options[this.selectedIndex].value != '-'){ get_select_change(this.options[this.selectedIndex].value, '{file_row.edit.action.DT_ID}', '{file_row.edit.action.DD_ID}', 'modx[{file_row.FILE_ID}][{file_row.edit.EDIT_ID}][{file_row.edit.action.DL_ID}]', '{file_row.edit.action.DL_ID}') }">
+									<option value="-"<!-- IF file_row.edit.action.TYPE == '-' --> selected="selected"<!-- ENDIF -->>Select type</option>
 									<option value="comment"<!-- IF file_row.edit.action.TYPE == 'comment' --> selected="selected"<!-- ENDIF -->>Comment</option>
 									<option value="find"<!-- IF file_row.edit.action.TYPE == 'find' --> selected="selected"<!-- ENDIF -->>Find</option>
 									<option value="after-add"<!-- IF file_row.edit.action.TYPE == 'after-add' --> selected="selected"<!-- ENDIF -->>After add</option>
@@ -554,7 +555,6 @@
 									<option value="inline-replace-with"<!-- IF file_row.edit.action.TYPE == 'inline-replace-with' --> selected="selected"<!-- ENDIF -->>Inline replace with</option>
 									<option value="inline-operation"<!-- IF file_row.edit.action.TYPE == 'inline-operation' --> selected="selected"<!-- ENDIF -->>Inline operation</option>
 									<option value="inline-remove"<!-- IF file_row.edit.action.TYPE == 'inline-remove' --> selected="selected"<!-- ENDIF -->>Inline remove</option>
-									<option value="-"<!-- IF file_row.edit.action.TYPE == '-' --> selected="selected"<!-- ENDIF -->>Select type</option>
 								</select>
 
 								<div id="{file_row.edit.action.DT_ID}_options" style="margin-top: 5px;">
