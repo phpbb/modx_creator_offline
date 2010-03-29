@@ -1,5 +1,5 @@
 /**
-* JavaScript for modx-creator @ phpbb.com
+* JavaScript for modx-creator
 */
 
 var field_cnt = 1;
