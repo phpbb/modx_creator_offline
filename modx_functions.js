@@ -173,7 +173,7 @@ function modx_add_field(obj_id, parent_id, sort, position, if_edit)
 			element += '<dd id="' + dd_id + '">';
 				element += '<span id="' + dd_id + '_field">';
 					element += '<input class="inputbox autowidth" id="' + dd_id + '_data" type="text" name="' + obj_id + '[' + dl_id + '][data]" disabled="disabled" size="30" value="" />';
-				element += '</dd>';
+				element += '</span>';
 				element += '<img id="' + dd_id + '_delete_tool" class="action-image" src="./images/delete.png" alt="Delete" onclick="$(\'#' + dl_id + '\').remove();" />';
 			element += '</dd>';
 		element += '</dl>';
