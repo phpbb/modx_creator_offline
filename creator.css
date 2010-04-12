@@ -1,0 +1,352 @@
+/* css for the MODX creator */
+/* Mostly copied from http:www.phpbb.com */
+body {
+	/* Text-Sizing with ems: http://www.clagnut.com/blog/348/ */
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	color: #536482;
+	background-color: #ACA8A1;
+	font-size: 62.5%;			/* This sets the default font size to be equivalent to 10px */
+	margin: 0;
+	text-align: center;
+}
+
+body div.header {
+	background-repeat: no-repeat;
+	width: 850px;
+	height: 129px;
+	float: left;
+	margin-top: 21px;
+}
+
+body div.header h1 {
+	margin: 0;
+}
+
+body.modx-creator .panel {
+	margin-bottom: 10px !important;
+}
+
+body.modx-creator fieldset.modx-level1 {
+	background-color: #FFFFFF;
+	padding: 10px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+body.modx-creator fieldset.modx-level2 {
+	padding: 5px;
+	background-color: #F5F8FB;
+	border: 1px solid #E5E8EC;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	font-size: 1em !important;
+}
+
+body.modx-creator fieldset.file-edit dt {
+	width: 19em !important;
+}
+
+body.modx-creator fieldset.file-edit dd {
+	margin-left: 20em !important;
+}
+
+body.modx-creator .sub-legend, body.modx .main-legend {
+	color: #28313F;
+}
+
+body.modx-creator .main-legend {
+	font-size: 1.1em;
+}
+
+body.modx-creator .adjusted-size {
+	font-size: 1.1em !important;
+}
+
+body.modx-creator .copy-to {
+	margin-bottom: 5px;
+}
+
+body.modx-creator img.sign, body.modx-creator img.action-image {
+	vertical-align: middle !important;
+	margin-right: 3px;
+	height:14px;
+	width:14px;
+}
+
+body.modx-creator img.action-image {
+	cursor: pointer;
+}
+
+body.modx-creator div.right-tools {
+	float: left;
+	width: 14px;
+	clear: right;
+}
+
+body.modx-creator div.right-tools img {
+	margin-bottom: 2px;
+}
+
+body.modx-creator textarea.right-tools {
+	float: left;
+	margin-bottom: 3px;
+}
+
+dd label {
+	white-space: nowrap;
+	color: #333;
+}
+
+dd input, dd textarea {
+	margin-right: 3px;
+}
+
+dd select {
+	width: auto;
+}
+
+dd textarea {
+	width: 85%;
+}
+
+dt label {
+	font-weight: bold;
+	text-align: left;
+}
+
+fieldset dl {
+	padding: 4px 0;
+}
+
+fieldset dt {
+	float: left;	
+	width: 40%;
+	text-align: left;
+	display: block;
+}
+
+fieldset dd {
+	margin-left: 41%;
+	vertical-align: top;
+	margin-bottom: 3px;
+}
+
+fieldset dl:hover dt label {
+	color: #000000;
+}
+
+fieldset.fields2 dl:hover dt label {
+	color: inherit;
+}
+
+fieldset.fields2 dt {
+	width: 15em;
+	border-right-width: 0;
+}
+
+fieldset.fields2 dd {
+	margin-left: 16em;
+	border-left-width: 0;
+}
+
+fieldset.submit-buttons {
+	text-align: center;
+	vertical-align: middle;
+	margin: 0 0;
+}
+
+fieldset {
+	border: none;
+}
+
+h1 {
+	font-size: 20px;
+	text-align: center;
+	margin-bottom: 0;
+	padding: 10px 0 5px 0;
+}
+
+h3 {
+	color: #115098;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	border-bottom: 1px solid #CCCCCC;
+	margin-bottom: 3px;
+	padding-bottom: 2px;
+	font-size: 1.3em;
+	margin-top: 0;
+}
+
+hr.dashed {
+	border-top: 1px dashed #CCCCCC;
+	margin: 10px 0;
+}
+
+input.inputbox	{ width: 85%; }
+input.medium	{ width: 50%; }
+input.narrow	{ width: 25%; }
+input.tiny		{ width: 125px; }
+
+input.button1, input.button2 {
+	font-size: 1em;
+}
+
+input.button1, input.button2 {
+	width: auto !important;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
+	color: #000;
+	background: #FAFAFA none repeat-x top;
+}
+
+input.button1 {
+	font-weight: bold;
+	border: 1px solid #666666;
+}
+
+label {
+	cursor: default;
+	padding-right: 5px;
+	color: #333;
+}
+
+label input {
+	vertical-align: middle;
+}
+
+label img {
+	vertical-align: middle;
+}
+
+span.side-left, span.side-right {
+	display: block;
+	width: 20px;
+	height: 150px;
+	background: url("./images/sides_top.gif") no-repeat;
+}
+
+span.side-left {
+	background-position: 0 0;
+	float: left;
+	margin-right: 10px;
+}
+
+span.side-right {
+	background-position: 100% 0;
+	float: right;
+}
+
+span.corners-top, span.corners-bottom, span.corners-top span, span.corners-bottom span {
+	font-size: 1px;
+	line-height: 1px;
+	display: block;
+	height: 5px;
+	background-repeat: no-repeat;
+}
+
+span.corners-top {
+	background-image: url("./images/corners_left.png");
+	background-position: 0 0;
+	margin: 0 -5px;
+}
+
+span.corners-top span {
+	background-image: url("./images/corners_right.png");
+	background-position: 100% 0;
+}
+
+span.corners-bottom {
+	background-image: url("./images/corners_left.png");
+	background-position: 0 100%;
+	margin: 0 -5px;
+	clear: both;
+}
+
+span.corners-bottom span {
+	background-image: url("./images/corners_right.png");
+	background-position: 100% 100%;
+}
+
+span.fcorners-bottom, span.fcorners-bottom span {
+	font-size: 1px;
+	line-height: 1px;
+	display: block;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-image: url("./images/corners_bottom.gif");
+	margin: 0;
+}
+
+span.fcorners-bottom {
+	background-position: 0 0;
+}
+
+span.fcorners-bottom span {
+	background-position: 100% -20px;
+}
+
+textarea.inputbox {
+	width: 85%;
+}
+
+#wrap {
+	width: 910px;
+	background: #FFFFFF url("./images/bg_body.gif") repeat-y 0 0;
+	margin: 10px auto;
+	text-align: left;
+	padding: 0;
+}
+
+#page-body {
+	margin: 40px 30px;
+	clear: both;
+}
+
+#page-footer {
+	background: url("./images/bg_footer.gif") repeat-x 0 100%;
+	margin-top: -20px;
+	clear: both;
+}
+
+#page-header {
+	background: url("./images/bg_header.gif") repeat-x 0 0;
+	height: 150px;
+	clear: both;
+}
+
+.autowidth {
+	width: auto !important;
+}
+
+/* Input field styles
+---------------------------------------- */
+.inputbox {
+	background-color: #FFFFFF;
+	border: 1px solid #c0c0c0;
+	color: #333333;
+	padding: 2px;
+	cursor: text;
+}
+
+.inputbox:hover {
+	border: 1px solid #eaeaea;
+}
+
+.inputbox:focus {
+	border: 1px solid #eaeaea;
+	color: #4b4b4b;
+}
+
+.panel {
+	background-color: #ECF1F3;
+	color: #28313F;
+	margin-bottom: 10px !important;
+	padding: 0 10px;
+}
+
+.panel span.corners-top, .panel span.corners-bottom {
+	margin: 0 -10px;
+}
+
+
