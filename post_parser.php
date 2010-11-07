@@ -96,7 +96,7 @@ class post_parser extends parser_outdata
 				if ($key2 == 'file')
 				{
 					$this->cnt_open++;
-					$this->cnt_edit = -1;
+					$this->cnt_edit = 0;
 					$this->action[$this->cnt_open]['file'] = $value2;
 				}
 				else

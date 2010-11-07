@@ -261,6 +261,8 @@ $stop = false;
 // And the damage...
 if ($parser->count_action())
 {
+	$parser->nubcheck();
+
 	while ($action = $parser->get_modx_action())
 	{
 		// <open>

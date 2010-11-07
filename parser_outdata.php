@@ -643,4 +643,54 @@ class parser_outdata
 		}
 	}
 
+	/**
+	 * nubcheck
+	 *
+	 * Do some denubbing to remove edits only containing a find and/or starting wiht a action.
+	 */
+	public function nubcheck()
+	{
+		foreach ($this->action as &$file_edits)
+		{
+			// One $file_edits for each file.
+			$prev_key = false;
+			foreach ($file_edits as $edit_key => $edit)
+			{
+				// Make sure this edit has not been removed.
+				if (empty($edit))
+				{
+					continue;
+				}
+
+				// Don't check file names.
+				if ($edit_key == 'file')
+				{
+					continue;
+				}
+
+				$sizeof = sizeof($edit);
+
+				// The only tag allowed to be alone is <remove>
+				if ($sizeof == 1 && $edit[0]['type'] == 'remove')
+				{
+					continue;
+				}
+				else if ($edit[0]['type'] != 'find' && $prev_key && $sizeof == 1)
+				{
+					// A single tag that is not a find. Merge it to the previous edit.
+					$file_edits[$prev_key] = array_merge($file_edits[$prev_key], $edit);
+					unset($file_edits[$edit_key]);
+				}
+				else
+				{
+					$prev_key = $edit_key;
+				}
+			}
+			unset($edit_key, $edit);
+		}
+
+//var_dump($this->action);
+
+	}
+
 }
