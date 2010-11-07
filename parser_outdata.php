@@ -688,9 +688,6 @@ class parser_outdata
 			}
 			unset($edit_key, $edit);
 		}
-
-//var_dump($this->action);
-
 	}
 
 }
