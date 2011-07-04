@@ -150,11 +150,12 @@ function get_mod_type($str, $extension)
 	{
 		$str = strtolower($str);
 		// The file is trying to tell us it's a MOD file
-		if((substr($str, 0, 10) == '##########' || strpos($str, 'easymod') !== false) && strpos($str, 'mod') !== false)
+		if((substr($str, 0, 10) == '##########' || strpos($str, 'easymod') !== false) || strpos($str, 'mod') !== false)
 		{
 			return(MOD);
 		}
 	}
+
 	return(false);
 }
 
