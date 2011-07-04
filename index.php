@@ -33,7 +33,9 @@ if ($submit_file && !$submit)
 	if ($_FILES['upload-file']['size'] > 0)
 	{
 		// Lets start with the extension...
-		$extension = strtolower(array_pop(explode('.', $_FILES['upload-file']['name'])));
+		$extension = explode('.', $_FILES['upload-file']['name']);
+		$extension = strtolower(array_pop($extension));
+
 		$str = file_get_contents($_FILES['upload-file']['tmp_name'], 0, NULL, 0, 200);
 
 		// We'll need to know what kind of file it is
