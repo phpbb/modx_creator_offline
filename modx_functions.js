@@ -647,7 +647,7 @@ function add_sql()
 				element += '<select name="sql[' + field_id + '][dbms]" id="sql-' + field_id + '-dbms">';
 					element += '<option value="mysql_40">MySQL 4.0</option>';
 					element += '<option value="mysql_41">MySQL 4.1</option>';
-					element += '<option value="mssaccess">MSSQL</option>';
+					element += '<option value="mssql">MSSQL</option>';
 					element += '<option value="oracle">Oracle</option>';
 					element += '<option value="postgres">PostgreSQL</option>';
 					element += '<option value="firebird">FireBird</option>';
