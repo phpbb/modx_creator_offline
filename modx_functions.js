@@ -333,7 +333,7 @@ function add_contributor(field_id)
 		element += '<dl>';
 			element += '<dt class="author-rows"><label for="contributor-' + field_id + '-' + temp + '-status">Status:</label></dt>';
 			element += '<dd class="author-rows">';
-				element += '<select name="author[' + field_id + '][contributions][' + temp + '][status]" id="contributor-' + field_id + '-' + temp + '-status">';
+				element += '<select name="author[' + field_id + '][contributions][' + temp + '][status]" id="contributor-' + field_id + '-' + temp + '-status" onchange="handle_contributor_to_field(\'' + dd_id + '\', \'' + field_id + '\', \'' + temp + '\');">';
 					element += '<option value="past">Past</option>';
 					element += '<option value="current" selected="selected">Current</option>';
 				element += '</select>';
@@ -355,15 +355,32 @@ function add_contributor(field_id)
 			element += '</dd>';
 		element += '</dl>';
 
-		element += '<dl>';
-			element += '<dt class="author-rows"><label for="contributor-' + field_id + '-' + temp + '-to">To:</label></dt>';
-			element += '<dd class="author-rows">';
-				element += '<input type="text" name="author[' + field_id + '][contributions][' + temp + '][to]" id="contributor-' + field_id + '-' + temp + '-to" size="40" maxlength="255" value="" />';
-			element += '</dd>';
-		element += '</dl>';
 	element += '</fieldset>';
 
 	$('#' + field_id + '-pre').append(element);
+}
+
+/**
+* Add or remove the "To" field based on the status of the contributor
+*/
+function handle_contributor_to_field(dd_id, field_id, temp)
+{
+	dd_id = '#' + dd_id;
+
+	if ($(dd_id + ' dl dd select').val() == 'past')
+	{
+		var element = '<dl>';
+			element += '<dt class="author-rows"><label for="contributor-' + field_id + '-' + temp + '-to">To:</label></dt>';
+				element += '<dd class="author-rows">';
+					element += '<input type="text" name="author[' + field_id + '][contributions][' + temp + '][to]" id="contributor-' + field_id + '-' + temp + '-to" size="40" maxlength="255" value="" />';
+				element += '</dd>';
+			element += '</dl>';
+		$(dd_id).append(element);
+	}
+	else
+	{
+		$(dd_id + ' dl:last').remove();
+	}
 }
 
 /**

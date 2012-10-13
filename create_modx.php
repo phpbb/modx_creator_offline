@@ -114,7 +114,7 @@ while ($author = $parser->get_modx_authors())
 				write_element('contributions', '', array(
 					'status' => $cval['status'],
 					'from' => trim($cval['from']),
-					'to' => trim($cval['to']),
+					'to' => (isset($cval['to'])) ? trim($cval['to']) : '',
 					'position' => trim($cval['position']),
 				));
 				// </contributions>
