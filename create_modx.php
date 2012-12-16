@@ -32,7 +32,7 @@ $xml->writeComment('For security purposes, please check: http://www.phpbb.com/mo
 // <mod>
 $xml->startElement('mod');
 $xml->writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-$xml->writeAttribute('xmlns', 'http://www.phpbb.com/mods/xml/' . MODX_LATEST);
+$xml->writeAttribute('xmlns', 'https://www.phpbb.com/mods/xml/' . MODX_LATEST);
 
 // <header>
 $xml->startElement('header');
@@ -91,6 +91,9 @@ while ($notes = $parser->get_modx_notes())
 	}
 }
 // </author-notes>
+
+// <github>
+write_element('github', $parser->get_modx_github());
 
 // <author-group>
 $xml->startElement('author-group');

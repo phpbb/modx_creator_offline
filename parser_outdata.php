@@ -30,6 +30,7 @@ class parser_outdata
 	protected $modx_version = '';
 	protected $php_installer = '';
 	protected $target_version = '';
+	protected $github = '';
 
 	// MODX arrays
 	protected $action = array();
@@ -144,6 +145,16 @@ class parser_outdata
 	public function get_modx_target_version()
 	{
 		return($this->target_version);
+	}
+
+	/**
+	 * get_modx_github
+	 *
+	 * @return string, the github URL.
+	 */
+	public function get_modx_github()
+	{
+		return($this->github);
 	}
 
 	/**

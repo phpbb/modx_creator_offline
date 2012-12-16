@@ -5,7 +5,7 @@
 <!DOCTYPE xsl:stylesheet[
 	<!ENTITY nbsp "&#160;">
 ]>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" xmlns:mod="http://www.phpbb.com/mods/xml/modx-1.2.5.xsd">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" xmlns:mod="https://www.phpbb.com/mods/xml/modx-1.2.6.xsd">
 	<xsl:output method="html" omit-xml-declaration="no" indent="yes" />
 	<xsl:variable name="title" select="mod:mod/mod:header/mod:title" />
 	<xsl:variable name="version">
@@ -23,7 +23,7 @@
 /*  phpBB 3.0 Admin Style Sheet
 	–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 	Original author:	subBlue ( http://www.subblue.com/ )
-	Copyright 2007 phpBB Group ( http://www.phpbb.com/ )
+	Copyright 2007 phpBB Group ( https://www.phpbb.com/ )
 	–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 */
 
@@ -154,7 +154,12 @@ a:active {
 #page-header {
 	clear:both;
 	text-align:right;
-	background:url(data:image/gif;base64,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) top left no-repeat;
+	background:url(data:image/gif;base64,R0lGODlhiwAwAPf/AMG+uerr7b66tf38/aWint3g4dbSzZaUkefs7+/u7a2qpuHf2tTQyrm2sc7T1bzBxKimoePi4djUz6Wkofb4+ubm5urv8evq6J2bmOjq7N3a1K6sqNDU1/L09rGuqo6MitDMx7m+wcLExejm4318ebS5vNTZ3Pr6+u7w8tbY2PHz9JKQjd/e3e3s69LOyKqopLSxrfj6+pyZlc7KxW1raezv8HV0coWDgeTn6NrW0MTFxeDl6NPW2OXo6np5duHg37a1srKvq8zQ08zOztrd3+no5/n7/JiWk76+vuDk5tbW1ubk4JCNiuXi3crO0KKgnHJxbuLk5t3f4cnNzsjEv+7w8bGxsL+9usXEwvX08+zw8ubq7MfDvoiGg/T299jb3LW1tdza2MjFwNba3N3c2fX3+MbJytDNyMLBv9fTzYqJh9jX1IB/fKuqqNvf4cfEv/n5+PDy887R0rq4tMTBvLWyrvT09PLz9O/y9KCem3h3dNrZ19LU1s3LycrGweHj5Lq5uPf398vIw+br7unt8MbKzdHW2cLHyuXq7NPX2uPo68nN0L/Ex+Ln6tfc39/k593i5dne4drf4tbb3tzh5K+0t62ytdnV0LK2uezq5szJw7azrre8vs/MxqyxtM3JxOvw88nIxvz8+/Hv7c/LxvD1+K+xssvHwu/099PPyuzx9O3y9e7z9sfLzvr6+ff29cLAu/H2+fL3+bO3ur+8t+Dc17i9v8fMzvv8/G9ua8LGx9bU0OHm6bC1uPPy8M/U1bOwrMPIy9TX2t/i4+bp69/c18DFx8HGyM3KxOPm59XRy9XSzauws83R1MbCvdHV1/T4+unu8Ort783P0N/j5fTz8cTAu7a4uMTCwLy6uLu4s9PT0rCztLK0tbSysMvKyMvMzc7NzM3Q0M7Q0fb19NXT0dnW0MfGxNHOyNDOy9PU1ayrq4OBfre0sOPl5aqvsrG2ucnGwN
+jZ2fn498XCvfHx8NPQzLO4u8LCwsLDxK6ztqekoPj39szIw////9vX0SH5BAEAAP8ALAAAAACLADAAAAj/AP8JHEiwoMGD//wpdDWqFsKHECNKnEixosWLB9Mo3DigGMaPFDUsyTQqy4CNKLOMGqEhokiSJlFuVMkSZMVO/t69K/HLX5FUNoMWbOFKplGjo1oaJHq0qcKkQiH28+eJmVU+cBpEFXpJoZFkX+TogueprFlPuuQUMOJvQJOCXf19DTv2rNm0a9u+3Wpwqj5LgO/5U8DXZip/tgArXsxY8ReFewUeTty4smPIhQlO7VWpcy9/+zJ/nOGPc+fTqFOfnhLgxLKBpE2rnr269WvRU2dh2j3LHwHRGHPvHj6Lm6njproNX+7EXxgJAoUvL448+fLhzZ/j9leie3ffwC9O//XeXUcuGyTSk/DBZt0D8iWknKATnTt58+jVs3cPXz59hBqMUNJJ/rjiSyZKHTSVLZw0aAtoAjXhC4H8HOhQRQEOuNCBCfaFWIOcOMHCAcDUsckmdQQBwQFAmAEiJ8b4A0t9DDYoIokmoqgiiy6CGOOMBmmQCYFNIaigPyEkmaQ/XGiQhVNZXAiRkEQeZaSHSoYgxA8vkNIJCCB0MoMY7byQQpYh3HEFUFNluWWXX4Y5ZplnZqmmQQvAoRAOXzhwzAMPFMLDH7j488oCHgKqqD+7nFQFD38+4MSggbQ1AkR57tlnpIISaiiiBU2l6AMORACMQRKcIcAaToxaxRwz/P8jqqKlnlpQqqu2quir0A20gCj+RHELI8QWW+wtUfgjCqgDTWWMsXZU+oex1Eqh0KUH/RrssNQem+yyofrzLLEcmHrQJZqEUYCxVQDRj6ziFluurXClu26x7aYxUDHAEnHIvwAHDDAR/syTg2b+BBMwwf4KLLADxLhmEL/+NOywwAQbjLDC/yZi7kEu1DNMwFVMoAm8HB/iMb0FhTwywCXrK1A1/khRyM04t9IKzjxbWwTCO/PsAM9B83wzB/
+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) top left no-repeat;
 	height:69px;
 	font-size:0.85em;
 	margin-bottom:10px;
@@ -224,7 +229,9 @@ a:active {
 }
 
 .panel {
-	background:#F3F3F3 url(data:image/gif;base64,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) repeat-x top;
+	background:#F3F3F3 url(data:image/gif;base64,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) repeat-x top;
 	padding:0;
 }
 
@@ -237,7 +244,8 @@ span.corners-top, span.corners-bottom, span.corners-top span, span.corners-botto
 }
 
 span.corners-top, span.corners-bottom {
-	background-image:url(data:image/gif;base64,R0lGODlhiBMMAMQSAP///5mZmfPz89vX0cvIw9zc3PX19bKysqmopvb29pqamvn5+Z2dnLy6t62sqp+fnqCgn/T09P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABIALAAAAACIEwwAAAX/4DAQDhScaKqubOu+cCzPdG3feK7vfO//wKBwSCwaj8ikcslsOp/QqHRKrVqv2Kx2y+16v+CweEwum8/otHrNbrvf8Lh8Tq/b7/i8fs/v+/+AgYKDhIWGh4hSAw0HBREAkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PG7BAoCAAkCEvr7/P3+/wADChxIsKDBgwgTKlzIsKHDhxAjSpxIsaLFixgzatzIsaPHjyBDihxJsqTJkyhT/6pcybKly5cwY8qcSbOmzZs4c+rcybOnz59AgwodSrSo0aNIkypdyrSp06dQo0qdSrWq1atYs2rdShJBAQBcw4odS7as2bNo06pdy7at27dw48qdS7eu3bt48+rdy7ev37+AAwseTLiw4cOIizJYYCCx48eQI0ueTLmy5cuYM2vezLmz58+gQ4seTbq06dOoU6teHToAgHysY8ueTbu27du4c+vezbu379/AgwsfTry48ePIkyuX4Br28ufQo0ufTr269evYs2vfzr279+/gw4sfT7704sbl06tfz769+/fw48ufT7++/fv48+vfzx+vV7D9BSjggAQWaOCBCCao4JmCDDbo4IMQRijhdfTYg8+EGGao4YYcdujhhyCGKOKIJJZo4oko5rVIIwbI4+KLMMYo44w01mjjjTjmqOOOPPbo449ABinkkEQWaeSRSCap5JJMNunkk1BGKeWUVFaZjQgkPJDIllx26eWXYIYp5phklmnmmWimqeaabLbp5ptwxinnnHTWaeedeOap55589unnn4AGKigcIQAAOw==);
+	background-image:url(data:image/gif;base64,R0lGODlhiBMMAMQSAP///5mZmfPz89vX0cvIw9zc3PX19bKysqmopvb29pqamvn5+Z2dnLy6t62sqp+fnqCgn/T09P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABIALAAAAACIEwwAAAX/4DAQDhScaKqubOu+cCzPdG3feK7vfO//wKBwSCwaj8ikcslsOp/QqHRKrVqv2Kx2y+16v+CweEwum8/otHrNbrvf8Lh8Tq/b7/i8fs/v+/+AgYKDhIWGh4hSAw0HBREAkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PG7BAoCAAkCEvr7/P3+/wADChxIsKDBgwgTKlzIsKHDhxAjSpxIsaLFixgzatzIsaPHjyBDihxJsqTJkyhT/6pcybKly5cwY8qcSbOmzZs4c+rcybOnz59AgwodSrSo0aNIkypdyrSp06dQo0qdSrWq1atYs2rdShJBAQBcw4odS7as2bNo06pdy7at27dw48qdS7eu3bt48+rdy7ev37+AAwseTLiw4cOIizJYYCCx48eQI0ueTLmy5cuYM2vezLmz58+gQ4seTbq06dOoU6teHToAgHysY8ueTbu27du4c+vezbu379/AgwsfTry48ePIkyuX4Br28ufQo0ufTr269evYs2vfzr279+/gw4sfT7704sbl06tfz769+/fw48ufT7++/fv48+vfzx+vV7D9BSjggAQWaOCBCCao4JmCDDbo4IMQRijhdfTYg8+EGGao4YYcdujhhyCGKOKIJJZo4oko5rVIIwbI4+KLMMYo44w01mjjjTjmqOOOPPbo449ABinkkEQWaeSRSCap5JJMNunkk1BGKeWUVFaZ
+jQgkPJDIllx26eWXYIYp5phklmnmmWimqeaabLbp5ptwxinnnHTWaeedeOap55589unnn4AGKigcIQAAOw==);
 }
 
 span.corners-top span, span.corners-bottom span {
@@ -624,7 +632,7 @@ div.endMOD { padding:0 5px; }
 // The following line from http://www.ryancooper.com/resources/keycode.asp
 document.onkeydown = mod_do_keypress;
 
-var host = "http://www.phpbb.com/mods/modx/i18n/";
+var host = "https://www.phpbb.com/mods/modx/i18n/";
 
 var enStrings = "dir=ltr\n" +
 "h1=Installation instructions for\n" +
@@ -646,6 +654,7 @@ var enStrings = "dir=ltr\n" +
 "a-e=Email:\n" +
 "a-n=Name:\n" +
 "a-h=WWW:\n" +
+"a-git=Github:\n" +
 "a-c=Contributions:\n" +
 "a-c-f=From\n" +
 "a-c-t=to\n" +
@@ -654,9 +663,9 @@ var enStrings = "dir=ltr\n" +
 "icf=Included files\n" +
 "icfn=No files have been included with this MOD.\n" +
 "dcl=Disclaimer\n" +
-"dclt=For security purposes, please check: <a href=\"http://www.phpbb.com/mods/\">http://www.phpbb.com/mods/</a> for the latest version of this MOD. Downloading this MOD from other sites could cause malicious code to enter into your phpBB Forum. As such, phpBB will not offer support for MODs not offered in our MODs database, located at: <a href=\"http://www.phpbb.com/mods/\">http://www.phpbb.com/mods/</a>\n" +
+"dclt=For security purposes, please check: <a href=\"https://www.phpbb.com/mods/\">https://www.phpbb.com/mods/</a> for the latest version of this MOD. Downloading this MOD from other sites could cause malicious code to enter into your phpBB Forum. As such, phpBB will not offer support for MODs not offered in our MODs database, located at: <a href=\"https://www.phpbb.com/mods/\">https://www.phpbb.com/mods/</a>\n" +
 "isp=and English support\n" +
-"ispt=English support can be obtained at <a href=\"http://www.phpbb.com/mods/\">http://www.phpbb.com/mods/</a> for released MODs.\n" +
+"ispt=English support can be obtained at <a href=\"https://www.phpbb.com/mods/\">https://www.phpbb.com/mods/</a> for released MODs.\n" +
 "ant=Author notes:\n" +
 "lic=License\n" +
 "lict=This MOD has been licensed under the following license:\n" +
@@ -709,8 +718,8 @@ var enStrings = "dir=ltr\n" +
 "regex=This find contains an advanced feature known as regular expressions.\n" +
 "mhe-v=- Version\n" +
 "mh=MOD history\n" +
-"addtl-modx=Additional MODX files\n" +
-"imn=This MOD has no additional MODX files.\n" +
+"addtl-modx=Additional file(s)\n" +
+"imn=This MOD has no additional file(s).\n" +
 "link-c=Contrib\n" +
 "link-d=Dependency\n" +
 "link-l=Language\n" +
@@ -722,7 +731,7 @@ var enStrings = "dir=ltr\n" +
 "installer-h2=PHP install file\n" +
 "installer-exp1=There is a PHP install file that needs to be run in order to complete the installation.\n" +
 "installer-exp2=To run it point your browser to, for example,\n" +
-"ispt-int=Support in your language <strong>might</strong> be available at a <a href=\"http://www.phpbb.com/support/intl/\">international support site</a>.\n" +
+"ispt-int=Support in your language <strong>might</strong> be available at a <a href=\"https://www.phpbb.com/support/intl/\">international support site</a>.\n" +
 "del-heads=Delete files\n" +
 "del-head=Delete file\n" +
 "del-file=Delete\n" +
@@ -741,14 +750,14 @@ var arrClasCnt = [
 	['cde-'	, codes_ll			],
 	['edt-'	, edits_ll			],
 	['fnd'	, finds_ll			],
-	['fnd'	, removes_ll			],
+	['rem'	, removes_ll			],
 	['regex', regex_ll			],
 	['rplw'	, replacewiths_ll	],
 	['aft'	, addafters_ll		],
 	['bef'	, addbefores_ll		],
 	['inc'	, increments_ll		],
 	['ifnd'	, ifinds_ll			],
-	['ifnd'	, iremoves_ll			],
+	['irem'	, iremoves_ll			],
 	['regex', iregex_ll			],
 	['irplw', ireplacewiths_ll	],
 	['iaft'	, iaddafters_ll		],
@@ -780,6 +789,8 @@ function changeLanguage(langCode)
 		applyLanguage(enStrings.split("\n"));
 	}
 	xslLanguage(langCode);
+
+	show_title(langCode);
 }
 
 function load_languages()
@@ -806,6 +817,71 @@ function load_language()
 	$output = 'load_language';
 	cachernd = parseInt(Math.random() * 99999999); // cache
 	send('', host + currentLanguage + '.txt?rnd=' + cachernd);
+}
+
+/**
+* From http://stackoverflow.com/questions/1280903/javascript-ie-and-getelementsbyclassname-problems/8472488#8472488
+*/
+if (typeof document.getElementsByClassName != 'function')
+{
+	document.getElementsByClassName = function()
+	{
+		var elms = document.getElementsByTagName('*');
+		var ei = new Array();
+		for (i = 0; i < elms.length; i++)
+		{
+			if (elms[i].getAttribute('class'))
+			{
+				ecl = elms[i].getAttribute('class').split(' ');
+				for (j = 0; j < ecl.length; j++)
+				{
+					if (ecl[j].toLowerCase() == arguments[0].toLowerCase())
+					{
+						ei.push(elms[i]);
+					}
+				}
+			}
+			else if (elms[i].className)
+			{
+				ecl = elms[i].className.split(' ');
+				for (j = 0; j < ecl.length; j++)
+				{
+					if (ecl[j].toLowerCase() == arguments[0].toLowerCase())
+					{
+						ei.push(elms[i]);
+					}
+				}
+			}
+		}
+		return ei;
+	}
+}
+
+function show_title(langCode)
+{
+	var sel_title = document.getElementById('title-' + langCode);
+
+	if (sel_title == null)
+	{
+		// A title in English is required.
+		sel_title = document.getElementById('title-en')
+
+		if (sel_title == null)
+		{
+			// No title in English or the selected language.
+			return;
+		}
+	}
+
+	var hide_title = document.getElementsByClassName('hide-title');
+
+	for (var i = 0; i < hide_title.length; i++)
+	{
+		hide_title[i].style.display='none';
+	}
+
+	sel_title.style.display='inline';
+	document.title = "phpBB MOD » " + sel_title.innerHTML;
 }
 
 /*****************
@@ -1425,7 +1501,7 @@ function change_dbms($form)
 		'mssql',
 		'oracle',
 		'postgres',
-		'sqllite'
+		'sqlite'
 	];
 	$exists = 0;
 	$tags = document.getElementsByTagName('dbms');
@@ -1440,7 +1516,7 @@ function change_dbms($form)
 	{
 		for ($i = 0; $i < $tags.length; $i++)
 		{
-			if (!($dbms = $tags[$i].attributes['type'].nodeValue))
+			if (!($dbms = $tags[$i].attributes['type'].value))
 			{
 				continue;
 			}
@@ -1472,7 +1548,7 @@ function sql_display($value)
 	// show the dbms of type we have selected, hide all others except for non dbms specific
 	for ($i = 0; $i < $tags.length; $i++)
 	{
-		if (!($dbms = $tags[$i].attributes['type'].nodeValue))
+		if (!($dbms = $tags[$i].attributes['type'].value))
 		{
 			continue;
 		}
@@ -1520,7 +1596,7 @@ function sql_dropdown()
 		'mssql',
 		'oracle',
 		'postgres',
-		'sqllite'
+		'sqlite'
 	];
 	$options = [];
 	$ie_options = [];
@@ -1530,7 +1606,7 @@ function sql_dropdown()
 	// Show the dbms of type we have selected, hide all others except for non dbms specific
 	for ($i = 0; $i < $tags.length; $i++)
 	{
-		if (!($dbms = $tags[$i].attributes['type'].nodeValue))
+		if (!($dbms = $tags[$i].attributes['type'].value))
 		{
 			continue;
 		}
@@ -1628,7 +1704,14 @@ function toggle_edit(o)
 		<div id="debug"></div>
 		<div id="wrap">
 			<div id="page-header">
-				<h1><span id="lang-h1">Installation instructions for</span> '<xsl:value-of select="$title" />' <span id="lang-V">version</span>&nbsp;<xsl:value-of select="$version" /></h1>
+				<h1>
+					<span id="lang-h1">Installation instructions for</span>
+					<span class="hide-title" lang="{@lang}"> '<xsl:value-of select="$title" />' </span>
+					<xsl:for-each select="mod:header/mod:title">
+						<span class="hide-title" lang="{@lang}" id="title-{@lang}" style="display: none;"> '<xsl:value-of select="current()" />' </span>
+					</xsl:for-each>
+					<span id="lang-V">version</span>&nbsp;<xsl:value-of select="$version" />
+				</h1>
 				<form method="post" action="" id="lang-selector" style="display: none;">
 				<fieldset class="nobg">
 					<label for="language"><span id="lang-slg">Select language:</span></label>&nbsp;<select id="language" name="language" onclick="load_languages()"><option value="en" selected="selected">English</option></select>
@@ -1666,6 +1749,7 @@ function toggle_edit(o)
 		</body>
 		</html>
 	</xsl:template>
+
 
 	<xsl:template name="give-header">
 		<fieldset>
@@ -1750,6 +1834,12 @@ function toggle_edit(o)
 							</xsl:if>
 						</dd>
 					</xsl:if>
+					<xsl:if test="mod:github != 'N/A' and mod:github != 'n/a' and mod:github != ''">
+						<xsl:if test="contains(mod:github, 'https://github.com/')">
+							<dt id="lang-a-git[{generate-id()}]">Github:</dt>
+							<dd name="author-dd"><a href="{mod:github}" dir="ltr"><xsl:value-of select="mod:github" /></a></dd>
+						</xsl:if>
+					</xsl:if>
 				</dl>
 				<span class="corners-bottom"><span></span></span>
 			</div>
@@ -1778,9 +1868,9 @@ function toggle_edit(o)
 		<xsl:for-each select="../mod:action-group">
 			<xsl:call-template name="give-files-included"></xsl:call-template>
 		</xsl:for-each>
-		<h3 id="lang-addtl-modx">Additional MODX files</h3>
+		<h3 id="lang-addtl-modx">Additional file(s)</h3>
 		<xsl:if test="count(mod:link-group/mod:link) = 0">
-			<p id="lang-imn">This MOD has no additional MODX files.</p>
+			<p id="lang-imn">This MOD has no additional file(s).</p>
 		</xsl:if>
 
 		<ul class="link-group" id="link-group">
@@ -1823,7 +1913,7 @@ function toggle_edit(o)
 			<div class="mod-about">
 				<span class="corners-top"><span></span></span>
 				<div class="mod-about-padding">
-					<p><span id="lang-dclt">For security purposes, please check: <a href="http://www.phpbb.com/mods/">http://www.phpbb.com/mods/</a> for the latest version of this MOD. Downloading this MOD from other sites could cause malicious code to enter into your phpBB Forum. As such, phpBB will not offer support for MODs not offered in our MODs database, located at: <a href="http://www.phpbb.com/mods/">http://www.phpbb.com/mods/</a></span></p>
+					<p><span id="lang-dclt">For security purposes, please check: <a href="https://www.phpbb.com/mods/">https://www.phpbb.com/mods/</a> for the latest version of this MOD. Downloading this MOD from other sites could cause malicious code to enter into your phpBB Forum. As such, phpBB will not offer support for MODs not offered in our MODs database, located at: <a href="https://www.phpbb.com/mods/">https://www.phpbb.com/mods/</a></span></p>
 					<p><span id="lang-ontt1">Before adding this MOD to your forum, you should back up all files and databases related to this MOD.</span></p>
 					<p><span id="lang-ontt2">This MOD was designed for phpBB</span><xsl:text> </xsl:text><xsl:value-of select="mod:installation/mod:target-version" /><xsl:text> </xsl:text>&nbsp;<span id="lang-ontt3">and may not function as stated on other phpBB versions. MODs for phpBB 3.0 will <strong>not</strong> work on phpBB 2.0 and vice versa.</span></p>
 					<xsl:for-each select="./mod:mod-version">
@@ -1842,8 +1932,8 @@ function toggle_edit(o)
 				<div class="mod-about-padding">
 					<p><span id="lang-lict">This MOD has been licensed under the following license:</span></p>
 					<p style='white-space:pre;'><a href="license.txt"><xsl:value-of select="mod:license" /></a></p>
-					<p><span id="lang-ispt">English support can be obtained at <a href="http://www.phpbb.com/mods/">http://www.phpbb.com/mods/</a> for released MODs.</span></p>
-					<p><span id="lang-ispt-int">Support in your language <strong>might</strong> be available at a <a href="http://www.phpbb.com/support/intl/">international support site</a>.</span></p>
+					<p><span id="lang-ispt">English support can be obtained at <a href="https://www.phpbb.com/mods/">https://www.phpbb.com/mods/</a> for released MODs.</span></p>
+					<p><span id="lang-ispt-int">Support in your language <strong>might</strong> be available at a <a href="https://www.phpbb.com/support/intl/">international support site</a>.</span></p>
 				</div>
 				<span class="corners-bottom"><span></span></span>
 			</div>
@@ -1882,10 +1972,10 @@ function toggle_edit(o)
 													<xsl:with-param name="string-in" select="string($authorurl)"/>
 												</xsl:call-template>
 											</xsl:variable>
-											<dd name="author-dd"><a dir="ltr" href="http://www.phpbb.com/community/memberlist.php?mode=viewprofile&amp;un={$operaurl}"><xsl:value-of select="$authorname" /></a></dd>
+											<dd name="author-dd"><a dir="ltr" href="https://www.phpbb.com/community/memberlist.php?mode=viewprofile&amp;un={$operaurl}"><xsl:value-of select="$authorname" /></a></dd>
 										</xsl:when>
 										<xsl:otherwise>
-											<dd name="author-dd"><a dir="ltr" href="http://www.phpbb.com/community/memberlist.php?mode=viewprofile&amp;un={$authorurl}"><xsl:value-of select="$authorname" /></a></dd>
+											<dd name="author-dd"><a dir="ltr" href="https://www.phpbb.com/community/memberlist.php?mode=viewprofile&amp;un={$authorurl}"><xsl:value-of select="$authorname" /></a></dd>
 										</xsl:otherwise>
 
 									</xsl:choose>
@@ -2083,7 +2173,7 @@ function toggle_edit(o)
 						<option value="mssql">MSSQL</option>
 						<option value="oracle">Oracle</option>
 						<option value="postgres">Postgres</option>
-						<option value="sqllite">SQLLite</option>
+						<option value="sqlite">SQLite</option>
 					</select>
 				</fieldset>
 			</form>

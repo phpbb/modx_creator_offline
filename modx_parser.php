@@ -92,6 +92,10 @@ class modx_parser extends parser_outdata
 					$this->license = (isset($modx_row['value'])) ? $modx_row['value'] : '';
 				break;
 
+				case 'github':
+					$this->github = (isset($modx_row['value'])) ? $modx_row['value'] : '';
+				break;
+
 				case 'time':
 					$this->installation_time = (isset($modx_row['value'])) ? $modx_row['value'] : '';
 				break;
