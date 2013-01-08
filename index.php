@@ -124,7 +124,7 @@ if ($submit)
 		$error['install_time'] = 'install_time';
 	}
 
-	if (strpos($u_github, 'https://github.com/') !== 0)
+	if ($u_github != '' && strpos($u_github, 'https://github.com/') !== 0)
 	{
 		$error['github'] = true;
 	}
