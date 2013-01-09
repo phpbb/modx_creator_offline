@@ -12,7 +12,7 @@ $filename = (isset($_GET['file'])) ? $_GET['file'] : '';
 
 if($filename == 'modx.prosilver.en.xsl' ||  $filename == 'license.txt')
 {
-	if(eregi("\.\.", $filename))
+	if(strpos('..', $filename) !== false)
 	{
 		exit;
 	}
