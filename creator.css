@@ -119,7 +119,7 @@ fieldset dl {
 }
 
 fieldset dt {
-	float: left;	
+	float: left;
 	width: 40%;
 	text-align: left;
 	display: block;
@@ -349,4 +349,28 @@ textarea.inputbox {
 	margin: 0 -10px;
 }
 
+#error-div {
+   color: #000000;
+   background-color: #CC0000;
+   font-size: 1.3em;
+   padding: 4px;
+   margin-left: 4px;
+}
 
+#warning-div{
+   color: #000000;
+   background-color: #F9F100;
+   font-size: 1.3em;
+   padding: 4px;
+   margin-left: 4px;
+}
+
+.error-dl {
+   background-color: #CC0000;
+   padding-left: 4px;
+}
+
+.warning-dl {
+   background: #F9F100;
+   padding-left: 4px;
+}
